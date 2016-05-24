@@ -1,0 +1,109 @@
+OVERVIEW: 
+1: get the meetup ids, BGG ids, and free-text "favourite games" of the members of LoB meetup group.  Cache this.
+1.1. 
+1.2. From each member's bio ("intro") for LoB meetup group, find their bgg username e.g. "bgg_username:enz0".
+1.3. Find and store the names of their favourite games as written up in their LoB question answer "What is your favourite game".
+1.4 try to find their bgg accounts from their LoB question answers on the meetup
+
+2: From BGG find each member's "want to play"s, their favourite games, and their owned games.
+
+3: find out who's going to the next week or two of LoB meetups.  (optional boolean: "only check events I've RSVP'd "yes" to)
+
+4: cross check that information to find who wants to play (or who owns a game you want to play.
+
+QUERY:
+
+I'm going to LoB tomorrow...
+  What are the favourite games of the other ppl going?
+  What are the want-to-play games of the other ppl going?
+
+When can I next play game X at LoB?
+
+NOTE: will likely get a 202 and the bgg api will crash.  need to retry later (1 second, normally) to get the actual response.
+
+NOTE: a bgg handle can have a space in it.  (argh!)
+or an _ (underscore)
+it is correct to put the space in the name when calling the ruby BGG library. 
+examples:
+https://boardgamegeek.com/user/Bang%20Potential
+https://boardgamegeek.com/user/Baron%20Frog
+https://boardgamegeek.com/user/Haakon%20Gaarder
+
+lob guild members
+https://boardgamegeek.com/guild/members/586/
+
+NOTE: bgg user id can be obtained from bgg user NAME by the following API call:
+https://www.boardgamegeek.com/xmlapi2/user/?name=enz0
+<user id="155396" name="enz0" ...
+
+NOTE: sometimes a (first?) call for a collection will return a "come back later for this - we're processing it..."
+SOME DATA:
+
+* group_id of London on Board: 274386
+* my member id: 13347289  and errol's member id (for testing): 151580452 and Lloyd's is 12712378
+
+* my bgg numeric user id (found by looking at the gallery link) is:
+155396
+
+REQUESTS:
+
+* REQUEST: get info about a group via its name
+https://api.meetup.com/LondonOnBoard?&sign=true&photo-host=public
+
+* REQUEST: Get the members of LoB (not all in one page...)
+
+https://api.meetup.com/2/members?&sign=true&photo-host=public&group_urlname=LondonOnBoard&page=20
+
+* REQUEST: get the answers a (single) member has given when joining:
+https://api.meetup.com/LondonOnBoard/members/13347289?&sign=true&photo-host=public&page=20&omit=photo,group_profile.group
+
+
+* REQUEST: get (short) info about one member (no photo, no topics).  There will be no generic bio in this as this is a meetup.com user "member" outwith context of any actual meetup group.  What we need is the member's LoB bio/introduction:
+
+https://api.meetup.com/2/member/151580452?&sign=true&photo-host=public&fields=bio,privacy,other_services&page=20&omit=topics,photo
+
+EVENTS: 
+documentation of events: http://www.meetup.com/meetup_api/docs/2/events/
+
+* REQUEST: Get the ids of the next couple of weeks of events with that meetup
+(this one is next 3 days...)
+
+https://api.meetup.com/2/events?&sign=true&photo-host=public&group_urlname=LondonOnBoard&time=,3d&status=upcoming&page=20
+
+https://api.meetup.com/2/events?offset=0&format=json&limited_events=False&group_urlname=LondonOnBoard&photo-host=public&time=%2C3d&page=20&fields=&order=time&status=upcoming&desc=false&sig_id=13347289&sig=BLAHBLAHBLAHXXXXX
+
+or shorter
+
+https://api.meetup.com/2/events?&sign=true&photo-host=public&group_urlname=LondonOnBoard&time=,3d&status=upcoming&page=20&only=event_url,yes_rsvp_count,id,time,name,waitlist_count
+
+* REQUEST: get the RSVP's for a single upcoming event by event_id
+
+https://api.meetup.com/2/rsvps?&sign=true&photo-host=public&rsvp=yes&event_id=fqqhnlyvcbqb&page=4&omit=venue,member_photo,event,group
+
+* REQUEST: Get the id(s) of the next event(s) you are going to with that meetup
+
+* REQUEST: (NON-ESSENTIAL) get one's own upcoming events (any group)
+
+https://api.meetup.com/2/events?&sign=true&photo-host=public&member_id=self&page=20
+
+
+----
+
+
+Stuff you can do on BGG:
+
+
+Geek Buddy ratings
+
+https://boardgamegeek.com/geekbuddy.php?action=gameratings
+
+
+LoB Guild
+
+https://boardgamegeek.com/guild/586
+
+
+Guild game search
+
+https://boardgamegeek.com/guild/collection/586?title=cyclades&subtype=boardgame&wanttoplay=1&B1=Apply
+
