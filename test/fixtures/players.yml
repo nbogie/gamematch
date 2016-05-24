@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bgg_username: MyText
+  bgg_user_id: MyText
+  meetup_username: MyText
+  meetup_user_id: 1
+  meetup_bio: MyText
+
+two:
+  bgg_username: MyText
+  bgg_user_id: MyText
+  meetup_username: MyText
+  meetup_user_id: 1
+  meetup_bio: MyText
