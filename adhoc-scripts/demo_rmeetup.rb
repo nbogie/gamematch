@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sqlite3'
-require 'rMeetup'
 require 'bgg'
-require './bgg_utils'
+require './adhoc-scripts/bgg_utils'
 require 'yaml'
+require 'rmeetup'
 
 GROUP_ID=274386
 

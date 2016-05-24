@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'rMeetup'
 gem 'bgg'
 
