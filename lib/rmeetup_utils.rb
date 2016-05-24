@@ -2,12 +2,14 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sqlite3'
 require 'bgg'
-require './adhoc-scripts/bgg_utils'
+require 'bgg_utils' #this one is local
 require 'yaml'
 require 'rmeetup'
 
 GROUP_ID=274386
 
+class RMeetupUtils
+  
 def getGroup
   results = @client.fetch(:groups,{:group_id => 274386})
   results.each do |result|
@@ -71,7 +73,7 @@ def findBGGTagInBio(str)
    tagged || findBGGTagFromURLInBio(str)
 end
 
-def getAndWriteMembers(n)
+def getAndWriteMembersToStdout(n)
   members = getMembers(n)
   members.each do |m|
     bio_raw = m.member["bio"]
@@ -81,9 +83,33 @@ def getAndWriteMembers(n)
   end
 end
 
+def getAndWriteMembersToDB(n)
+  #TODO: process the users as they're loaded - dont load them all into memory first
+  members = getMembers(n)
+  members.each do |m|
+    bio_raw = m.member["bio"]
+    found_bgg_tag = findBGGTagInBio(bio_raw)
+    
+    Player.create(meetup_username: m.name, 
+                  bgg_username: found_bgg_tag,
+                  bgg_user_id: nil,
+                  meetup_user_id: m.id,
+                  meetup_bio: bio_raw)
+                  
+    puts "Imported user: #{m.name}"
+  end
+end
+
 def getAllMembersPaged
-  0.upto(35) do |n|
+  0.upto(1) do |n|
     getAndWriteMembers(n)
+    sleep(5)
+  end
+end
+
+def importAllMembersPagedToDB
+  0.upto(1) do |n|
+    getAndWriteMembersToDB(n)
     sleep(5)
   end
 end
@@ -165,14 +191,20 @@ def populateUserGames
   end
 end
 
-api_keys = YAML::load_file('config/api_keys.yaml')
-@client = RMeetup::Client.new(:api_key => api_keys[:meetup_api_key])
-db = SQLite3::Database.new "bgglob.db"
+def initialize
+  api_keys = YAML::load_file('config/api_keys.yaml')
+  @client = RMeetup::Client.new(:api_key => api_keys[:meetup_api_key])
+end
 
-getAllMembersPaged
+#db = SQLite3::Database.new "bgglob.db"
+
+#getAllMembersPaged
+
 #rsvps = showRSVPsForUpcomingEventsInNextNDays(6)
 #rsvps = showRSVPsForEvent("227906557")
 #findRSVPsInDB(db, rsvps)
 
 #SQL to find mutual want-to-play games
 #select gu.bgg_username,g.name,gu.own from games_users gu, games g where want_to_play = 1 and g.game_id = gu.game_id and gu.game_id in (select gu.game_id from games_users gu where gu.want_to_play = 1 group by gu.game_id having count(*) > 1) order by g.name;
+
+end  #ends class
