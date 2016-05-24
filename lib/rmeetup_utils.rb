@@ -83,21 +83,28 @@ def getAndWriteMembersToStdout(n)
   end
 end
 
-def getAndWriteMembersToDB(n)
+def getAndWriteMembersToDB(offset)
   #TODO: process the users as they're loaded - dont load them all into memory first
-  members = getMembers(n)
+  members = getMembers(offset)
   members.each do |m|
     bio_raw = m.member["bio"]
     found_bgg_tag = findBGGTagInBio(bio_raw)
-    
-    Player.create(meetup_username: m.name, 
+    existing_player = Player.find_by meetup_user_id: m.id
+    if (existing_player)
+      puts "WARNING: skipping player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB: #{existing_player.inspect}"
+    else
+      Player.create(meetup_username: m.name, 
                   bgg_username: found_bgg_tag,
                   bgg_user_id: nil,
                   meetup_user_id: m.id,
-                  meetup_bio: bio_raw)
-                  
-    puts "Imported user: #{m.name}"
+                  meetup_bio: bio_raw,
+                  meetup_status: m.status,
+                  meetup_link: m.link,
+                  meetup_joined: m.joined)
+      puts "Imported user: #{m.name} #{m.id}"
+    end
   end
+  return members.size
 end
 
 def getAllMembersPaged
@@ -108,8 +115,10 @@ def getAllMembersPaged
 end
 
 def importAllMembersPagedToDB
-  0.upto(1) do |n|
-    getAndWriteMembersToDB(n)
+  offset = 0
+  while (getAndWriteMembersToDB(offset) > 0)
+    offset += 1
+    puts "DONE PAGE: #{offset}"
     sleep(5)
   end
 end
