@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20160524180603) do
     t.text     "bgg_username"
     t.text     "bgg_user_id"
     t.text     "meetup_username"
+    t.text     "meetup_link"
+    t.text     "meetup_status"  #TODO: capture as boolean or enum
+    t.text     "meetup_joined"  #TODO: capture this timestamp as date
     t.integer  "meetup_user_id"
     t.text     "meetup_bio"
     t.datetime "created_at",      null: false

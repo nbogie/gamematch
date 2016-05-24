@@ -9,6 +9,9 @@
       <th>Bgg user</th>
       <th>Meetup username</th>
       <th>Meetup user</th>
+      <th>Meetup status</th>
+      <th>Meetup link</th>
+      <th>Meetup joined</th>
       <th>Meetup bio</th>
       <th colspan="3"></th>
     </tr>
@@ -21,6 +24,9 @@
         <td><%= player.bgg_user_id %></td>
         <td><%= player.meetup_username %></td>
         <td><%= player.meetup_user_id %></td>
+        <td><%= player.meetup_status %></td>
+        <td><%= player.meetup_link %></td>
+        <td><%= player.meetup_joined %></td>
         <td><%= player.meetup_bio %></td>
         <td><%= link_to 'Show', player %></td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
