@@ -3,5 +3,11 @@
 #
 # Examples:
 #
-cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-Mayor.create(name: 'Emanuel', city: cities.first)
+#cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#Mayor.create(name: 'Emanuel', city: cities.first)
+
+record_lob_bgg_links([
+    [39340532, "Arthurian", "Jason"], 
+    [41555212, "Aliandra", "Mairi"],
+    [53301632, "Leyton", "Bruce"]
+    ])
