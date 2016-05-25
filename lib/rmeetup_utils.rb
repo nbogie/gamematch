@@ -242,24 +242,27 @@ def populateUserGames
     colln["item"].each do |g|
       
       gid = g["objectid"]
+      gameObj = Game.find_by(game_id: gid)
       if ((! processed_game_ids.member? gid) &&
-          (! Game.exists?(game_id: gid) ))
+           gameObj.nil? )
         Rails.logger.debug "Saving new game to db: #{gid}"
-        Game.create({ game_id: gid,
+        g = Game.create({ game_id: gid,
           name: g["name"][0]["content"]
         })
         processed_game_ids.push(g['objectid'])
       else
         #game already exists
       end
+      
+      if (g["status"][0]["wanttoplay"] == '1')
+        Rails.logger.debug "#{player.meetup_username} wants to play #{gameObj.game_id}"
+        gameObj.keen_players.push player
+      end
+      if (g["status"][0]["own"] == '1')
+        Rails.logger.debug "#{player.meetup_username} owns #{gameObj.game_id}"
+        gameObj.owning_players.push player
+      end
 
-      skip {
-      db.execute "insert into games_users (bgg_username, game_id, want_to_play, own) values ( ?, ?, ?, ? )", 
-                [bgg_username, 
-                 gid, 
-                 g["status"][0]["wanttoplay"], 
-                 g["status"][0]["own"]]
-      }
       #showDetailsOfMyCollection(colln)
     end
   end

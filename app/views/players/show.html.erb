@@ -16,9 +16,35 @@
 </p>
 
 <p>
-  <strong>Meetup user:</strong>
+  <strong>Meetup user id:</strong>
   <%= @player.meetup_user_id %>
 </p>
+
+<p>
+  <strong>Num games owned:</strong>
+  <%= @player.owned_games.size %>
+
+  <ul>
+  <% @player.owned_games.each do |game| %>
+    <li><a href="https://boardgamegeek.com/boardgame/<%= game.game_id %>"><%= game.name %> (<%= game.game_id %>)</a> - <%= link_to 'Show', game %></li>
+  <% end %>
+  </ul>
+  
+</p>
+
+
+<p>
+  <strong>Wants to play:</strong>
+  <%= @player.want_to_play_games.size %>
+
+  <ul>
+  <% @player.want_to_play_games.each do |game| %>
+    <li><a href="https://boardgamegeek.com/boardgame/<%= game.game_id %>"><%= game.name %> (<%= game.game_id %>)</a> - <%= link_to 'Show', game %></li>
+  <% end %>
+  </ul>
+
+</p>
+
 
 <p>
   <strong>Meetup bio:</strong>
