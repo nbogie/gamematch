@@ -12,6 +12,7 @@
       <th>Meetup status</th>
       <th>Meetup link</th>
       <th>Meetup joined</th>
+      <th>last colln req time</th>
       <th>Meetup bio</th>
       <th colspan="3"></th>
     </tr>
@@ -28,6 +29,7 @@
         <td><a href='<%= player.meetup_link %>'><%= player.meetup_link %></a></td>
         <td><%= player.meetup_joined %></td>
         <td><%= player.meetup_bio %></td>
+        <td><%= player.last_collection_request_time %></td>
         <td><%= link_to 'Show', player %></td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
         <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>

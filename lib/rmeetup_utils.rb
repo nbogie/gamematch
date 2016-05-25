@@ -200,35 +200,66 @@ def createUserGames(db)
 SQL
 end
 
-def populateUserGames
+def skip(&block)
+  puts "skipping block"
+end
 
+def populateUserGames
   #createUserGames(db)
   processed_game_ids = []
-  users = findBGGersInDB(db)
-  users.each do |user|
-    bgg_username = unescapeSpace(user[0])
-    colln = BggApi.collection({username: bgg_username})
+  players = Player.where("players.bgg_username IS NOT NULL")
+  Rails.logger.info "Processing games for #{players.size} players"
+  players.each do |player|
+    
+    bgg_username = unescapeSpace(player.bgg_username)
+    puts "processing collection for user: #{bgg_username}"
+    
+    begin
+      colln = BggApi.collection({username: bgg_username})
+    rescue RuntimeError => err
+      if (err.to_s.include?(" 202 "))
+        Rails.logger.info "dealing with 202 exception for player: #{bgg_username}"
+        player.last_collection_request_time = Time.now
+        player.save
+        next
+      else
+        raise err
+      end
+    end
+
+    if (colln.nil? || colln["item"].nil?)
+      Rails.logger.warn "No collection for #{bgg_username}: #{colln.inspect}"
+      next
+    end
+  
     partitioned = partitionCollection(colln)
     strs = colln['item'].map do |g|
       gameInfoAsString(g)
     end
 
+    
     puts strs.join("\n")
     colln["item"].each do |g|
-      db.execute "insert into games_users (bgg_username, game_id, want_to_play, own) values ( ?, ?, ?, ? )", 
-                [bgg_username, 
-                 g["objectid"], 
-                 g["status"][0]["wanttoplay"], 
-                 g["status"][0]["own"]]
-
-      if (! processed_game_ids.member? g["objectid"])
-        db.execute "insert into games (game_id, name) values ( ?, ? )", 
-                [g["objectid"], 
-                 g["name"][0]["content"]]
+      
+      gid = g["objectid"]
+      if ((! processed_game_ids.member? gid) &&
+          (! Game.exists?(game_id: gid) ))
+        Rails.logger.debug "Saving new game to db: #{gid}"
+        Game.create({ game_id: gid,
+          name: g["name"][0]["content"]
+        })
         processed_game_ids.push(g['objectid'])
+      else
+        #game already exists
       end
 
-              #
+      skip {
+      db.execute "insert into games_users (bgg_username, game_id, want_to_play, own) values ( ?, ?, ?, ? )", 
+                [bgg_username, 
+                 gid, 
+                 g["status"][0]["wanttoplay"], 
+                 g["status"][0]["own"]]
+      }
       #showDetailsOfMyCollection(colln)
     end
   end

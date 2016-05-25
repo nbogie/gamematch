@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524180603) do
+ActiveRecord::Schema.define(version: 20160525005508) do
 
   create_table "games", force: :cascade do |t|
     t.text     "name"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20160524180603) do
     t.text     "meetup_joined"
     t.integer  "meetup_user_id"
     t.text     "meetup_bio"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.datetime "last_collection_request_time"
   end
 
   add_index "players", ["meetup_user_id"], name: "index_players_on_meetup_user_id", unique: true
