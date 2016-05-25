@@ -212,7 +212,7 @@ def populateUserGames
   players.each do |player|
     
     bgg_username = unescapeSpace(player.bgg_username)
-    puts "processing collection for user: #{bgg_username}"
+    Rails.logger.info "processing collection for user: #{bgg_username}"
     
     begin
       colln = BggApi.collection({username: bgg_username})
