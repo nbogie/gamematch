@@ -8,7 +8,7 @@
       <th>Bgg username</th>
       <th>Bgg user</th>
       <th>Meetup username</th>
-      <th>Meetup user</th>
+      <th>LoB Meetup user</th>
       <th>Meetup status</th>
       <th>Meetup link</th>
       <th>Meetup joined</th>
@@ -23,9 +23,9 @@
         <td><a href='https://boardgamegeek.com/user/<%= player.bgg_username %>'><%= player.bgg_username %></a></td>
         <td><%= player.bgg_user_id %></td>
         <td><%= player.meetup_username %></td>
-        <td><%= player.meetup_user_id %></td>
+        <td><a href='https://www.meetup.com/LondonOnBoard/members/<%= player.meetup_user_id %>'><%= player.meetup_user_id %></a></td>
         <td><%= player.meetup_status %></td>
-        <td><%= player.meetup_link %></td>
+        <td><a href='<%= player.meetup_link %>'><%= player.meetup_link %></a></td>
         <td><%= player.meetup_joined %></td>
         <td><%= player.meetup_bio %></td>
         <td><%= link_to 'Show', player %></td>

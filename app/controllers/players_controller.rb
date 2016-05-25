@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.all
+    @players = Player.where("players.bgg_username is NOT NULL")
   end
 
   # GET /players/1

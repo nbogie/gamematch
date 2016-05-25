@@ -108,7 +108,7 @@ def getAndWriteMembersToDB(offset)
 end
 
 def getAllMembersPaged
-  0.upto(1) do |n|
+  0.upto(40) do |n|
     getAndWriteMembers(n)
     sleep(5)
   end
@@ -154,6 +154,40 @@ end
 def unescapeSpace(str)
   str.gsub('%20', ' ')
 end
+
+def add_bgg_meetup_links
+  #TODO: read this from a table or db
+  bgg_lob_links = [
+      [39340532, "Arthurian", "Jason"], 
+      [41555212, "Aliandra", "Mairi"],
+      [53301632, "Leyton", "Bruce"],
+      [12899354, "Maiacetus", "Pankaj"],
+      [151580452, "stereoscopy", "Errol"],
+      [102496152, "Jeeman", "Jee"],
+      [72083722, "pawnvsdice", "Stuart"],
+      [13695428, "randomgerbil", "Ed"],
+      [8748997, "Bezman", "Behrooz"],
+      [152895592, "CDrust", "Drust"],
+      [182872300,"CJCalogero", "CJ"],
+      [24657712, "Dubbelnisse", "Mats"],
+      [96722032, "nathanroche", "Nathan"],
+      [194247084, "Zeik7", "Rob"],
+      [12743081, "divinentd", "Nils"],
+      [188046567, "pie_eater81", "Oliver"],
+      [13265173, "Stelio", "Stelio"],
+      [12362448, "Mrraow", "Stephen"],
+      [113779702, "magicoctopus", "Tomi"],
+      [8203939, "Trusty Sapper", "Tommy"],
+      ]
+  
+  bgg_lob_links.each do |mid, bgn, real|
+    p = Player.find_by meetup_user_id: mid
+    p.bgg_username = bgn
+    p.save
+  end
+end
+
+
 
 def createUserGames(db)
   rows = db.execute <<-SQL
@@ -204,8 +238,6 @@ def initialize
   api_keys = YAML::load_file('config/api_keys.yaml')
   @client = RMeetup::Client.new(:api_key => api_keys[:meetup_api_key])
 end
-
-#db = SQLite3::Database.new "bgglob.db"
 
 #getAllMembersPaged
 
