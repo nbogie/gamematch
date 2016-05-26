@@ -6,6 +6,8 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Meetup link</th>
+      <th>RSVPs</th>
       <th>Status</th>
       <th>Event time</th>
       <th colspan="3"></th>
@@ -15,7 +17,9 @@
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= link_to event.name, event.url %></td>
+        <td><%= link_to event.name, event %></td>
+        <td><%= link_to 'meetup', event.url %></td>
+        <td><%= event.rsvps.size %></td>
         <td><%= event.status %></td>
         <td><%= event.event_time %></td>
         <td><%= link_to 'Show', event %></td>

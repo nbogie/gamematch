@@ -18,6 +18,20 @@ def getGroup
   end
 end
 
+def importAllRSVPsForAllEventsToDB
+  Event.all.each do |ev|
+    rsvps = getRSVPsForEvent(ev.meetup_event_id)
+    rsvps.each do |r|
+      rsvp = Rsvp.new
+      rsvp.event = ev
+      rsvp.player = Player.find_by(meetup_user_id: r.member['member_id'])
+      rsvp.response = r.response
+      ev.rsvps.push(rsvp)
+      rsvp.save
+    end
+  end
+end
+
 def getRSVPsForEvent(event_id)
     rsvps = @client.fetch(:rsvps,{:event_id => event_id, 
                                  :rsvp=>'yes', 
@@ -137,10 +151,10 @@ end
 def importAllEventsToDB(nDays)
   events = getEventsForNextNDays(nDays)
   events.map do |event|
-    ev = Event.create({
+    Event.create({
       name: event.name, 
       provided_url: event.event["event_url"],
-      meetup_id: event.event["id"],
+      meetup_event_id: Event.extract_id_from_meetup_url(event.event["event_url"]),
       status: event.status,
       event_time: event.time
     })

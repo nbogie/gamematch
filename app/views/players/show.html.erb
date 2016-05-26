@@ -11,6 +11,18 @@
 </p>
 
 <p>
+  <strong>Next meetups</strong>
+  <ol>
+    
+    <% @player.events.each do |event| %>
+    <li><%= link_to event.name, event %></li>
+    <% end %>
+    
+  </ol>
+  
+</p>
+<p>
+
   <strong>Num games owned:</strong>
   <%= @player.owned_games.size %>
 

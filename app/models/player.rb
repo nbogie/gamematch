@@ -2,6 +2,10 @@ class Player < ActiveRecord::Base
 
   #http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association
 
+  has_many :rsvps, :foreign_key => "meetup_user_id"
+  has_many :events, :through => :rsvps
+
+
   has_many :ownerships, :foreign_key => "meetup_user_id"
   has_many :owned_games, :through => :ownerships, :source => 'game'
 

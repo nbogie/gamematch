@@ -15,5 +15,16 @@
   <%= @event.event_time %>
 </p>
 
+  <ul>
+  <% @event.players.each do |player| %>
+    <li>
+      <%= link_to player.bgg_username, player.bgg_user_url %> - 
+      <%= link_to player.meetup_username, player.meetup_user_url %>
+      <%= link_to 'Show', player %>
+    </li>
+  <% end %>
+  </ul>
+
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

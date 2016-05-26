@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526015420) do
+ActiveRecord::Schema.define(version: 20160526021322) do
 
   create_table "events", force: :cascade do |t|
+    t.text     "meetup_event_id"
     t.text     "name"
     t.text     "provided_url"
-    t.text     "meetup_id"
     t.text     "status"
     t.datetime "event_time"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "events", ["meetup_id"], name: "index_events_on_meetup_id", unique: true
+  add_index "events", ["meetup_event_id"], name: "index_events_on_meetup_event_id", unique: true
 
   create_table "games", force: :cascade do |t|
     t.text     "name"
@@ -65,5 +65,11 @@ ActiveRecord::Schema.define(version: 20160526015420) do
   end
 
   add_index "players", ["meetup_user_id"], name: "index_players_on_meetup_user_id", unique: true
+
+  create_table "rsvps", id: false, force: :cascade do |t|
+    t.integer "meetup_user_id"
+    t.integer "meetup_event_id"
+    t.text    "response"
+  end
 
 end

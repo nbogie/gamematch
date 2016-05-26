@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meetup_user_id: 1
+  response: MyText
+
+two:
+  meetup_user_id: 1
+  response: MyText
