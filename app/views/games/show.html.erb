@@ -10,15 +10,16 @@
   <%= @game.game_id %>
 </p>
 
+
 <p>
   <strong>Num wanting to play:</strong>
   <%= @game.keen_players.size %>
   <ul>
   <% @game.keen_players.each do |player| %>
     <li>
-      <%= link_to player.bgg_username, player.bgg_user_url %> - 
-      <%= link_to player.meetup_username, player.meetup_user_url %>
-      <%= link_to 'Show', player %>
+      <%= link_to player.meetup_username, player %> 
+      <%= link_to "(bgg)", player.bgg_user_url %>
+      <%= link_to "(Meetup)", player.meetup_user_url %>
     </li>
   <% end %>
   </ul>
@@ -28,14 +29,15 @@
 <p>
   <strong>Num owning:</strong>
   <%= @game.owning_players.size %>
-  
+<ul> 
   <% @game.owning_players.each do |player| %>
-  <li>
-    <%= link_to player.bgg_username, player.bgg_user_url %> - 
-    <%= link_to player.meetup_username, player.meetup_user_url %>
-    <%= link_to 'Show', player %>
-  </li>
+    <li>
+      <%= link_to player.meetup_username, player %> 
+      <%= link_to "(bgg)", player.bgg_user_url %>
+      <%= link_to "(Meetup)", player.meetup_user_url %>
+    </li>
 <% end %>
+</ul>
 
 </p>
 

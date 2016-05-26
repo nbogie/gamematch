@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <a href='#basic-info'>basic info</a> | 
+  <a href='#want-to-play-games'>want-to-play</a> | 
+  <a href='#owned-games'>owned games</a>
+</p>
+<p id='basic-info'>
   <strong>Bgg username:</strong>
   <%= link_to @player.bgg_username, @player.bgg_user_url %>
 </p>
@@ -21,16 +26,32 @@
   </ol>
   
 </p>
+
+<p>
+  <strong id='want-to-play-games'>Wants to play:</strong>
+  <%= @player.want_to_play_games.size %>
+
+  <ul>
+  <% @player.want_to_play_games.each do |game| %>
+    <li><%= link_to game.name, game %>
+      <%= link_to "(bgg)", game.bgg_game_url %>
+    </li>
+  <% end %>
+  </ul>
+
+</p>
+
 <p>
 
-  <strong>Num games owned:</strong>
+  <strong id='owned-games'>Num games owned:</strong>
   <%= @player.owned_games.size %>
 
   <ul>
   <% @player.owned_games.each do |game| %>
     <li>
-      <%= link_to game.name, game.bgg_game_url %> 
-    - <%= link_to 'Show', game %>
+      <%= link_to game.name, game %>
+      <%= link_to "(bgg)", game.bgg_game_url %>
+    
     </li>
   <% end %>
   </ul>
@@ -38,19 +59,7 @@
 </p>
 
 
-<p>
-  <strong>Wants to play:</strong>
-  <%= @player.want_to_play_games.size %>
 
-  <ul>
-  <% @player.want_to_play_games.each do |game| %>
-    <li><%= link_to game.name, game.bgg_game_url %>
-      - <%= link_to 'Show', game %>
-    </li>
-  <% end %>
-  </ul>
-
-</p>
 
 
 <p>

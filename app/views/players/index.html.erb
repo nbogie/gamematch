@@ -5,40 +5,34 @@
 <table border='1'>
   <thead>
     <tr>
-      <th>Bgg username</th>
-      <th colspan="2"></th>
-      <th>Meetup username</th>
+      <th>Name(s)</th>
+      <th>Edit</th>
       <th>Meetup status</th>
       <th>num want-to-play</th>
       <th>num meetups upcoming</th>
-      <th>Meetup joined</th>
       <th>Granted</th>
       <th>Collection Processed At</th>
       <th>Collection Requested at</th>
       <th>Meetup bio</th>
-      <th>last colln req time</th>
-      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @players.each do |player| %>
       <tr>
-        <td><%= link_to player.bgg_username, player.bgg_user_url %></td>
-        <td><%= link_to 'Show', player %></td>
+        <td><%= link_to player.meetup_username, player %> 
+           (<%= link_to "bgg:#{player.bgg_username}", player.bgg_user_url %>)
+            <%= link_to " / Meetup", player.meetup_user_url %>
+        </td>
+        
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= link_to player.meetup_username, player.meetup_user_url %></td>
         <td><%= player.meetup_status %></td>
         <td><%= player.want_to_play_games.size %></td>
         <td><%= player.events.size %></td>
-        <td><%= player.meetup_joined %></td>
         <td><%= player.granted %></td>
         <td><%= player.collection_processed_at %></td>
         <td><%= player.last_collection_request_time %></td>
-        
         <td><%= player.meetup_bio %></td>
-        <td><%= player.last_collection_request_time %></td>
-        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

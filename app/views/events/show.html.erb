@@ -14,13 +14,18 @@
   <strong>Event time:</strong>
   <%= @event.event_time %>
 </p>
+  <h3>Attending Players:</h3>
 
   <ul>
   <% @event.players.each do |player| %>
     <li>
-      <%= link_to player.bgg_username, player.bgg_user_url %> - 
-      <%= link_to player.meetup_username, player.meetup_user_url %>
-      <%= link_to 'Show', player %>
+      <% if ! player.bgg_username.nil? %>
+        <%= link_to player.meetup_username, player, class: "bgg-linked-player" %>
+        (bgg: <%= link_to player.bgg_username, player.bgg_user_url %>)
+      <% else %>
+        <%= link_to player.meetup_username, player %>
+      <% end %>
+      / <%= link_to "meetup", player.meetup_user_url %>
     </li>
   <% end %>
   </ul>
