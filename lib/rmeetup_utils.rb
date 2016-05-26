@@ -143,14 +143,7 @@ def showRSVPsForUpcomingEventsInNextNDays(nDays)
     showRSVPsForEvent(event.event["id"])
   end
 end
-def findBGGersInDB(db)
-  users = []
-  db.execute("select bgg_username, bgg_user_id, meetup_username, meetup_user_id from users where bgg_username is not null") do |row|
-    p ["selected a user with a bgg username ", row]
-    users.push row
-  end
-  users
-end
+
 def unescapeSpace(str)
   str.gsub('%20', ' ')
 end
@@ -188,24 +181,11 @@ def add_bgg_meetup_links
 end
 
 
-
-def createUserGames(db)
-  rows = db.execute <<-SQL
-    create table games_users (
-      bgg_username varchar(40),
-      game_id varchar(20),
-      want_to_play bool,
-      own bool
-    );
-SQL
-end
-
 def skip(&block)
   puts "skipping block"
 end
 
 def populateUserGames
-  #createUserGames(db)
   processed_game_ids = []
   players = Player.where("players.bgg_username IS NOT NULL")
   Rails.logger.info "Processing games for #{players.size} players"
