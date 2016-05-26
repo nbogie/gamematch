@@ -3,6 +3,9 @@
 <p>
   <strong>Name:</strong>
   <%= @game.name %>
+  <%= link_to "(on bgg)", @game.bgg_game_url %> 
+  <%= link_to "(geekbuddy analyse)", @game.bgg_game_analysis_url %> 
+
 </p>
 
 <p>

@@ -20,4 +20,11 @@ class Player < ActiveRecord::Base
     "https://boardgamegeek.com/user/#{bgg_username}"
   end
   
+  
+  def remove_games
+    collection_processed_at = nil
+    ownerships.delete_all
+    play_wishes.delete_all
+    save!
+  end
 end

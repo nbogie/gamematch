@@ -208,6 +208,14 @@ def add_bgg_meetup_links
       [140935202, "OroroPro", "David Dawkins", false],
       [118512942, "RhialtoTheMarvellous", "Simon Dowrick", false],
       [23469191, "nosywombat", "Dean Morris", false],
+      [18182381, "2grve", "Pouria", false],
+      [6210521, "Sorp222", "Paul Lister", false ],
+      [5465745, "outlier", "Paul Agapow", false ],
+      [11559453, "crazylegs", "Tom P", false ],
+      [13127296, "furriebarry", "Ronan", false ],
+      [9797120, "discombob", "russell", false],
+      [78659442, "benosteen", "Ben O'Steen", false],
+      [13294861, "pilgrim152", "Karl Bunyan", false],
       ]
   
   bgg_lob_links.each do |mid, bgn, real, granted|
@@ -223,6 +231,8 @@ def skip(&block)
   puts "skipping block"
 end
 
+
+
 def importUserGamesFromBGG
   processed_game_ids = []
   players = Player.where("players.bgg_username IS NOT NULL and collection_processed_at IS NULL")
@@ -233,7 +243,10 @@ def importUserGamesFromBGG
     Rails.logger.info "processing collection for user: #{bgg_username}"
     
     begin
-      colln = BggApi.collection({username: bgg_username})
+      #We'd like to request only wanttoplay: 1 OR own: 1 but we can only AND these.
+      #Stats are probably a whole lot more data, so 
+      #  consider only getting the rated games, with stats, at a second pass.
+      colln = BggApi.collection({username: bgg_username, stats: 1})
     rescue RuntimeError => err
       if (err.to_s.include?(" 202 "))
         Rails.logger.info "dealing with 202 exception for player: #{bgg_username}"
@@ -247,16 +260,27 @@ def importUserGamesFromBGG
 
     if (colln.nil? || colln["item"].nil?)
       Rails.logger.warn "No collection for #{bgg_username}: #{colln.inspect}"
+      player.collection_processed_at = Time.now
+      player.save
       next
     end
+
   
     partitioned = partitionCollection(colln)
-    strs = colln['item'].map do |g|
-      gameInfoAsString(g)
-    end
+    #Faster than checking if we already have an ownership record
+    player.ownerships.delete_all
+    player.play_wishes.delete_all
     
-    puts strs.join("\n")
     colln["item"].each do |g|
+      
+      begin
+        user_rating = g['stats'] ? g['stats'].first['rating'].first['value'] : nil
+      rescue Exception => ex
+        Rails.logger.debug("no user rating available: #{ex}")
+        user_rating = nil
+      end
+    
+      Rails.logger.debug("user rating is: #{user_rating}")
       
       gid = g["objectid"]
       gameObj = Game.find_by(game_id: gid)
@@ -272,20 +296,30 @@ def importUserGamesFromBGG
       end
       Rails.logger.debug "Game: #{g.inspect}"
       
-      if (g["status"][0]["wanttoplay"] == '1')
-        Rails.logger.debug "#{player.meetup_username} wants to play #{gameObj.game_id}"
-        gameObj.keen_players.push player
+      if (! PlayWish.exists?(meetup_user_id: player.id, game_id: gameObj.id))
+        if (g["status"][0]["wanttoplay"] == '1')
+          Rails.logger.debug "#{player.meetup_username} wants to play #{gameObj.game_id}"
+          gameObj.keen_players.push player
+          Rails.logger.debug "AFTER"
+          Rails.logger.debug "Num play wishes #{gameObj.play_wishes.size} Num ownerships #{gameObj.ownerships.size}"
+        end
       end
-      if (g["status"][0]["own"] == '1')
-        Rails.logger.debug "#{player.meetup_username} owns #{gameObj.game_id}"
-        gameObj.owning_players.push player
+      
+      if (! Ownership.exists?(meetup_user_id: player.id, game_id: gameObj.id))
+        if (g["status"][0]["own"] == '1')
+          Rails.logger.debug "#{player.meetup_username} #{player.id} owns #{gameObj.game_id} - pushing"
+          gameObj.owning_players.push player
+          Rails.logger.debug "Num play wishes #{player.play_wishes.size} Num ownerships #{player.ownerships.size}"
+        end
+      else
+          Rails.logger.debug "#ALREADY OWNED {player.meetup_username} #{player.id} owns #{gameObj.game_id} (#{gameObj.id})"
       end
-
-      #showDetailsOfMyCollection(colln)
     end #each game in collection
     
     player.collection_processed_at = Time.now
     player.save
+    Rails.logger.debug "Done processing #{colln['item'].size} item(s) for #{player.meetup_username}"
+
   end #each player
   Rails.logger.info "Done importing games collections for those users"
 end #method
