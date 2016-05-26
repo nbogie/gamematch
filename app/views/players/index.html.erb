@@ -10,6 +10,7 @@
       <th>Meetup username</th>
       <th>Meetup status</th>
       <th>num want-to-play</th>
+      <th>num meetups upcoming</th>
       <th>Meetup joined</th>
       <th>Meetup bio</th>
       <th>last colln req time</th>
@@ -26,6 +27,7 @@
         <td><%= link_to player.meetup_username, player.meetup_user_url %></td>
         <td><%= player.meetup_status %></td>
         <td><%= player.want_to_play_games.size %></td>
+        <td><%= player.events.size %></td>
         <td><%= player.meetup_joined %></td>
         <td><%= player.meetup_bio %></td>
         <td><%= player.last_collection_request_time %></td>
