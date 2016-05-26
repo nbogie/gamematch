@@ -178,31 +178,42 @@ end
 def add_bgg_meetup_links
   #TODO: read this from a table or db
   bgg_lob_links = [
-      [39340532, "Arthurian", "Jason"], 
-      [41555212, "Aliandra", "Mairi"],
-      [53301632, "Leyton", "Bruce"],
-      [12899354, "Maiacetus", "Pankaj"],
-      [151580452, "stereoscopy", "Errol"],
-      [102496152, "Jeeman", "Jee"],
-      [72083722, "pawnvsdice", "Stuart"],
-      [13695428, "randomgerbil", "Ed"],
-      [8748997, "Bezman", "Behrooz"],
-      [152895592, "CDrust", "Drust"],
-      [182872300,"CJCalogero", "CJ"],
-      [24657712, "Dubbelnisse", "Mats"],
-      [96722032, "nathanroche", "Nathan"],
-      [194247084, "Zeik7", "Rob"],
-      [12743081, "divinentd", "Nils"],
-      [188046567, "pie_eater81", "Oliver"],
-      [13265173, "Stelio", "Stelio"],
-      [12362448, "Mrraow", "Stephen"],
-      [113779702, "magicoctopus", "Tomi"],
-      [8203939, "Trusty Sapper", "Tommy"],
+      [39340532, "Arthurian", "Jason", true], 
+      [41555212, "Aliandra", "Mairi", true],
+      [53301632, "Leyton", "Bruce", true],
+      [12899354, "Maiacetus", "Pankaj", true],
+      [151580452, "stereoscopy", "Errol", true],
+      [102496152, "Jeeman", "Jee", false],
+      [72083722, "pawnvsdice", "Stuart", false],
+      [13695428, "randomgerbil", "Ed", false],
+      [8748997, "Bezman", "Behrooz", false],
+      [152895592, "CDrust", "Drust", false],
+      [182872300,"CJCalogero", "CJ", false],
+      [24657712, "Dubbelnisse", "Mats", true],
+      [96722032, "nathanroche", "Nathan", true],
+      [194247084, "Zeik7", "Rob", true],
+      [12743081, "divinentd", "Nils", true],
+      [188046567, "pie_eater81", "Oliver", true],
+      [13265173, "Stelio", "Stelio", true],
+      [12362448, "Mrraow", "Stephen", true],
+      [7971953, "Tom Chase", "Tom Chase", false],
+      [182712715, "RobRun", "Rob Run", false],
+      [113779702, "magicoctopus", "Tomi", true],
+      [8203939, "Trusty Sapper", "Tommy", true],
+      [7307288, "vejrum", "Soren Vejrum", false],
+      [185264724, "jelerak", "Alessandro Mongelli", false],
+      [9878336, "bestlem", "Mark Bestley", false],
+      [158369332, "vixeast", "Vicki Astbury", false], 
+      [187328341, "Szajko", "Krisztian Posch", false],
+      [140935202, "OroroPro", "David Dawkins", false],
+      [118512942, "RhialtoTheMarvellous", "Simon Dowrick", false],
+      [23469191, "nosywombat", "Dean Morris", false],
       ]
   
-  bgg_lob_links.each do |mid, bgn, real|
+  bgg_lob_links.each do |mid, bgn, real, granted|
     p = Player.find_by meetup_user_id: mid
     p.bgg_username = bgn
+    p.granted = granted
     p.save
   end
 end
@@ -212,9 +223,9 @@ def skip(&block)
   puts "skipping block"
 end
 
-def populateUserGames
+def importUserGamesFromBGG
   processed_game_ids = []
-  players = Player.where("players.bgg_username IS NOT NULL")
+  players = Player.where("players.bgg_username IS NOT NULL and collection_processed_at IS NULL")
   Rails.logger.info "Processing games for #{players.size} players"
   players.each do |player|
     
@@ -243,7 +254,6 @@ def populateUserGames
     strs = colln['item'].map do |g|
       gameInfoAsString(g)
     end
-
     
     puts strs.join("\n")
     colln["item"].each do |g|
@@ -253,13 +263,14 @@ def populateUserGames
       if ((! processed_game_ids.member? gid) &&
            gameObj.nil? )
         Rails.logger.debug "Saving new game to db: #{gid}"
-        g = Game.create({ game_id: gid,
+        gameObj = Game.create({ game_id: gid,
           name: g["name"][0]["content"]
         })
         processed_game_ids.push(g['objectid'])
       else
         #game already exists
       end
+      Rails.logger.debug "Game: #{g.inspect}"
       
       if (g["status"][0]["wanttoplay"] == '1')
         Rails.logger.debug "#{player.meetup_username} wants to play #{gameObj.game_id}"
@@ -271,9 +282,13 @@ def populateUserGames
       end
 
       #showDetailsOfMyCollection(colln)
-    end
-  end
-end
+    end #each game in collection
+    
+    player.collection_processed_at = Time.now
+    player.save
+  end #each player
+  Rails.logger.info "Done importing games collections for those users"
+end #method
 
 def initialize
   api_keys = YAML::load_file('config/api_keys.yaml')

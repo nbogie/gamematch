@@ -12,6 +12,9 @@
       <th>num want-to-play</th>
       <th>num meetups upcoming</th>
       <th>Meetup joined</th>
+      <th>Granted</th>
+      <th>Collection Processed At</th>
+      <th>Collection Requested at</th>
       <th>Meetup bio</th>
       <th>last colln req time</th>
       <th></th>
@@ -29,6 +32,10 @@
         <td><%= player.want_to_play_games.size %></td>
         <td><%= player.events.size %></td>
         <td><%= player.meetup_joined %></td>
+        <td><%= player.granted %></td>
+        <td><%= player.collection_processed_at %></td>
+        <td><%= player.last_collection_request_time %></td>
+        
         <td><%= player.meetup_bio %></td>
         <td><%= player.last_collection_request_time %></td>
         <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
