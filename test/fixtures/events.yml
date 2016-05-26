@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  provided_url: MyText
+  meetup_id: MyText
+  status: MyText
+  event_time: 2016-05-26 01:33:55
+
+two:
+  name: MyText
+  provided_url: MyText
+  meetup_id: MyText
+  status: MyText
+  event_time: 2016-05-26 01:33:55
