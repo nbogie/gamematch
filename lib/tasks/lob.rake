@@ -7,5 +7,12 @@ namespace :lob do
     mu = RMeetupUtils.new
     mu.importAllMembersPagedToDB
   end
+  
+  desc "fetch the upcoming lob meetup events and save them to db"
+  task import_events_to_db: :environment do
+    mu = RMeetupUtils.new
+    Event.delete_all
+    mu.importAllEventsToDB(6)
+  end
 
 end

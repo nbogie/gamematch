@@ -2,17 +2,7 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @event.name %>
-</p>
-
-<p>
-  <strong>Provided url:</strong>
-  <%= @event.provided_url %>
-</p>
-
-<p>
-  <strong>Meetup:</strong>
-  <%= @event.meetup_id %>
+  <%= link_to @event.name, @event.url %>
 </p>
 
 <p>

@@ -134,6 +134,19 @@ def findRSVPsInDB(db, rsvps)
   end
 end
 
+def importAllEventsToDB(nDays)
+  events = getEventsForNextNDays(nDays)
+  events.map do |event|
+    ev = Event.create({
+      name: event.name, 
+      provided_url: event.event["event_url"],
+      meetup_id: event.event["id"],
+      status: event.status,
+      event_time: event.time
+    })
+  end
+end
+
 def showRSVPsForUpcomingEventsInNextNDays(nDays)
   events = getEventsForNextNDays(nDays)
   events.map do |event|
