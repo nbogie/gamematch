@@ -16,8 +16,8 @@
   <ul>
   <% @game.keen_players.each do |player| %>
     <li>
-      <a href='https://boardgamegeek.com/user/<%= player.bgg_username %>'><%= player.bgg_username %></a> / 
-      <a href='https://www.meetup.com/LondonOnBoard/members/<%= player.meetup_user_id %>'><%= player.meetup_user_id %></a>
+      <%= link_to player.bgg_username, player.bgg_user_url %> - 
+      <%= link_to player.meetup_username, player.meetup_user_url %>
       <%= link_to 'Show', player %>
     </li>
   <% end %>
@@ -31,8 +31,8 @@
   
   <% @game.owning_players.each do |player| %>
   <li>
-    <a href='https://boardgamegeek.com/user/<%= player.bgg_username %>'><%= player.bgg_username %></a> / 
-    <a href='https://www.meetup.com/LondonOnBoard/members/<%= player.meetup_user_id %>'><%= player.meetup_user_id %></a>
+    <%= link_to player.bgg_username, player.bgg_user_url %> - 
+    <%= link_to player.meetup_username, player.meetup_user_url %>
     <%= link_to 'Show', player %>
   </li>
 <% end %>

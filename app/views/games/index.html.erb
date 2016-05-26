@@ -13,8 +13,10 @@
   <tbody>
     <% @games.each do |game| %>
       <tr>
-        <td><a href="https://boardgamegeek.com/boardgame/<%= game.game_id %>"><%= game.name %> (<%= game.game_id %>)</a></td>
-        <td><a href="https://boardgamegeek.com/geekbuddy/analyze/thing/<%= game.game_id %>">BGG analysis</a></td>
+        <td><%= link_to "#{game.name} (#{game.game_id})", game.bgg_game_url %></td>
+        <td>
+           <%= link_to "BGG analysis", game.bgg_game_analysis_url %>
+        </td>
         <td><%= link_to 'Show', game %></td>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -8,4 +8,12 @@ class Player < ActiveRecord::Base
   has_many :play_wishes, :foreign_key => "meetup_user_id"
   has_many :want_to_play_games, :through => :play_wishes, :source => 'game'
 
+  def meetup_user_url
+    return "https://www.meetup.com/LondonOnBoard/members/#{meetup_user_id}"
+  end
+  
+  def bgg_user_url
+    "https://boardgamegeek.com/user/#{bgg_username}"
+  end
+  
 end

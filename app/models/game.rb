@@ -4,4 +4,13 @@ class Game < ActiveRecord::Base
 
   has_many :play_wishes
   has_many :keen_players, :through => :play_wishes, :source => 'player'
+
+  def bgg_game_url
+    return "https://boardgamegeek.com/boardgame/#{game_id}"
+  end
+  
+  def bgg_game_analysis_url
+    return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{game_id}"
+  end
+  
 end

@@ -2,13 +2,12 @@
 
 <p>
   <strong>Bgg username:</strong>
-  <%= @player.bgg_username %>
+  <%= link_to @player.bgg_username, @player.bgg_user_url %>
 </p>
 
 <p>
   <strong>Meetup username:</strong>
-  <%= @player.meetup_username %> (  <%= @player.meetup_user_id %>
-)
+  <%= link_to @player.meetup_username, @player.meetup_user_url %>
 </p>
 
 <p>
@@ -17,7 +16,10 @@
 
   <ul>
   <% @player.owned_games.each do |game| %>
-    <li><a href="https://boardgamegeek.com/boardgame/<%= game.game_id %>"><%= game.name %> (<%= game.game_id %>)</a> - <%= link_to 'Show', game %></li>
+    <li>
+      <%= link_to game.name, game.bgg_game_url %> 
+    - <%= link_to 'Show', game %>
+    </li>
   <% end %>
   </ul>
   
@@ -30,7 +32,9 @@
 
   <ul>
   <% @player.want_to_play_games.each do |game| %>
-    <li><a href="https://boardgamegeek.com/boardgame/<%= game.game_id %>"><%= game.name %> (<%= game.game_id %>)</a> - <%= link_to 'Show', game %></li>
+    <li><%= link_to game.name, game.bgg_game_url %>
+      - <%= link_to 'Show', game %>
+    </li>
   <% end %>
   </ul>
 
