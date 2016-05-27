@@ -5,6 +5,10 @@ class Game < ActiveRecord::Base
   has_many :play_wishes
   has_many :keen_players, :through => :play_wishes, :source => 'player'
 
+  def self.search(search_term)
+    where('name LIKE ?', "%#{search_term}%")
+  end
+
   def bgg_game_url
     return "https://boardgamegeek.com/boardgame/#{game_id}"
   end
