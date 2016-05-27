@@ -38,6 +38,11 @@
       <%= link_to player.meetup_username, player %> 
       <%= link_to "(bgg)", player.bgg_user_url %>
       <%= link_to "(Meetup)", player.meetup_user_url %>
+    <ul>
+      <% player.events.each do |event| %>
+        <li><%= event.name %></li>
+      <% end %>
+    </ul>
     </li>
 <% end %>
 </ul>
