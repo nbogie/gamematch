@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
+  #for game search autocomplete
+  get 'game_names' => 'games#game_names'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

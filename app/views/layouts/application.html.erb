@@ -13,7 +13,11 @@
     <li><%= link_to "Players", players_path %></li>
     </li>
   </ul>
-  <input type='textfield' id='game_name_search' placeholder='game title to search for'/>
+  
+  <form action='/games' method='get'>
+    <input id='submit' type='submit' value='search' />
+    <input type='textfield' name='term' size=50 id='game_name_search' placeholder='game title to search for'/>
+  </form>
   
 </div>
 <%= yield %>

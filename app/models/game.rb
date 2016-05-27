@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
   has_many :keen_players, :through => :play_wishes, :source => 'player'
 
   def self.search(search_term)
-    where('name LIKE ?', "%#{search_term}%")
+    order(:name).where('name LIKE ?', "%#{search_term}%").first(20)
   end
 
   def bgg_game_url

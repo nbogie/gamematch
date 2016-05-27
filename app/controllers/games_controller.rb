@@ -5,13 +5,26 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    ps = params.permit(:search_term)
-    if (ps[:search_term]) 
-      @games = Game.search(ps[:search_term])
+    ps = params.permit(:term)
+    if (ps[:term]) 
+      @games = Game.search(ps[:term])
     else
       @games = Game.all
     end
   end
+
+
+  #GET /game_names
+  def game_names
+    ps = params.permit(:term)
+    if (ps[:term]) 
+      @games = Game.search(ps[:term])
+    else
+      @games = []
+    end
+    render json: @games.map(&:name)
+  end
+
 
   # GET /games/1
   # GET /games/1.json
