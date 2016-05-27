@@ -19,6 +19,7 @@ def getGroup
 end
 
 def importAllRSVPsForAllEventsToDB
+  Rsvp.delete_all
   Event.all.each do |ev|
     rsvps = getRSVPsForEvent(ev.meetup_event_id)
     rsvps.each do |r|
@@ -149,6 +150,8 @@ def findRSVPsInDB(db, rsvps)
 end
 
 def importAllEventsToDB(nDays)
+  Rsvp.delete_all
+  Event.delete_all
   events = getEventsForNextNDays(nDays)
   events.map do |event|
     Event.create({
