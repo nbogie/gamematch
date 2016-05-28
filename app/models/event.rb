@@ -8,8 +8,7 @@ class Event < ActiveRecord::Base
     return "https://www.meetup.com/LondonOnBoard/events/#{meetup_event_id}"
   end
 
-  def self.extract_id_from_meetup_url(u)
-    return u.match(/events\/([0-9]+)\//)[1]
-  end
-  
+  #The field "meetup_event_id" can be either numeric or alphanumeric, and this 
+  #may differ from the one used in the url.
+  #We save whatever one is given in the id field.
 end

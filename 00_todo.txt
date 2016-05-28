@@ -1,8 +1,13 @@
 00_TODO
+========
 
-add matches from up-and-coming LoBs
+Add matches from up-and-coming LoBs
 
-add indices and uniqueness constraints on the join tables.
+Add indices and uniqueness constraints on the join tables.
 
-It is possible to have two copies of a game in your collection.  For now, I'll just ignore the second item (so if you only own the second one, the system will not record that you own the game at all).  This is simpler than merging.
+It is possible to have two copies of a game in your bgg collection.  
+For now, I'll just ignore the second item (so if you only own the second one, the system will not record that you own the game at all).  This is simpler than merging.
 
+Consider importing all games from bgg in one pass (perhaps from a csv dump of all games).
+
+Imports additions and refreshes of a single event, and single user.

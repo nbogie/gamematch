@@ -154,10 +154,11 @@ def importAllEventsToDB(nDays)
   Event.delete_all
   events = getEventsForNextNDays(nDays)
   events.map do |event|
+    Rails.logger.debug "importing event: #{event.inspect}"
     Event.create({
       name: event.name, 
       provided_url: event.event["event_url"],
-      meetup_event_id: Event.extract_id_from_meetup_url(event.event["event_url"]),
+      meetup_event_id: event.event["id"],
       status: event.status,
       event_time: event.time
     })
