@@ -25,9 +25,9 @@ task import_rsvps_for_saved_events: :environment do
 end
 
 desc "add bgg-lob links"
-task add_bgg_meetup_links: :environment do
+task set_bgg_meetup_links: :environment do
   mu = RMeetupUtils.new
-  mu.add_bgg_meetup_links
+  mu.set_bgg_meetup_links
 end
 
 desc "import all users' games from bgg"

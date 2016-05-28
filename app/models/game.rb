@@ -10,11 +10,11 @@ class Game < ActiveRecord::Base
   end
 
   def bgg_game_url
-    return "https://boardgamegeek.com/boardgame/#{game_id}"
+    return "https://boardgamegeek.com/boardgame/#{bgg_game_id}"
   end
   
   def bgg_game_analysis_url
-    return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{game_id}"
+    return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{bgg_game_id}"
   end
   
 end

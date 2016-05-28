@@ -14,7 +14,7 @@
     <% @games.each do |game| %>
       <tr>
         <td><%= link_to game.name, game %>
-            <%= link_to "(bgg ##{game.game_id})", game.bgg_game_url %>
+            <%= link_to "(bgg ##{game.bgg_game_id})", game.bgg_game_url %>
         </td>
         <td>
            <%= link_to "BGG analysis", game.bgg_game_analysis_url %>

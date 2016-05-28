@@ -179,7 +179,7 @@ def unescapeSpace(str)
   str.gsub('%20', ' ')
 end
 
-def add_bgg_meetup_links
+def set_bgg_meetup_links
   #TODO: read this from a table or db
   bgg_lob_links = [
       [39340532, "Arthurian", "Jason", true], 
@@ -220,6 +220,7 @@ def add_bgg_meetup_links
       [9797120, "discombob", "russell", false],
       [78659442, "benosteen", "Ben O'Steen", false],
       [13294861, "pilgrim152", "Karl Bunyan", false],
+      [185063943,'wilesgeoffrey', 'Geoff Wiles', true],
       ]
   
   bgg_lob_links.each do |mid, bgn, real, granted|
@@ -287,11 +288,11 @@ def importUserGamesFromBGG
       Rails.logger.debug("user rating is: #{user_rating}")
       
       gid = g["objectid"]
-      gameObj = Game.find_by(game_id: gid)
+      gameObj = Game.find_by(bgg_game_id: gid)
       if ((! processed_game_ids.member? gid) &&
            gameObj.nil? )
         Rails.logger.debug "Saving new game to db: #{gid}"
-        gameObj = Game.create({ game_id: gid,
+        gameObj = Game.create({ bgg_game_id: gid,
           name: g["name"][0]["content"]
         })
         processed_game_ids.push(g['objectid'])
@@ -302,7 +303,7 @@ def importUserGamesFromBGG
       
       if (! PlayWish.exists?(meetup_user_id: player.id, game_id: gameObj.id))
         if (g["status"][0]["wanttoplay"] == '1')
-          Rails.logger.debug "#{player.meetup_username} wants to play #{gameObj.game_id}"
+          Rails.logger.debug "#{player.meetup_username} wants to play bggid:#{gameObj.bgg_game_id}"
           gameObj.keen_players.push player
           Rails.logger.debug "AFTER"
           Rails.logger.debug "Num play wishes #{gameObj.play_wishes.size} Num ownerships #{gameObj.ownerships.size}"
@@ -311,12 +312,12 @@ def importUserGamesFromBGG
       
       if (! Ownership.exists?(meetup_user_id: player.id, game_id: gameObj.id))
         if (g["status"][0]["own"] == '1')
-          Rails.logger.debug "#{player.meetup_username} #{player.id} owns #{gameObj.game_id} - pushing"
+          Rails.logger.debug "#{player.meetup_username} #{player.id} owns bggid:#{gameObj.bgg_game_id} - pushing"
           gameObj.owning_players.push player
           Rails.logger.debug "Num play wishes #{player.play_wishes.size} Num ownerships #{player.ownerships.size}"
         end
       else
-          Rails.logger.debug "#ALREADY OWNED {player.meetup_username} #{player.id} owns #{gameObj.game_id} (#{gameObj.id})"
+          Rails.logger.debug "#ALREADY OWNED {player.meetup_username} #{player.id} owns bggid:#{gameObj.bgg_game_id} (#{gameObj.id})"
       end
     end #each game in collection
     
@@ -340,6 +341,6 @@ end
 #findRSVPsInDB(db, rsvps)
 
 #SQL to find mutual want-to-play games
-#select gu.bgg_username,g.name,gu.own from games_users gu, games g where want_to_play = 1 and g.game_id = gu.game_id and gu.game_id in (select gu.game_id from games_users gu where gu.want_to_play = 1 group by gu.game_id having count(*) > 1) order by g.name;
+#select gu.bgg_username,g.name,gu.own from games_users gu, games g where want_to_play = 1 and g.bgg_game_id = gu.bgg_game_id and gu.bgg_game_id in (select gu.bgg_game_id from games_users gu where gu.want_to_play = 1 group by gu.bgg_game_id having count(*) > 1) order by g.name;
 
 end  #ends class

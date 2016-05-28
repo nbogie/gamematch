@@ -2,8 +2,8 @@
 
 one:
   name: MyText
-  game_id: 1
+  bgg_game_id: 1
 
 two:
   name: MyText
-  game_id: 1
+  bgg_game_id: 1
