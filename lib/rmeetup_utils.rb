@@ -21,7 +21,8 @@ end
 def importAllRSVPsForAllEventsToDB
   Rsvp.delete_all
   Event.all.each do |ev|
-    rsvps = getRSVPsForEvent(ev.meetup_event_id)
+    #TODO: page through the rsvps to consume all of them
+    rsvps = getRSVPsForEventOnePage(ev.meetup_event_id)
     rsvps.each do |r|
       rsvp = Rsvp.new
       rsvp.event = ev
@@ -33,20 +34,12 @@ def importAllRSVPsForAllEventsToDB
   end
 end
 
-def getRSVPsForEvent(event_id)
+def getRSVPsForEventOnePage(event_id)
     rsvps = @client.fetch(:rsvps,{:event_id => event_id, 
                                  :rsvp=>'yes', 
                                  :omit=> 'group,member_photo,event,venue', 
                                  :page=>70 
                                })
-end
-
-def showRSVPsForEvent(event_id)
-  rsvps = getRSVPsForEvent(event_id)
-  rsvps.each do |rsvp|
-    puts "#{rsvp.member['member_id']},#{rsvp.member['name']},#{rsvp.response}"
-  end
-  rsvps
 end
 
 def getMembers(offset)
@@ -99,14 +92,13 @@ def getAndWriteMembersToStdout(n)
 end
 
 def getAndWriteMembersToDB(offset)
-  #TODO: process the users as they're loaded - dont load them all into memory first
   members = getMembers(offset)
   members.each do |m|
     bio_raw = m.member["bio"]
     found_bgg_tag = findBGGTagInBio(bio_raw)
     existing_player = Player.find_by meetup_user_id: m.id
     if (existing_player)
-      puts "WARNING: skipping player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB: #{existing_player.inspect}"
+      Rails.logger.warn "WARNING: skipping player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB: #{existing_player.inspect}"
     else
       Player.create(meetup_username: m.name, 
                   bgg_username: found_bgg_tag,
@@ -116,7 +108,7 @@ def getAndWriteMembersToDB(offset)
                   meetup_status: m.status,
                   meetup_link: m.link,
                   meetup_joined: m.joined)
-      puts "Imported user: #{m.name} #{m.id}"
+      Rails.logger.info "Imported user: #{m.name} #{m.id}"
     end
   end
   return members.size
@@ -133,21 +125,11 @@ def importAllMembersPagedToDB
   offset = 0
   while (getAndWriteMembersToDB(offset) > 0)
     offset += 1
-    puts "DONE PAGE: #{offset}"
+    Rails.logger.info "DONE PAGE: #{offset}"
     sleep(5)
   end
 end
 
-
-def findRSVPsInDB(db, rsvps)
-  rsvps.each do |r|
-    user_id = r.member['member_id']
-    db.execute( "select * from users where meetup_user_id = ?", user_id) do |row|
-      p ["selected a user for id ", user_id, row]
-    end
-    #puts rsvp.member['member_id']},#{rsvp.member['name']},#{rsvp.response}"
-  end
-end
 
 def importAllEventsToDB(nDays)
   Rsvp.delete_all
@@ -162,16 +144,6 @@ def importAllEventsToDB(nDays)
       status: event.status,
       event_time: event.time
     })
-  end
-end
-
-def showRSVPsForUpcomingEventsInNextNDays(nDays)
-  events = getEventsForNextNDays(nDays)
-  events.map do |event|
-    #{ :id => event.id, :name => event.name, :yes_rsvp_count => event.yes_rsvp_count, :time => event.time}
-    puts """EVENT: #{event.event["id"]}, #{event.event["yes_rsvp_count"]}, #{event.name}, #{event.to_h}"""
-    puts "RSVPS"
-    showRSVPsForEvent(event.event["id"])
   end
 end
 
@@ -345,10 +317,6 @@ def initialize
 end
 
 #getAllMembersPaged
-
-#rsvps = showRSVPsForUpcomingEventsInNextNDays(6)
-#rsvps = showRSVPsForEvent("227906557")
-#findRSVPsInDB(db, rsvps)
 
 #SQL to find mutual want-to-play games
 #select gu.bgg_username,g.name,gu.own from games_users gu, games g where want_to_play = 1 and g.bgg_game_id = gu.bgg_game_id and gu.bgg_game_id in (select gu.bgg_game_id from games_users gu where gu.want_to_play = 1 group by gu.bgg_game_id having count(*) > 1) order by g.name;
