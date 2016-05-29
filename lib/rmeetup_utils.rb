@@ -265,7 +265,7 @@ def importUserGamesFromBGG
       #TODO: deal also with 503, and other codes.
       if (err.to_s.include?(" 202 "))
         Rails.logger.info "dealing with 202 exception for player: #{bgg_username}"
-        player.last_collection_request_time = Time.now
+        player.collection_requested_at = Time.now
         player.save
         next
       else

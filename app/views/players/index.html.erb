@@ -32,7 +32,7 @@
         <td><%= player.granted %></td>
         <td class='<%= player.collection_processed_at.nil? ? 'unprocessed' : 'processed' %>'>
           <%= time_ago_in_words(player.collection_processed_at) unless player.collection_processed_at.nil? %> ago</td>
-        <td><%= time_ago_in_words(player.last_collection_request_time) unless player.last_collection_request_time.nil? %> ago</td>
+        <td><%= time_ago_in_words(player.collection_requested_at) unless player.collection_requested_at.nil? %> ago</td>
         <td><%= player.meetup_bio %></td>
       </tr>
     <% end %>

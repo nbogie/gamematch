@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529032800) do
+ActiveRecord::Schema.define(version: 20160529033457) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 20160529032800) do
     t.text     "meetup_link"
     t.text     "meetup_status"
     t.text     "meetup_joined"
-    t.integer  "meetup_user_id",               null: false
+    t.integer  "meetup_user_id",          null: false
     t.text     "meetup_bio"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.datetime "last_collection_request_time"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.datetime "collection_requested_at"
     t.boolean  "granted"
     t.datetime "collection_processed_at"
   end
