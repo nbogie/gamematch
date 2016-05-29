@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529032126) do
+ActiveRecord::Schema.define(version: 20160529032800) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20160529032126) do
   add_index "players", ["meetup_user_id"], name: "index_players_on_meetup_user_id", unique: true
 
   create_table "rsvps", id: false, force: :cascade do |t|
-    t.integer "meetup_user_id"
-    t.integer "meetup_event_id"
+    t.integer "meetup_user_id",  null: false
+    t.integer "meetup_event_id", null: false
     t.text    "response"
   end
 
