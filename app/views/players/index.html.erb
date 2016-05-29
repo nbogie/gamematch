@@ -30,8 +30,9 @@
         <td><%= player.want_to_play_games.size %></td>
         <td><%= player.events.size %></td>
         <td><%= player.granted %></td>
-        <td><%= player.collection_processed_at %></td>
-        <td><%= player.last_collection_request_time %></td>
+        <td class='<%= player.collection_processed_at.nil? ? 'unprocessed' : 'processed' %>'>
+          <%= time_ago_in_words(player.collection_processed_at) unless player.collection_processed_at.nil? %> ago</td>
+        <td><%= time_ago_in_words(player.last_collection_request_time) unless player.last_collection_request_time.nil? %> ago</td>
         <td><%= player.meetup_bio %></td>
       </tr>
     <% end %>

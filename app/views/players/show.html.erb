@@ -43,19 +43,32 @@
 
 <p>
 
-  <strong id='owned-games'>Num games owned:</strong>
+<h3>Games others most want to play, which are owned by this player</h3>
+  <ul>
+  <% @most_desired_games.each do |game| %>
+    <li>
+      <%= link_to game.name, game %>
+      <%= link_to "(bgg)", game.bgg_game_url %>
+      - Num wishing to play: <%= @playwish_counts[game.id] %>
+    </li>
+  <% end %>
+  </ul>
+
+  <strong id='owned-games'>Total number of games owned:</strong>
   <%= @player.owned_games.size %>
 
+<h3>All games owned</h3>
   <ul>
   <% @player.owned_games.each do |game| %>
     <li>
       <%= link_to game.name, game %>
       <%= link_to "(bgg)", game.bgg_game_url %>
-    
+      - Num wishing to play: <%= @playwish_counts[game.id] %>
     </li>
   <% end %>
   </ul>
   
+
 </p>
 
 

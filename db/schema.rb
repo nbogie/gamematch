@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528012816) do
+ActiveRecord::Schema.define(version: 20160528235346) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20160528012816) do
   add_index "games", ["bgg_game_id"], name: "index_games_on_bgg_game_id", unique: true
 
   create_table "ownerships", id: false, force: :cascade do |t|
-    t.integer  "game_id"
-    t.integer  "meetup_user_id"
+    t.integer  "game_id",        null: false
+    t.integer  "meetup_user_id", null: false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 20160528012816) do
   add_index "ownerships", ["game_id", "meetup_user_id"], name: "index_ownerships_on_game_id_and_meetup_user_id", unique: true
 
   create_table "play_wishes", id: false, force: :cascade do |t|
-    t.integer  "game_id"
-    t.integer  "meetup_user_id"
+    t.integer  "game_id",        null: false
+    t.integer  "meetup_user_id", null: false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
