@@ -242,6 +242,7 @@ def importUserGamesFromBGG
   processed_game_ids = []
   players = Player.where("players.bgg_username IS NOT NULL and collection_processed_at IS NULL")
   Rails.logger.info "Processing games for #{players.size} players"
+  reqTime = Time.now - 100
   players.each do |player|
     
     bgg_username = unescapeSpace(player.bgg_username)
@@ -251,8 +252,17 @@ def importUserGamesFromBGG
       #We'd like to request only wanttoplay: 1 OR own: 1 but we can only AND these.
       #Stats are probably a whole lot more data, so 
       #  consider only getting the rated games, with stats, at a second pass.
+      while(Time.now < reqTime + 5) do
+        remainingTime = reqTime + 5 - Time.now
+        Rails.logger.debug("Sleeping #{remainingTime}s to avoid spamming bgg...")
+        sleep remainingTime
+      end
+      
+      reqTime = Time.now
+      Rails.logger.info("requesting collection for #{bgg_username} at time: #{reqTime}")
       colln = BggApi.collection({username: bgg_username, stats: 1})
     rescue RuntimeError => err
+      #TODO: deal also with 503, and other codes.
       if (err.to_s.include?(" 202 "))
         Rails.logger.info "dealing with 202 exception for player: #{bgg_username}"
         player.last_collection_request_time = Time.now
