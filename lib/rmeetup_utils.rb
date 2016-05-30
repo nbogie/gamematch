@@ -27,6 +27,10 @@ def importAllRSVPsForAllEventsToDB
       rsvp = Rsvp.new
       rsvp.event = ev
       rsvp.player = Player.find_by(meetup_user_id: r.member['member_id'])
+      if rsvp.player.nil?
+        Rails.logger.warn "Found rsvp for an unimported player - meetup_user_id: '#{r.member['member_id']}' - ignoring rsvp."
+        next
+      end
       rsvp.response = r.response
       ev.rsvps.push(rsvp)
       rsvp.save
