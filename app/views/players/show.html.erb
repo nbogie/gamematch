@@ -15,6 +15,10 @@
   <%= link_to @player.meetup_username, @player.meetup_user_url %>
 </p>
 
+<p>Collection processed at <%= @player.collection_processed_at %></p>
+
+
+
 <p>
   <strong>Next meetups</strong>
   <ol>
@@ -81,4 +85,7 @@
 </p>
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
+
+<%= link_to 'mark collection stale', mark_stale_path(:id => @player.id ) %> | 
+
 <%= link_to 'Back', players_path %>

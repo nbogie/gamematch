@@ -70,6 +70,29 @@ class PlayersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  
+  def mark_stale
+    id = params.require(:id)
+    logger.debug("mark_stale with id #{id}")
+    p = Player.find(id)
+    p.collection_processed_at = nil
+    p.save!
+    redirect_to p, notice: "Player mark_stale successful."
+  end
+
+  
+  def link_with_bgg_account
+    logger.debug("in link_with_bgg_account #{params.require(:id)}")
+    @player = Player.find(params.require(:id)[:id])
+    if @player.update(params.require(:bgg_username))
+      redirect_to @player, notice: 'Player bgg_username successfully updated'
+    else
+      redirect_to @player, notice: "Player bgg_username update failed.  Errors: #{@player.errors}"
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

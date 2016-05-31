@@ -14,6 +14,13 @@ Rails.application.routes.draw do
   
   get 'rare_games' => 'games#rare_games'
 
+  get 'players/mark_stale/:id', to: 'players#mark_stale', as: 'mark_stale'
+
+  get 'players/link_with_bgg_account/:id/:bgg_username', to: 'players#link_with_bgg_account
+  ', as: 'link_with_bgg_account'
+
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
