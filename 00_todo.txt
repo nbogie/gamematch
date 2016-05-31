@@ -1,6 +1,12 @@
 00_TODO
 ========
 
+
+Games which are owned only by one or two players, which are popular
+Game.joins(:ownerships).select('id, name, count(*) as c').group(:game_id).having('c <2')
+->
+SELECT id, name, count(*) as c FROM "games" INNER JOIN "ownerships" ON "ownerships"."game_id" = "games"."id" GROUP BY "game_id" HAVING c <2
+
 Add matches from up-and-coming LoBs
 
 Add indices and uniqueness constraints on the join tables.

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   #for game search autocomplete
   get 'game_names' => 'games#game_names'
+  
+  get 'rare_games' => 'games#rare_games'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

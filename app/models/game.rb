@@ -16,5 +16,12 @@ class Game < ActiveRecord::Base
   def bgg_game_analysis_url
     return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{bgg_game_id}"
   end
+
+  def self.find_rare_games
+    #TODO: do purely in AR or SQL, without passing the half-way list of ids around
+    gids = Game.joins(:ownerships).select('id, name, count(*) as c').group(:id).having('c <= 2')
+    gids = Game.joins(:play_wishes).select('id, name, count(*) as pw_c').where(:id => gids.map(&:id)).group(:game_id).having('pw_c > 3')
+    return Game.find(gids.map(&:id))
+  end
   
 end

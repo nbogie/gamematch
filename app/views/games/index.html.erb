@@ -6,6 +6,8 @@
   <thead>
     <tr>
       <th>Name (and bgg id)</th>
+      <th>Num owning</th>
+      <th>Num wanting to play</th>
       <th>BGG Geek Buddy Analysis</th>
     </tr>
   </thead>
@@ -15,6 +17,12 @@
       <tr>
         <td><%= link_to game.name, game %>
             <%= link_to "(bgg ##{game.bgg_game_id})", game.bgg_game_url %>
+        </td>
+        <td>
+          Owned: <%= game.ownerships.size %>
+        </td>
+        <td>
+          Desired: <%= game.play_wishes.size %>
         </td>
         <td>
            <%= link_to "BGG analysis", game.bgg_game_analysis_url %>
