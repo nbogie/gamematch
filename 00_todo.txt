@@ -1,7 +1,6 @@
 00_TODO
 ========
 
-
 Games which are owned only by one or two players, which are popular
 Game.joins(:ownerships).select('id, name, count(*) as c').group(:game_id).having('c <2')
 ->
@@ -9,17 +8,18 @@ SELECT id, name, count(*) as c FROM "games" INNER JOIN "ownerships" ON "ownershi
 
 Add matches from up-and-coming LoBs
 
-Add indices and uniqueness constraints on the join tables.
+Consider importing all games from bgg in one pass (perhaps from a csv dump of all games). ( ~80k games? )
 
-Consider importing all games from bgg in one pass (perhaps from a csv dump of all games).
-
-Imports additions and refreshes of a single event, and single user.
+Permit import / refresh of a single event, and single user.
 
 When showing a user's owned games which are most desired for play by others, prefer games that no one else owns.
 
 DONE: 
+=====
 Show a user's most desired game
 
 It is possible to have two copies of a game in your bgg collection.  
 For now, I'll just ignore the second item (so if you only own the second one, the system will not record that you own the game at all).  This is simpler than merging.
+
+Add indices and uniqueness constraints on the join tables.
 
