@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601035747) do
+ActiveRecord::Schema.define(version: 20160601202641) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -90,5 +90,7 @@ ActiveRecord::Schema.define(version: 20160601035747) do
     t.integer "event_id",  null: false
     t.text    "response"
   end
+
+  add_index "rsvps", ["event_id", "player_id"], name: "index_rsvps_on_event_id_and_player_id", unique: true
 
 end

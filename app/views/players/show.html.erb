@@ -1,11 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+
 <p>
   <a href='#basic-info'>basic info</a> | 
   <a href='#want-to-play-games'>want-to-play</a> | 
   <a href='#owned-games'>owned games</a> | 
   <a href='#favourite-games'>favourite games</a>
 </p>
+
+<p>
+  <%= link_to 'Edit', edit_player_path(@player) %> |
+  <%= link_to 'mark collection stale', mark_stale_path(:id => @player.id ) %> | 
+</p>
+
 <p id='basic-info'>
   <strong>Bgg username:</strong>
   <%= link_to @player.bgg_username, @player.bgg_user_url %>
@@ -97,7 +104,5 @@
 </p>
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
-
 <%= link_to 'mark collection stale', mark_stale_path(:id => @player.id ) %> | 
-
 <%= link_to 'Back', players_path %>

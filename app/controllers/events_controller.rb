@@ -11,6 +11,9 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @attending_players = @event.players.order(:meetup_username)
+    #TODO: show games most desired for play at this event
+    @desired_game_counts = PlayWish.where(player_id: @event.players).group(:game_id).count.sort_by{|i,c| c}.reverse[0..10]
+    
   end
 
   # GET /events/new

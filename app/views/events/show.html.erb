@@ -10,6 +10,13 @@
   <%= @event.status %>
 </p>
 
+<ul>
+  
+<% @desired_game_counts.each do |gid, pw_count| %>
+  <li><%= Game.find(gid).name %> - <%= pw_count %> wishes.</li>
+<% end %>
+</ul>
+
 <p>
   <strong>Event time:</strong>
   <%= @event.event_time %>
