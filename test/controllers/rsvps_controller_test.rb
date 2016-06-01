@@ -18,7 +18,7 @@ class RsvpsControllerTest < ActionController::TestCase
 
   test "should create rsvp" do
     assert_difference('Rsvp.count') do
-      post :create, rsvp: { meetup_user_id: @rsvp.meetup_user_id, response: @rsvp.response }
+      post :create, rsvp: { player_id: @rsvp.player_id, response: @rsvp.response }
     end
 
     assert_redirected_to rsvp_path(assigns(:rsvp))
@@ -35,7 +35,7 @@ class RsvpsControllerTest < ActionController::TestCase
   end
 
   test "should update rsvp" do
-    patch :update, id: @rsvp, rsvp: { meetup_user_id: @rsvp.meetup_user_id, response: @rsvp.response }
+    patch :update, id: @rsvp, rsvp: { player_id: @rsvp.player_id, response: @rsvp.response }
     assert_redirected_to rsvp_path(assigns(:rsvp))
   end
 

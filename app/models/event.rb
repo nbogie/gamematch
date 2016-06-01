@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
 
-  has_many :rsvps, :foreign_key => 'meetup_event_id'
+  has_many :rsvps
   has_many :players, :through => :rsvps
 
 

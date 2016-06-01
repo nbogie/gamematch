@@ -1,4 +1,4 @@
 class Rsvp < ActiveRecord::Base
-  belongs_to :player, :foreign_key => 'meetup_user_id'
-  belongs_to :event, :foreign_key => 'meetup_event_id'
+  belongs_to :player
+  belongs_to :event
 end

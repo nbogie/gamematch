@@ -242,9 +242,9 @@ def importUserGamesFromBGG
   
     partitioned = partitionCollection(colln)
     #Faster than checking if we already have an ownership record
-    player.ownerships.delete_all
-    player.play_wishes.delete_all
-    
+    Ownership.delete_all(player_id: player.id)
+    PlayWish.delete_all(player_id: player.id)
+
     colln["item"].each do |g|
       
       begin
@@ -270,7 +270,7 @@ def importUserGamesFromBGG
       end
       Rails.logger.debug "Game: #{g.inspect}"
       
-      if (! PlayWish.exists?(meetup_user_id: player.id, game_id: gameObj.id))
+      if (! PlayWish.exists?(player_id: player.id, game_id: gameObj.id))
         if (g["status"][0]["wanttoplay"] == '1')
           Rails.logger.debug "#{player.meetup_username} wants to play bggid:#{gameObj.bgg_game_id}"
           gameObj.keen_players.push player
@@ -279,7 +279,7 @@ def importUserGamesFromBGG
         end
       end
       
-      if (! Ownership.exists?(meetup_user_id: player.id, game_id: gameObj.id))
+      if (! Ownership.exists?(player_id: player.id, game_id: gameObj.id))
         if (g["status"][0]["own"] == '1')
           Rails.logger.debug "#{player.meetup_username} #{player.id} owns bggid:#{gameObj.bgg_game_id} - pushing"
           gameObj.owning_players.push player

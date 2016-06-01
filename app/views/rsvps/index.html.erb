@@ -15,8 +15,8 @@
   <tbody>
     <% @rsvps.each do |rsvp| %>
       <tr>
-        <td><%= rsvp.meetup_user_id %></td>
-        <td><%= rsvp.meetup_event_id %></td>
+        <td><%= rsvp.player_id %></td>
+        <td><%= rsvp.event_id %></td>
         <td><%= rsvp.response %></td>
       </tr>
     <% end %>

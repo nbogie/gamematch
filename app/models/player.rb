@@ -2,14 +2,14 @@ class Player < ActiveRecord::Base
 
   #http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association
 
-  has_many :rsvps, :foreign_key => "meetup_user_id"
+  has_many :rsvps
   has_many :events, :through => :rsvps
 
 
-  has_many :ownerships, :foreign_key => "meetup_user_id"
+  has_many :ownerships
   has_many :owned_games, :through => :ownerships, :source => 'game'
 
-  has_many :play_wishes, :foreign_key => "meetup_user_id"
+  has_many :play_wishes
   has_many :want_to_play_games, :through => :play_wishes, :source => 'game'
 
   def meetup_user_url
@@ -22,8 +22,8 @@ class Player < ActiveRecord::Base
   
   
   def remove_games
-    Ownership.where(meetup_user_id: id).delete_all
-    PlayWish.where(meetup_user_id: id).delete_all
+    Ownership.delete_all(player_id: id)
+    PlayWish.delete_all(player_id: id)
     collection_processed_at = nil
     save!
   end

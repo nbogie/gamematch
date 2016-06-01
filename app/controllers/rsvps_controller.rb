@@ -69,6 +69,6 @@ class RsvpsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rsvp_params
-      params.require(:rsvp).permit(:meetup_user_id, :response)
+      params.require(:rsvp).permit(:player_id, :response)
     end
 end

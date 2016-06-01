@@ -1,5 +1,5 @@
 class Ownership < ActiveRecord::Base
   belongs_to :game
-  belongs_to :player, :foreign_key => 'meetup_user_id'
+  belongs_to :player
 
 end

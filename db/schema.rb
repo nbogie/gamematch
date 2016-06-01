@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529033457) do
+ActiveRecord::Schema.define(version: 20160601004754) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -35,24 +35,24 @@ ActiveRecord::Schema.define(version: 20160529033457) do
   add_index "games", ["bgg_game_id"], name: "index_games_on_bgg_game_id", unique: true
 
   create_table "ownerships", id: false, force: :cascade do |t|
-    t.integer  "game_id",        null: false
-    t.integer  "meetup_user_id", null: false
+    t.integer  "game_id",    null: false
+    t.integer  "player_id",  null: false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ownerships", ["game_id", "meetup_user_id"], name: "index_ownerships_on_game_id_and_meetup_user_id", unique: true
+  add_index "ownerships", ["game_id", "player_id"], name: "index_ownerships_on_game_id_and_player_id", unique: true
 
   create_table "play_wishes", id: false, force: :cascade do |t|
-    t.integer  "game_id",        null: false
-    t.integer  "meetup_user_id", null: false
+    t.integer  "game_id",    null: false
+    t.integer  "player_id",  null: false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "play_wishes", ["game_id", "meetup_user_id"], name: "index_play_wishes_on_game_id_and_meetup_user_id", unique: true
+  add_index "play_wishes", ["game_id", "player_id"], name: "index_play_wishes_on_game_id_and_player_id", unique: true
 
   create_table "players", force: :cascade do |t|
     t.text     "bgg_username"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20160529033457) do
   add_index "players", ["meetup_user_id"], name: "index_players_on_meetup_user_id", unique: true
 
   create_table "rsvps", id: false, force: :cascade do |t|
-    t.integer "meetup_user_id",  null: false
-    t.integer "meetup_event_id", null: false
+    t.integer "player_id", null: false
+    t.integer "event_id",  null: false
     t.text    "response"
   end
 
