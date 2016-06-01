@@ -180,6 +180,14 @@ def set_bgg_meetup_links
       [78659442, "benosteen", "Ben O'Steen", false],
       [13294861, "pilgrim152", "Karl Bunyan", false],
       [185063943,'wilesgeoffrey', 'Geoff Wiles', true],
+      [149989062, 'chloroform_tea', 'Roseanna Pendlebury', false],
+      [61197802, 'Nicopenny', 'Nicolas Barber', false],
+      [94984652, 'Stuartjsk', 'Stuart Jackson', false],
+      [195881009, 'rwodzu', 'Rwodzu', false],
+      [183575577, 'Iaangus', 'Ian Angus', false],
+      [133073032, 'saua', 'Joachim', false],
+      [6224143, 'pwatson1974', 'Paul Watson', false],
+      
       ]
   
   bgg_lob_links.each do |mid, bgn, real, granted|
