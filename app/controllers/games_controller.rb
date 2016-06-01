@@ -34,6 +34,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @rating_players = @game.rating_players.select('players.*, ratings.rating').order('ratings.rating desc, players.meetup_username').where('ratings.rating > 6').limit(20)
   end
 
   # GET /games/new
