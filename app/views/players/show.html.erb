@@ -53,6 +53,18 @@
 
 </p>
 
+<h3 id='favourite-games'><%= @player.meetup_username %>'s Top 20 games</h3>
+  <ul>
+  <% @top_20_games.each do |game| %>
+    <li>
+      <%= link_to game.name, game %>
+      <%= link_to "(bgg)", game.bgg_game_url %>
+      Rating: <%= game.rating %>
+    </li>
+  <% end %>
+  </ul>
+
+
 <p>
 
 <h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
@@ -80,18 +92,6 @@
   <% end %>
   </ul>
   
-<h3 id='favourite-games'><%= @player.meetup_username %>'s Top 20 games</h3>
-  <ul>
-  <% @top_20_games.each do |game| %>
-    <li>
-      <%= link_to game.name, game %>
-      <%= link_to "(bgg)", game.bgg_game_url %>
-      Rating: <%= game.rating %>
-    </li>
-  <% end %>
-  </ul>
-  
-
 </p>
 
 

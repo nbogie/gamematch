@@ -16,10 +16,12 @@ class PlayersController < ApplicationController
     playwish_counts_all = PlayWish.group(:game_id).count
     playwish_counts_all.default=0
     @playwish_counts = Hash[* @player.owned_games.map{ |g| [g.id, playwish_counts_all[g.id]] }.flatten ]
+
     top_ten = @playwish_counts.sort_by{|gid,n| n}.reverse[0..9]
     @most_desired_games = top_ten.map { |gid, n| 
       @owned_games.detect{|g| g.id == gid}
     }
+
     @playwish_counts = Hash[* top_ten.flatten]
   end
 

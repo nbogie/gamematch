@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601202641) do
+ActiveRecord::Schema.define(version: 20160601222345) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20160601202641) do
   end
 
   add_index "ownerships", ["game_id", "player_id"], name: "index_ownerships_on_game_id_and_player_id", unique: true
+  add_index "ownerships", ["game_id"], name: "index_ownerships_on_game_id"
+  add_index "ownerships", ["player_id"], name: "index_ownerships_on_player_id"
 
   create_table "play_wishes", id: false, force: :cascade do |t|
     t.integer  "game_id",    null: false
@@ -54,6 +56,8 @@ ActiveRecord::Schema.define(version: 20160601202641) do
   end
 
   add_index "play_wishes", ["game_id", "player_id"], name: "index_play_wishes_on_game_id_and_player_id", unique: true
+  add_index "play_wishes", ["game_id"], name: "index_play_wishes_on_game_id"
+  add_index "play_wishes", ["player_id"], name: "index_play_wishes_on_player_id"
 
   create_table "players", force: :cascade do |t|
     t.text     "bgg_username"
