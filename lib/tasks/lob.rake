@@ -9,12 +9,12 @@ namespace :lob do
   end
   
   desc "fetch the upcoming lob meetup events and rsvps to db"
-  task import_events_and_rsvps_to_db: :environment do
+  task import_events_and_rsvps: :environment do
     mu = RMeetupUtils.new
     Rsvp.delete_all
     Event.delete_all
-    mu.importAllEventsToDB(12)
-    mu.importAllRSVPsForAllEventsToDB
+    mu.importAllEvents(12)
+    mu.importAllRSVPsForAllEvents
   end
 
 desc "fetch the lob meetup rsvps to the events in db, and save to db"

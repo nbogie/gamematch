@@ -74,8 +74,6 @@ class PlayersController < ApplicationController
     end
   end
   
-  
-  
   def mark_stale
     id = params.require(:id)
     logger.debug("mark_stale with id #{id}")
@@ -85,7 +83,6 @@ class PlayersController < ApplicationController
     redirect_to p, notice: "Player mark_stale successful."
   end
 
-  
   def link_with_bgg_account
     logger.debug("in link_with_bgg_account #{params.require(:id)}")
     @player = Player.find(params.require(:id)[:id])

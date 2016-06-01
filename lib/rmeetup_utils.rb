@@ -18,7 +18,7 @@ def getGroup
   end
 end
 
-def importAllRSVPsForAllEventsToDB
+def importAllRSVPsForAllEvents
   Rsvp.delete_all
   Event.all.each do |ev|
     #TODO: page through the rsvps to consume all of them
@@ -85,17 +85,7 @@ def findBGGTagInBio(str)
    tagged || findBGGTagFromURLInBio(str)
 end
 
-def getAndWriteMembersToStdout(n)
-  members = getMembers(n)
-  members.each do |m|
-    bio_raw = m.member["bio"]
-    found_bgg_tag = findBGGTagInBio(bio_raw)
-    bio = bio_raw.nil? ? "" : bio_raw.gsub(/\n/, "XYNL").gsub(/\r/, "XYCR").gsub(/,/,"XYCM")
-    puts """#{m.name}, #{m.id}, #{m.status}, #{found_bgg_tag}, #{bio}""" #, #{m.member}"""
-  end
-end
-
-def getAndWriteMembersToDB(offset)
+def importPageOfMembers(offset)
   members = getMembers(offset)
   members.each do |m|
     bio_raw = m.member["bio"]
@@ -118,16 +108,9 @@ def getAndWriteMembersToDB(offset)
   return members.size
 end
 
-def getAllMembersPaged
-  0.upto(40) do |n|
-    getAndWriteMembers(n)
-    sleep(5)
-  end
-end
-
-def importAllMembersPagedToDB
+def importAllMembers
   offset = 0
-  while (getAndWriteMembersToDB(offset) > 0)
+  while (importPageOfMembers(offset) > 0)
     offset += 1
     Rails.logger.info "DONE PAGE: #{offset}"
     sleep(5)
@@ -135,7 +118,7 @@ def importAllMembersPagedToDB
 end
 
 
-def importAllEventsToDB(nDays)
+def importAllEvents(nDays)
   Rsvp.delete_all
   Event.delete_all
   events = getEventsForNextNDays(nDays)
@@ -319,8 +302,6 @@ def initialize
   api_keys = YAML::load_file('config/api_keys.yaml')
   @client = RMeetup::Client.new(:api_key => api_keys[:meetup_api_key])
 end
-
-#getAllMembersPaged
 
 #SQL to find mutual want-to-play games
 #select gu.bgg_username,g.name,gu.own from games_users gu, games g where want_to_play = 1 and g.bgg_game_id = gu.bgg_game_id and gu.bgg_game_id in (select gu.bgg_game_id from games_users gu where gu.want_to_play = 1 group by gu.bgg_game_id having count(*) > 1) order by g.name;
