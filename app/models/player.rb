@@ -22,9 +22,9 @@ class Player < ActiveRecord::Base
   
   
   def remove_games
+    Ownership.where(meetup_user_id: id).delete_all
+    PlayWish.where(meetup_user_id: id).delete_all
     collection_processed_at = nil
-    ownerships.delete_all
-    play_wishes.delete_all
     save!
   end
 end

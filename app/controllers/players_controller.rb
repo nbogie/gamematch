@@ -50,8 +50,11 @@ class PlayersController < ApplicationController
   # PATCH/PUT /players/1
   # PATCH/PUT /players/1.json
   def update
+    #TODO: protect this update method.
     respond_to do |format|
       if @player.update(player_params)
+        @player.collection_processed_at = nil
+        @player.save!
         format.html { redirect_to @player, notice: 'Player was successfully updated.' }
         format.json { render :show, status: :ok, location: @player }
       else
@@ -102,6 +105,6 @@ class PlayersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_params
-      params.require(:player).permit(:bgg_username, :bgg_user_id, :meetup_username, :meetup_user_id, :meetup_bio)
+      params.require(:player).permit(:bgg_username)
     end
 end
