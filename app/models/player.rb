@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
   has_many :rsvps
   has_many :events, :through => :rsvps
 
+  has_many :ratings
+  has_many :rated_games, :through => :ratings, :source => 'game'
 
   has_many :ownerships
   has_many :owned_games, :through => :ownerships, :source => 'game'

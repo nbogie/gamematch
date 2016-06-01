@@ -3,7 +3,8 @@
 <p>
   <a href='#basic-info'>basic info</a> | 
   <a href='#want-to-play-games'>want-to-play</a> | 
-  <a href='#owned-games'>owned games</a>
+  <a href='#owned-games'>owned games</a> | 
+  <a href='#favourite-games'>favourite games</a>
 </p>
 <p id='basic-info'>
   <strong>Bgg username:</strong>
@@ -32,8 +33,8 @@
 </p>
 
 <p>
-  <strong id='want-to-play-games'>Wants to play:</strong>
-  <%= @player.want_to_play_games.size %>
+  <strong id='want-to-play-games'><%= @player.meetup_username %> wants to play:</strong>
+  <%= @player.want_to_play_games.size %> game(s):
 
   <ul>
   <% @player.want_to_play_games.each do |game| %>
@@ -47,7 +48,7 @@
 
 <p>
 
-<h3>Games others most want to play, which are owned by this player</h3>
+<h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
   <ul>
   <% @most_desired_games.each do |game| %>
     <li>
@@ -61,13 +62,24 @@
   <strong id='owned-games'>Total number of games owned:</strong>
   <%= @player.owned_games.size %>
 
-<h3>All games owned</h3>
+<h3>All games owned by <%= @player.meetup_username %></h3>
   <ul>
-  <% @player.owned_games.each do |game| %>
+  <% @owned_games.each do |game| %>
     <li>
       <%= link_to game.name, game %>
       <%= link_to "(bgg)", game.bgg_game_url %>
       - Num wishing to play: <%= @playwish_counts[game.id] %>
+    </li>
+  <% end %>
+  </ul>
+  
+<h3 id='favourite-games'><%= @player.meetup_username %>'s Top 20 games</h3>
+  <ul>
+  <% @top_20_games.each do |game| %>
+    <li>
+      <%= link_to game.name, game %>
+      <%= link_to "(bgg)", game.bgg_game_url %>
+      Rating: <%= game.rating %>
     </li>
   <% end %>
   </ul>

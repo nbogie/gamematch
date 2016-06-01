@@ -235,7 +235,8 @@ def importUserGamesFromBGG
     if (colln.nil? || colln["item"].nil?)
       Rails.logger.warn "No collection for #{bgg_username}: #{colln.inspect}"
       player.collection_processed_at = Time.now
-      player.save
+      player.ratings_imported_at = Time.now
+      player.save!
       next
     end
 
@@ -244,17 +245,8 @@ def importUserGamesFromBGG
     #Faster than checking if we already have an ownership record
     Ownership.delete_all(player_id: player.id)
     PlayWish.delete_all(player_id: player.id)
-
+    Rating.delete_all(player_id: player.id)
     colln["item"].each do |g|
-      
-      begin
-        user_rating = g['stats'] ? g['stats'].first['rating'].first['value'] : nil
-      rescue Exception => ex
-        Rails.logger.debug("no user rating available: #{ex}")
-        user_rating = nil
-      end
-    
-      Rails.logger.debug("user rating is: #{user_rating}")
       
       gid = g["objectid"]
       gameObj = Game.find_by(bgg_game_id: gid)
@@ -269,7 +261,22 @@ def importUserGamesFromBGG
         #game already exists
       end
       Rails.logger.debug "Game: #{g.inspect}"
-      
+
+      begin
+        user_rating_str = g['stats'] ? g['stats'].first['rating'].first['value'] : nil
+        user_rating = Float(user_rating_str) rescue nil
+        Rails.logger.debug "got user_rating of #{user_rating_str} - parses as #{user_rating}"
+        if user_rating
+          if (! Rating.exists?(player_id: player.id, game_id: gameObj.id))
+              Rails.logger.debug "setting rating"
+              Rating.create!({ player_id: player.id, game_id: gameObj.id, rating: user_rating})
+          end
+        end
+      rescue Exception => ex
+        Rails.logger.debug("no user rating available: #{ex}")
+        user_rating = nil
+      end
+
       if (! PlayWish.exists?(player_id: player.id, game_id: gameObj.id))
         if (g["status"][0]["wanttoplay"] == '1')
           Rails.logger.debug "#{player.meetup_username} wants to play bggid:#{gameObj.bgg_game_id}"
@@ -291,7 +298,8 @@ def importUserGamesFromBGG
     end #each game in collection
     
     player.collection_processed_at = Time.now
-    player.save
+    player.ratings_imported_at = Time.now
+    player.save!
     Rails.logger.debug "Done processing #{colln['item'].size} item(s) for #{player.meetup_username}"
 
   end #each player

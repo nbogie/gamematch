@@ -1,6 +1,24 @@
 <p id="notice"><%= notice %></p>
+<script>
+$( document ).ready(function() {
+  $("#show-pending-collection-imports").bind('click', function() {
+      $('.player-row').hide();
+      $('.with-pending-collection').show();
+  });
+  $("#show-with-imported-ratings").bind('click', function() {
+      $('.player-row').hide();
+      $('.with-imported-ratings').show();
+  });
+  $("#show-all-players").bind('click', function() {
+      $('.player-row').show();
+  });
+});
 
+</script>
 <h1>Listing Players</h1>
+<a href='#' id='show-all-players'>show all</a>
+| <a href='#' id='show-pending-collection-imports'>show pending</a>
+| <a href='#' id='show-with-imported-ratings'>show with imported ratings</a>
 
 <table border='1'>
   <thead>
@@ -12,6 +30,7 @@
       <th>num meetups upcoming</th>
       <th>Granted</th>
       <th>Collection Processed At</th>
+      <th>Ratings Imported At</th>
       <th>Collection Requested at</th>
       <th>Meetup bio</th>
     </tr>
@@ -19,7 +38,10 @@
 
   <tbody>
     <% @players.each do |player| %>
-      <tr>
+      <tr class='player-row
+      <%= player.collection_processed_at.nil? ? 'with-pending-collection' : '' %>
+      <%= player.ratings_imported_at.nil? ? '': 'with-imported-ratings' %>
+      '>
         <td><%= link_to player.meetup_username, player %> 
            (<%= link_to "bgg:#{player.bgg_username}", player.bgg_user_url %>)
             <%= link_to " / Meetup", player.meetup_user_url %>
@@ -31,8 +53,9 @@
         <td><%= player.events.size %></td>
         <td><%= player.granted %></td>
         <td class='<%= player.collection_processed_at.nil? ? 'unprocessed' : 'processed' %>'>
-          <%= time_ago_in_words(player.collection_processed_at) unless player.collection_processed_at.nil? %> ago</td>
-        <td><%= time_ago_in_words(player.collection_requested_at) unless player.collection_requested_at.nil? %> ago</td>
+          <%= time_ago_in_words(player.collection_processed_at) + " ago" unless player.collection_processed_at.nil? %></td>
+        <td><%= time_ago_in_words(player.ratings_imported_at) + " ago" unless player.ratings_imported_at.nil? %></td>
+        <td><%= time_ago_in_words(player.collection_requested_at) + " ago" unless player.collection_requested_at.nil? %></td>
         <td><%= player.meetup_bio %></td>
       </tr>
     <% end %>

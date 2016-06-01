@@ -1,4 +1,7 @@
 class Game < ActiveRecord::Base
+  has_many :ratings
+  has_many :rating_players, :through => :ratings, :source => 'player'
+
   has_many :ownerships
   has_many :owning_players, :through => :ownerships, :source => 'player'
 
