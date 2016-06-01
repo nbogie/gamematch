@@ -55,7 +55,7 @@
       <%= link_to "(Meetup)", player.meetup_user_url %>
     <ul>
       <% player.events.each do |event| %>
-        <li><%= event.name %></li>
+        <li><%= link_to event.name, event, title: 'Explore the event here' %> (<%= link_to "Meetup", event.url, alt: 'View the event on meetup.com' %>)</li>
       <% end %>
     </ul>
     </li>

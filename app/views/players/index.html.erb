@@ -46,7 +46,6 @@ $( document ).ready(function() {
            (<%= link_to "bgg:#{player.bgg_username}", player.bgg_user_url %>)
             <%= link_to " / Meetup", player.meetup_user_url %>
         </td>
-        
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
         <td><%= player.meetup_status %></td>
         <td><%= player.want_to_play_games.size %></td>

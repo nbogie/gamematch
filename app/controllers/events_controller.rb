@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @attending_players = @event.players.order(:meetup_username)
   end
 
   # GET /events/new

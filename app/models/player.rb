@@ -22,7 +22,11 @@ class Player < ActiveRecord::Base
     "https://boardgamegeek.com/user/#{bgg_username}"
   end
   
-  
+  def search_on_bgg_url
+    n = CGI.escape meetup_username
+    "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=user&q=#{n}&B1=Go"
+  end
+
   def remove_games
     Ownership.delete_all(player_id: id)
     PlayWish.delete_all(player_id: id)

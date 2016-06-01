@@ -17,7 +17,7 @@
   <h3>Attending Players:</h3>
 
   <ul>
-  <% @event.players.each do |player| %>
+  <% @attending_players.each do |player| %>
     <li>
       <% if ! player.bgg_username.nil? %>
         <%= link_to player.meetup_username, player, class: "bgg-linked-player" %>
@@ -26,6 +26,9 @@
         <%= link_to player.meetup_username, player %>
       <% end %>
       / <%= link_to "meetup", player.meetup_user_url %>
+      
+      -<%= link_to "search on bgg", player.search_on_bgg_url %>
+
     </li>
   <% end %>
   </ul>

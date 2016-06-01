@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.where("players.bgg_username is NOT NULL")
+    @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
   end
 
   # GET /players/1
