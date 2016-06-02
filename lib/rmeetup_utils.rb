@@ -187,7 +187,7 @@ def set_bgg_meetup_links
       [183575577, 'Iaangus', 'Ian Angus', false],
       [133073032, 'saua', 'Joachim', false],
       [6224143, 'pwatson1974', 'Paul Watson', false],
-      
+      [120421272, 'TrevPC', 'Trev Caughie', false]
       ]
   
   bgg_lob_links.each do |mid, bgn, real, granted|
