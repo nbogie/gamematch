@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'admin/tables'
+
   resources :rsvps
   resources :events
   resources :games
