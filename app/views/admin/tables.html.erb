@@ -1,2 +1,13 @@
 <h1>Admin#tables</h1>
 <p>Find me in app/views/admin/tables.html.erb</p>
+
+<ul>
+<li>Events: <%= Event.count %></li><li>
+RSVPS: <%= Rsvp.count %></li><li>
+Games: <%= Game.count %></li><li>
+Players: <%= Player.count %></li><li>
+Players with bgg_usernames: <%= Player.where('bgg_username is not null').count %></li><li>
+Ownerships: <%= Ownership.count %></li><li>
+PlayWish: <%= PlayWish.count %></li>
+</li>
+</ul>
