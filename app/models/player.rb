@@ -17,8 +17,12 @@ class Player < ActiveRecord::Base
 
   def which_of_my_games_are_desired_by(all_inc_me)
     other_players = all_inc_me.where('id is not ?', id)
-    pws = PlayWish.where(game_id: owned_games, player_id: other_players)
-    counts = pws.group(:game_id).count.sort_by{|qi,c| c}.reverse[0..10]
+    counts = 
+      PlayWish.where(game_id: owned_games, player_id: other_players).
+        group(:game_id).
+        count.
+        sort_by{|qi,c| c}.
+        reverse[0..10]
     Game.where(id: counts.map{|c| c[0]}).
       includes(:keen_players).
       select(:id, :meetup_username).
