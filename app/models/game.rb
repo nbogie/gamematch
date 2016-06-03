@@ -31,12 +31,14 @@ class Game < ActiveRecord::Base
   def self.desired_games_for_players_owned_by_others(ps, owners)
     Game.select('games.id, games.name, games.bgg_game_id, count(play_wishes.game_id) AS pw_count').
       joins(:play_wishes).
-      where('play_wishes.player_id' => ps,
-            'id' => Ownership.where(player_id: owners).select(:game_id).distinct).
+      where( 'play_wishes.player_id' => ps,
+             'id' => Ownership.where(player_id: owners).select(:game_id).distinct
+           ).
       select(:id, :meetup_username).
       where(play_wishes: { player_id: ps }).
       group('games.id').
-      order('pw_count DESC, games.name').limit(10)
+      order('pw_count DESC, games.name')
+      .limit(10)
   end
   
   def self.desired_games_for_players_owned_by_others_eager_load_keen_players(others, owner)
@@ -47,7 +49,8 @@ class Game < ActiveRecord::Base
       PlayWish.select('play_wishes.game_id, count(play_wishes.player_id) AS pw_count').
         where('play_wishes.game_id' => owner.owned_games, 'play_wishes.player_id' => others).
         group('play_wishes.game_id').
-        order('pw_count DESC').limit(10)
+        order('pw_count DESC').
+        limit(10)
     
     Game.where(id: most_desired_ids.map(&:game_id)).
       includes(:keen_players).

@@ -16,8 +16,9 @@ class EventsController < ApplicationController
     @desired_owned_games = Game.desired_games_for_players_owned_by_others(@event.players, @attending_players)
 
     if has_chosen_player?
-      @chosen_player_owned_desired_games =  Game.desired_games_for_players_owned_by_others_eager_load_keen_players(@event.players, @chosen_player)
-        #Game.desired_games_for_players_owned_by_others(@event.players.where('id is not ?', @chosen_player), @chosen_player)
+      @chosen_player_owned_desired_games =  
+        Game.desired_games_for_players_owned_by_others_eager_load_keen_players(@event.players, @chosen_player)
+#        Game.desired_games_for_players_owned_by_others(@event.players.where('id is not ?', @chosen_player), @chosen_player)
       
     end
 
