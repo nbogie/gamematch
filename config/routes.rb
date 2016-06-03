@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   get 'players/:id/choose', to: 'players#choose_player', as: 'choose_player'
 
+  get 'events/:id/workinprogress', to: 'events#workinprogress', as: 'workinprogress'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

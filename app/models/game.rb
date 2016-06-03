@@ -20,6 +20,25 @@ class Game < ActiveRecord::Base
     return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{bgg_game_id}"
   end
 
+  def self.desired_games_for_players(ps)
+    Game.select('games.id, games.name, games.bgg_game_id, count(play_wishes.game_id) AS pw_count').
+    joins(:play_wishes).
+    where('play_wishes.player_id' => ps).
+    group('games.id').
+    order('pw_count DESC, games.name').limit(10)
+  end
+
+  def self.desired_games_for_players_owned_by_another(ps, owner)
+    Game.select('games.id, games.name, games.bgg_game_id, count(play_wishes.game_id) AS pw_count').
+      joins(:play_wishes).
+      where('play_wishes.player_id' => ps).
+      where('id' => Ownership.where(player_id: ps).select(:game_id).distinct).
+      group('games.id').
+      order('pw_count DESC, games.name').limit(10)
+  end
+  
+
+
   def self.find_rare_games
     #TODO: do purely in AR or SQL, without passing the half-way list of ids around
     gids = Game.joins(:ownerships).select('id, name, count(*) as c').group(:id).having('c <= 2')

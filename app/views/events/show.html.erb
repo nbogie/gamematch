@@ -12,15 +12,15 @@
 
 <h3>Games which attendees want to play (in bgg)</h3>
 <ul>
-<% @desired_game_counts.each do |gid, pw_count| %>
-  <li><%= Game.find(gid).name %> - <%= pw_count %> wishes.</li>
+<% @desired_games.each do |g| %>
+  <li><%= g.name %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
 
 <h3>Games which attendees want to play, which someone attending owns</h3>
 <ul>
-<% @owned_and_desired_game_counts.each do |gid, pw_count| %>
-  <li><%= @owned_and_desired_games_by_id[gid].name %> - <%= pw_count %> wishes.</li>
+<% @desired_owned_games.each do |g| %>
+  <li><%= g.name %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
 

@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Games which attendees want to play, which someone attending owns</h3>
+<ul>
+<% @desired_games.each do |g| %>
+  <li><%= g.name %> - <%= g.pw_count %> wishes.</li>
+<% end %>
+</ul>
