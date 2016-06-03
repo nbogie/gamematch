@@ -7,6 +7,13 @@ class PlayersController < ApplicationController
     @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
   end
 
+  def choose_player
+    p = Player.find(params.require(:id))
+    session[:chosen_player_id] = params.require(:id)
+    logger.debug "Chosen player is #{chosen_player}"
+    redirect_to p, notice: "Focus on player: #{chosen_player.meetup_username}"
+  end
+  
   # GET /players/1
   # GET /players/1.json
   def show

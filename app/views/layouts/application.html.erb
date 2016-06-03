@@ -19,7 +19,11 @@
     <input id='submit' type='submit' value='search' />
     <input type='textfield' name='term' size=50 id='game_name_search' placeholder='game title to search for'/>
   </form>
+
+<div>
+  Focused player: <%= @chosen_player.meetup_username %>
   
+</div>  
 </div>
 <%= yield %>
 

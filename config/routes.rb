@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'players/link_with_bgg_account/:id/:bgg_username', to: 'players#link_with_bgg_account
   ', as: 'link_with_bgg_account'
 
-
+  get 'players/:id/choose', to: 'players#choose_player', as: 'choose_player'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
