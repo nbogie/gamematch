@@ -39,7 +39,20 @@ class Game < ActiveRecord::Base
       order('pw_count DESC, games.name').limit(10)
   end
   
-
+  def self.desired_games_for_players_owned_by_others_eager_load_keen_players(others, owner)
+    #todo: WIP get rid of this and use the above.
+    #The problem is eager loading with conditions, in one query.
+    others = others.where('id is not ?', owner.id)
+    counts = 
+      PlayWish.where(game_id: owner.owned_games, player_id: others).
+        group(:game_id).
+        count.
+        sort_by{|qi,c| c}.reverse[0..10]
+    Game.where(id: counts.map{|c| c[0]}).
+      includes(:keen_players).
+      select(:id, :meetup_username).
+      where(play_wishes: { player_id: others })
+  end
 
   def self.find_rare_games
     #TODO: do purely in AR or SQL, without passing the half-way list of ids around

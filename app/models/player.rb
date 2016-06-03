@@ -15,19 +15,6 @@ class Player < ActiveRecord::Base
   has_many :want_to_play_games, :through => :play_wishes, :source => 'game'
 
 
-  def which_of_my_games_are_desired_by(all_inc_me)
-    other_players = all_inc_me.where('id is not ?', id)
-    counts = 
-      PlayWish.where(game_id: owned_games, player_id: other_players).
-        group(:game_id).
-        count.
-        sort_by{|qi,c| c}.reverse[0..10]
-    Game.where(id: counts.map{|c| c[0]}).
-      includes(:keen_players).
-      select(:id, :meetup_username).
-      where(play_wishes: { player_id: other_players })
-  end
-
 
   def meetup_user_url
     return "https://www.meetup.com/LondonOnBoard/members/#{meetup_user_id}"
