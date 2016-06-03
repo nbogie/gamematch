@@ -27,6 +27,8 @@ $( document ).ready(function() {
       <th>Edit</th>
       <th>Meetup status</th>
       <th>num want-to-play</th>
+      <th>num owned</th>
+      <th>num rated</th>
       <th>num meetups upcoming</th>
       <th>bgg disparities</th>
       <th>Granted</th>
@@ -50,6 +52,8 @@ $( document ).ready(function() {
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
         <td><%= player.meetup_status %></td>
         <td><%= player.want_to_play_games.size %></td>
+        <td><%= player.owned_games.size %></td>
+        <td><%= player.rated_games.size %></td>
         <td><%= player.events.size %></td>
         <td><%= link_to 'bgg disparities', player.bgg_disparities_url %></td>
         <td><%= player.granted %></td>
