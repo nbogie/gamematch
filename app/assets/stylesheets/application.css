@@ -16,7 +16,7 @@
  */
 
 .bgg-linked-player {
-    font-weight: bold;
+    font-weight: bolder;
 }
 .unprocessed {
     background-color: orange;
