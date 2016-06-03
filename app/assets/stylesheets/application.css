@@ -14,7 +14,6 @@
  *= require_self
  *= require jquery-ui/autocomplete
  */
-
 .bgg-linked-player {
     font-weight: bolder;
 }

@@ -14,6 +14,18 @@ class Player < ActiveRecord::Base
   has_many :play_wishes
   has_many :want_to_play_games, :through => :play_wishes, :source => 'game'
 
+
+  def which_of_my_games_are_desired_by(all_inc_me)
+    other_players = all_inc_me.where('id is not ?', id)
+    #TODO: really exclude this player from other_players, 
+    #  or else it'll just recommend you bring games you want to play...
+    ogs = owned_games.select(:id)
+    pws = PlayWish.where(game_id: ogs, player_id: other_players.select(:id))
+    counts = pws.group(:game_id).count.sort_by{|qi,c| c}.reverse[0..10]
+    owned_and_desired_games = Game.where(id: counts.map{|c| c[0]}).includes(:keen_players).select(:id, :meetup_username).where(play_wishes: { player_id: other_players })
+  end
+
+
   def meetup_user_url
     return "https://www.meetup.com/LondonOnBoard/members/#{meetup_user_id}"
   end
@@ -37,4 +49,10 @@ class Player < ActiveRecord::Base
     collection_processed_at = nil
     save!
   end
+
+  
+  def self.me
+    find_by(bgg_username: 'enz0')
+  end
+  
 end
