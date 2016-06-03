@@ -18,7 +18,6 @@ class EventsController < ApplicationController
     @owned_and_desired_games_by_id = Hash[ (Game.where(id: @owned_and_desired_game_counts.map {|i| i[0]} ).map{|g| [g.id, g]})]
     
     if has_chosen_player?
-      @chosen_player_desired_game_counts = PlayWish.where(player_id: @event.players.where('id is not ?', @chosen_player)).group(:game_id).count.sort_by{|i,c| c}.reverse[0..10]
       @chosen_player_owned_desired_games = @chosen_player.which_of_my_games_are_desired_by(@event.players)
     end
 

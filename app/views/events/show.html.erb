@@ -26,7 +26,6 @@
 
 <h3>Games attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
 
-<%= @chosen_player_desired_game_counts %>
 <ul>
 <% @chosen_player_owned_desired_games.each do |g| %>
   <li><%= link_to g.name, g %> - <ul>
