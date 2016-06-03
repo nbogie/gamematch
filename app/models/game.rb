@@ -43,12 +43,13 @@ class Game < ActiveRecord::Base
     #todo: WIP get rid of this and use the above.
     #The problem is eager loading with conditions, in one query.
     others = others.where('id is not ?', owner.id)
-    counts = 
-      PlayWish.where(game_id: owner.owned_games, player_id: others).
-        group(:game_id).
-        count.
-        sort_by{|qi,c| c}.reverse[0..10]
-    Game.where(id: counts.map{|c| c[0]}).
+    most_desired_ids = 
+      PlayWish.select('play_wishes.game_id, count(play_wishes.player_id) AS pw_count').
+        where('play_wishes.game_id' => owner.owned_games, 'play_wishes.player_id' => others).
+        group('play_wishes.game_id').
+        order('pw_count DESC').limit(10)
+    
+    Game.where(id: most_desired_ids.map(&:game_id)).
       includes(:keen_players).
       select(:id, :meetup_username).
       where(play_wishes: { player_id: others })
