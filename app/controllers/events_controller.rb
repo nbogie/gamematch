@@ -13,16 +13,18 @@ class EventsController < ApplicationController
     @attending_players = @event.players.order(:meetup_username)
     
     @desired_games       = Game.desired_games_for_players(@event.players)
-    @desired_owned_games = Game.desired_games_for_players_owned_by_another(@event.players, @chosen_player)
+    @desired_owned_games = Game.desired_games_for_players_owned_by_others(@event.players, @attending_players)
 
     if has_chosen_player?
-      @chosen_player_owned_desired_games = @chosen_player.which_of_my_games_are_desired_by(@event.players)
+      @chosen_player_owned_desired_games =  @chosen_player.which_of_my_games_are_desired_by(@event.players)
+        #Game.desired_games_for_players_owned_by_others(@event.players.where('id is not ?', @chosen_player), @chosen_player)
+      
     end
 
   end
   
   def workinprogress
-    @desired_games =Game.desired_games_for_players_owned_by_another(@event.players, @chosen_player)
+    @desired_games =Game.desired_games_for_players_owned_by_others(@event.players, @chosen_player)
 
   end
 

@@ -13,14 +13,14 @@
 <h3>Games which attendees want to play (in bgg)</h3>
 <ul>
 <% @desired_games.each do |g| %>
-  <li><%= g.name %> - <%= g.pw_count %> wishes.</li>
+  <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
 
 <h3>Games which attendees want to play, which someone attending owns</h3>
 <ul>
 <% @desired_owned_games.each do |g| %>
-  <li><%= g.name %> - <%= g.pw_count %> wishes.</li>
+  <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
 
@@ -28,7 +28,8 @@
 
 <ul>
 <% @chosen_player_owned_desired_games.each do |g| %>
-  <li><%= link_to g.name, g %> - <ul>
+  <li><%= link_to g.name, g %> - <%# g.pw_count %> <ul>
+    
     <% g.keen_players.each do |kp| %>
       <%= link_to kp.meetup_username, kp %>
     <% end %>
