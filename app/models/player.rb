@@ -22,7 +22,10 @@ class Player < ActiveRecord::Base
     ogs = owned_games.select(:id)
     pws = PlayWish.where(game_id: ogs, player_id: other_players.select(:id))
     counts = pws.group(:game_id).count.sort_by{|qi,c| c}.reverse[0..10]
-    owned_and_desired_games = Game.where(id: counts.map{|c| c[0]}).includes(:keen_players).select(:id, :meetup_username).where(play_wishes: { player_id: other_players })
+    Game.where(id: counts.map{|c| c[0]}).
+      includes(:keen_players).
+      select(:id, :meetup_username).
+      where(play_wishes: { player_id: other_players })
   end
 
 
