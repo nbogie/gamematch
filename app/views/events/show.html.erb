@@ -10,10 +10,17 @@
   <%= @event.status %>
 </p>
 
+<h3>Games attendees want to play (in bgg)</h3>
 <ul>
-  
 <% @desired_game_counts.each do |gid, pw_count| %>
   <li><%= Game.find(gid).name %> - <%= pw_count %> wishes.</li>
+<% end %>
+</ul>
+
+<h3>Games attendees want to play, which someone owns (in bgg)</h3>
+<ul>
+<% @owned_and_desired_game_counts.each do |gid, pw_count| %>
+  <li><%= @owned_and_desired_games_by_id[gid].name %> - <%= pw_count %> wishes.</li>
 <% end %>
 </ul>
 
@@ -39,7 +46,6 @@
     </li>
   <% end %>
   </ul>
-
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

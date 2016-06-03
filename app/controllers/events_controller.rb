@@ -11,9 +11,10 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @attending_players = @event.players.order(:meetup_username)
-    #TODO: show games most desired for play at this event
+    @owned_game_ids = Ownership.where(player_id: @event.players).select(:game_id).distinct.map(&:game_id)
     @desired_game_counts = PlayWish.where(player_id: @event.players).group(:game_id).count.sort_by{|i,c| c}.reverse[0..10]
-    
+    @owned_and_desired_game_counts = PlayWish.where(player_id: @event.players, game_id: @owned_game_ids).group(:game_id).count.sort_by{|i,c| c}.reverse[0..10]
+    @owned_and_desired_games_by_id = Hash[ (Game.where(id: @owned_and_desired_game_counts.map {|i| i[0]} ).map{|g| [g.id, g]})]
   end
 
   # GET /events/new
