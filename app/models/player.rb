@@ -22,6 +22,10 @@ class Player < ActiveRecord::Base
     "https://boardgamegeek.com/user/#{bgg_username}"
   end
   
+  def bgg_disparities_url
+    "https://boardgamegeek.com/collection/user/#{bgg_username}?rated=1&ff=1&sort=delta&sortdir=desc&columns=title|bggrating|rating&hiddencolumns=delta"
+  end
+  
   def search_on_bgg_url
     n = CGI.escape meetup_username
     "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=user&q=#{n}&B1=Go"
