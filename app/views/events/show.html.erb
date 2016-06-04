@@ -1,3 +1,4 @@
+<!-- EVENT SHOW -->
 <p>
   <strong>Name:</strong>
   <%= link_to @event.name, @event.url %>
@@ -34,11 +35,13 @@
 </ul>
 </div>
 </li>
+
+<% if @chosen_player %>
+<h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
+
 <li class="accordion-item" data-accordion-item>
   <a href="#" class="accordion-title">User-Owned Desired Games</a>
   <div class="accordion-content" data-tab-content>
-
-<h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
 
 <ul>
 <% @chosen_player_owned_desired_games.each do |g| %>
@@ -52,6 +55,7 @@
 </ul>
 </div>
 </li>
+<% end %>
 <li class="accordion-item" data-accordion-item>
   <a href="#" class="accordion-title">Attending</a>
   <div class="accordion-content" data-tab-content>

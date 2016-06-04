@@ -1,15 +1,10 @@
+<!-- PLAYER SHOW -->
 
 <p>
   <a href='#basic-info'>basic info</a> | 
   <a href='#want-to-play-games'>want-to-play</a> | 
   <a href='#owned-games'>owned games</a> | 
   <a href='#favourite-games'>favourite games</a>
-</p>
-
-<p>
-  <%= link_to 'Edit', edit_player_path(@player) %> |
-  <%= link_to 'Focus this Player', choose_player_path(@player) %> |
-  <%= link_to 'Mark collection stale', mark_stale_path(:id => @player.id ) %>
 </p>
 
 <p id='basic-info'>
@@ -110,6 +105,9 @@
 </li> <!-- accordion item -->
 
 
-<%= link_to 'Edit', edit_player_path(@player) %> |
-<%= link_to 'mark collection stale', mark_stale_path(:id => @player.id ) %> | 
-<%= link_to 'Back', players_path %>
+<div>
+  <%= link_to 'Edit', edit_player_path(@player), class: 'button small' %>
+  <%= link_to 'Focus this Player', choose_player_path(@player), class: 'button small' %>
+  <%= link_to 'Mark collection stale', mark_stale_path(:id => @player.id ), class: 'button small' %>
+</div>
+

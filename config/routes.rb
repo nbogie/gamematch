@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'admin/tables'
 
+
+  get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
+
   resources :rsvps
   resources :events
   resources :games

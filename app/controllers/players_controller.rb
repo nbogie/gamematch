@@ -10,8 +10,12 @@ class PlayersController < ApplicationController
   def choose_player
     p = Player.find(params.require(:id))
     session[:chosen_player_id] = params.require(:id)
-    logger.debug "Chosen player is #{chosen_player}"
     redirect_to p, notice: "Focus on player: #{chosen_player.meetup_username}"
+  end
+  
+  def choose_no_player
+    session[:chosen_player_id] = nil
+    redirect_to '/', notice: "Defocused player"
   end
   
   # GET /players/1

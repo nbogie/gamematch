@@ -1,3 +1,5 @@
+<!-- PLAYER INDEX -->
+
 <script>
 $( document ).ready(function() {
   $("#show-pending-collection-imports").bind('click', function() {
@@ -19,7 +21,8 @@ $( document ).ready(function() {
 | <a href='#' id='show-pending-collection-imports'>show pending</a>
 | <a href='#' id='show-with-imported-ratings'>show with imported ratings</a>
 
-<table border='1'>
+<div class="table-scroll">
+<table class='hover'>
   <thead>
     <tr>
       <th>Name(s)</th>
@@ -65,6 +68,6 @@ $( document ).ready(function() {
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 <%= link_to 'New Player', new_player_path %>
