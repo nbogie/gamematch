@@ -5,7 +5,6 @@
   <%= @game.name %>
   <%= link_to "(on bgg)", @game.bgg_game_url %> 
   <%= link_to "(geekbuddy analyse)", @game.bgg_game_analysis_url %> 
-
 </p>
 
 <p>
@@ -15,8 +14,7 @@
 
 
 <p>
-  <strong>Num wanting to play:</strong>
-  <%= @game.keen_players.size %>
+  <h3>Wanting to play (<%= @game.keen_players.size %>)</h3>
   <ul>
   <% @game.keen_players.each do |player| %>
     <li>
@@ -26,7 +24,6 @@
     </li>
   <% end %>
   </ul>
-
 </p>
 
 <p>
@@ -41,13 +38,11 @@
     </li>
   <% end %>
   </ul>
-
 </p>
 
 <p>
-  <strong>Num owning:</strong>
-  <%= @game.owning_players.size %>
-<ul> 
+  <h3>Owners (<%= @game.owning_players.size %>)</h3>
+  <ul> 
   <% @game.owning_players.each do |player| %>
     <li>
       <%= link_to player.meetup_username, player %> 
