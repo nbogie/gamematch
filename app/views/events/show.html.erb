@@ -9,6 +9,12 @@
   <strong>Status:</strong>
   <%= @event.status %>
 </p>
+<!--  data-multi-expand="true" -->
+<ul class="accordion" data-accordion>
+  
+  <li class="accordion-item is-active" data-accordion-item>
+    <a href="#" class="accordion-title">Desired Games</a>
+    <div class="accordion-content" data-tab-content>
 
 <h3>Games which attendees want to play (in bgg)</h3>
 <ul>
@@ -16,6 +22,11 @@
   <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
+</div>
+</li>
+<li class="accordion-item" data-accordion-item>
+  <a href="#" class="accordion-title">Owned Desired Games</a>
+  <div class="accordion-content" data-tab-content>
 
 <h3>Games which attendees want to play, which someone attending owns</h3>
 <ul>
@@ -23,6 +34,11 @@
   <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
 <% end %>
 </ul>
+</div>
+</li>
+<li class="accordion-item" data-accordion-item>
+  <a href="#" class="accordion-title">User-Owned Desired Games</a>
+  <div class="accordion-content" data-tab-content>
 
 <h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
 
@@ -36,6 +52,11 @@
   </ul></li>
 <% end %>
 </ul>
+</div>
+</li>
+<li class="accordion-item" data-accordion-item>
+  <a href="#" class="accordion-title">Attending</a>
+  <div class="accordion-content" data-tab-content>
 
 <p>
   <strong>Event time:</strong>
@@ -55,10 +76,14 @@
       / <%= link_to "meetup", player.meetup_user_url %>
       
       -<%= link_to "search on bgg", player.search_on_bgg_url %>
-
     </li>
   <% end %>
   </ul>
+  </div>
+
+</li>
+
+</ul> <!-- end accordion -->
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
