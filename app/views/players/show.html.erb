@@ -31,22 +31,26 @@
 
 <p><strong>Collection processed at: </strong><%= @player.collection_processed_at %></p>
 
-<p>
-  <strong>Next meetups</strong>
-  <ol>
-    
-    <% @player.events.each do |event| %>
-    <li><%= link_to event.name, event %></li>
-    <% end %>
-    
-  </ol>
+<!--  data-multi-expand="true" -->
+<ul class="accordion" data-accordion>
   
-</p>
-
-<p>
-  <strong id='want-to-play-games'><%= @player.meetup_username %> wants to play:</strong>
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title">Next Meetups</a>
+  <div class="accordion-content" data-tab-content>
+  <h3>Next meetups</h3>
+    <ol>
+      <% @player.events.each do |event| %>
+      <li><%= link_to event.name, event %></li>
+      <% end %>
+    </ol>
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title"><%= @player.meetup_username %> wants to play:</a>
+  <div class="accordion-content" data-tab-content>
+    <h3><%= @player.meetup_username %> wants to play:</h3>
   <%= @player.want_to_play_games.size %> game(s):
-
+  
   <ul>
   <% @player.want_to_play_games.each do |game| %>
     <li><%= link_to game.name, game %>
@@ -54,10 +58,13 @@
     </li>
   <% end %>
   </ul>
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
 
-</p>
-
-<h3 id='favourite-games'><%= @player.meetup_username %>'s Top 20 games</h3>
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title"><%= @player.meetup_username %>'s Top 20</a>
+  <div class="accordion-content" data-tab-content>
+    <h3><%= @player.meetup_username %>'s Top 20 games</h3>
   <ul>
   <% @top_20_games.each do |game| %>
     <li>
@@ -67,11 +74,13 @@
     </li>
   <% end %>
   </ul>
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
 
-
-<p>
-
-<h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title"><%= @player.meetup_username %>'s games which others most want to play</a>
+  <div class="accordion-content" data-tab-content>
+    <h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
   <ul>
   <% @most_desired_games.each do |game| %>
     <li>
@@ -81,11 +90,15 @@
     </li>
   <% end %>
   </ul>
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
 
-  <strong id='owned-games'>Total number of games owned:</strong>
-  <%= @player.owned_games.size %>
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title">Owned Games</a>
+  <div class="accordion-content" data-tab-content>
+    <h3>All games owned by <%= @player.meetup_username %></h3>
+    <strong id='owned-games'>Total number of games owned:</strong> <%= @player.owned_games.size %>
 
-<h3>All games owned by <%= @player.meetup_username %></h3>
   <ul>
   <% @owned_games.each do |game| %>
     <li>
@@ -95,12 +108,8 @@
     </li>
   <% end %>
   </ul>
-  
-</p>
-
-
-
-
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
 
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
