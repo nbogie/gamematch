@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'admin/tables'
-
 
   get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
 
@@ -27,8 +25,9 @@ Rails.application.routes.draw do
   get 'players/:id/choose', to: 'players#choose_player', as: 'choose_player'
 
   get 'events/:id/workinprogress', to: 'events#workinprogress', as: 'workinprogress'
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+
+  get 'admin/tables'
+  get 'admin/misc'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
