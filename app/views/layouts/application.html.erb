@@ -39,6 +39,13 @@
   </div>
 </div>
 
+<% if ! notice.nil? %>
+<div class="callout">
+  <h5>Notice: </h5>
+  <p><%= notice %></p>
+</div>
+<% end %>
+
 <%= yield %>
 
 </body>
