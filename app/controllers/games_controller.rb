@@ -5,11 +5,12 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    ps = params.permit(:term)
-    if (ps[:term]) 
-      @games = Game.search(ps[:term])
+    ps = params.permit(:term, :page)
+    if (ps[:term])
+      @games = Game.search(term: ps[:term], limit: 10, offset: ps[:page] || 0)
     else
-      @games = Game.all
+      #TODO: allow only numeric param
+      @games = Game.list_a_page({offset: ps[:page], limit: 20})
     end
   end
 

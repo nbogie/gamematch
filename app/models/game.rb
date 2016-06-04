@@ -7,9 +7,25 @@ class Game < ActiveRecord::Base
 
   has_many :play_wishes
   has_many :keen_players, :through => :play_wishes, :source => 'player'
+  
+  def self.list_a_page(opts)
+    common_select(opts)
+  end
 
-  def self.search(search_term)
-    order(:name).where('name LIKE ?', "%#{search_term}%").first(20)
+  def self.search(opts)
+    common_select(opts).
+    where('name LIKE ?', "%#{opts[:term]}%")
+  end
+
+  #Returns games with play_wishes and ownerships associations counted as
+  # pw_count and own_count.
+  # TODO: do this with scopes instead - more conventional.
+  def self.common_select(opts)
+    select('games.*, count(distinct play_wishes.player_id) AS pw_count, count(distinct ownerships.player_id) AS own_count').
+    joins(:play_wishes).
+    joins(:ownerships).
+    group('games.id').
+    order('games.name').limit(opts[:limit] || 15).offset(opts[:offset] || 7)
   end
 
   def bgg_game_url

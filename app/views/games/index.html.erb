@@ -18,10 +18,10 @@
             <%= link_to "(bgg ##{game.bgg_game_id})", game.bgg_game_url %>
         </td>
         <td>
-          Owned: <%= game.ownerships.size %>
+          Owned: <%= game.own_count %>
         </td>
         <td>
-          Desired: <%= game.play_wishes.size %>
+          Desired: <%= game.pw_count %>
         </td>
         <td>
            <%= link_to "BGG analysis", game.bgg_game_analysis_url %>
