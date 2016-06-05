@@ -13,21 +13,26 @@
 <body>
 <div class="top-bar">
   <div class="top-bar-left">
-    <ul class="vertical medium-horizontal menu">
+
+    <ul class="vertical medium-horizontal menu" data-dropdown-menu>
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Players", players_path %></li>
-      <li><%= link_to "Games", games_path %></li>
-      <li><%= link_to "Desired games", desired_games_path %></li>
-      <li><%= link_to "Rarer desired games", rare_games_path %></li>
-      <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
+      <li><%= link_to "Games", games_path %>
+        <ul class="vertical menu">
+          <li><%= link_to "Desired games", desired_games_path %></li>
+          <li><%= link_to "Rarer desired games", rare_games_path %></li>
+          <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
+        </ul>
+      </li>
       <li>
         <% if @chosen_player.nil? %>
-          No Focused Player
+          No Player
         <% else %>
           <%= link_to @chosen_player.meetup_username, @chosen_player %>
           <%= link_to '(logout)', choose_no_player_path %>
         <% end %>
-      </li>  
+      </li>
+      
 
     </ul>
   </div>
@@ -51,6 +56,8 @@
 <% end %>
 
 <%= yield %>
+
+<%= javascript_include_tag "application" %>     
 
 </body>
 </html>
