@@ -15,7 +15,7 @@ class PlayersController < ApplicationController
   
   def choose_no_player
     session[:chosen_player_id] = nil
-    redirect_to '/', notice: "Defocused player"
+    redirect_to '/events', notice: "Defocused player"
   end
   
   # GET /players/1
