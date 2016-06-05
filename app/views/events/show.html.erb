@@ -1,13 +1,11 @@
 <!-- EVENT SHOW -->
 <p>
-  <strong>Name:</strong>
+  <strong>Event:</strong>
   <%= link_to @event.name, @event.url %>
+
+  (<%= @event.event_time %>)
 </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @event.status %>
-</p>
 <!--  data-multi-expand="true" -->
 <ul class="accordion" data-accordion>
   
@@ -37,11 +35,11 @@
 </li>
 
 <% if @chosen_player %>
-<h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
 
 <li class="accordion-item" data-accordion-item>
   <a href="#" class="accordion-title">User-Owned Desired Games</a>
   <div class="accordion-content" data-tab-content>
+<h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
 
 <ul>
 <% @chosen_player_owned_desired_games.each do |g| %>
@@ -60,10 +58,6 @@
   <a href="#" class="accordion-title">Attending</a>
   <div class="accordion-content" data-tab-content>
 
-<p>
-  <strong>Event time:</strong>
-  <%= @event.event_time %>
-</p>
   <h3>Attending Players:</h3>
 
   <ul>

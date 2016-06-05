@@ -10,7 +10,6 @@
       <th>RSVPs</th>
       <th>Status</th>
       <th>Event time</th>
-      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -22,8 +21,6 @@
         <td><%= event.rsvps.size %></td>
         <td><%= event.status %></td>
         <td><%= event.event_time %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
       </tr>
     <% end %>
   </tbody>

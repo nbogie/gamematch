@@ -33,6 +33,18 @@ class Player < ActiveRecord::Base
     "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=user&q=#{n}&B1=Go"
   end
 
+  def bgg_want_to_plays_url
+    "https://boardgamegeek.com/collection/user/#{bgg_username}?wanttoplay=1&subtype=boardgame&ff=1"
+  end
+  
+  def bgg_owned_games_url
+    "https://boardgamegeek.com/collection/user/#{bgg_username}?own=1&subtype=boardgame&ff=1"
+  end
+  
+  def bgg_ratings_url
+    "https://boardgamegeek.com/collection/user/#{bgg_username}?rated=1&subtype=boardgame&ff=1"
+  end
+  
   def remove_games
     Ownership.delete_all(player_id: id)
     PlayWish.delete_all(player_id: id)

@@ -22,6 +22,13 @@
   <%= @player.meetup_bio %>
 </p>
 
+<p><strong>BGG links: </strong>
+  <%= link_to 'want-to-play', @player.bgg_want_to_plays_url %>,
+  <%= link_to 'owned', @player.bgg_owned_games_url %>,
+  <%= link_to 'ratings', @player.bgg_ratings_url %>
+  
+</p>
+
 <p><strong>Collection processed at: </strong><%= @player.collection_processed_at %></p>
 
 <!--  data-multi-expand="true" -->
