@@ -87,9 +87,10 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <ul>
   <% @most_desired_games.each do |game| %>
     <li>
+      <%= @playwish_counts[game.id] %> wish to play
       <%= link_to game.name, game %>
       <%= link_to "(bgg)", game.bgg_game_url %>
-      - Num wishing to play: <%= @playwish_counts[game.id] %>
+       (<%# game.rating %>/10)
     </li>
   <% end %>
   </ul>
