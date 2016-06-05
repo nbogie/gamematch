@@ -24,14 +24,13 @@
           <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
         </ul>
       </li>
-      <li>
-        <% if @chosen_player.nil? %>
-          No Player
-        <% else %>
-          <%= link_to @chosen_player.meetup_username, @chosen_player %>
-          <%= link_to '(logout)', choose_no_player_path %>
-        <% end %>
-      </li>
+      <% if @chosen_player.nil? %>
+        <li>no-one</li>
+      <% else %>
+        <li><%= link_to @chosen_player.meetup_username, @chosen_player %></li>
+        <li><%= link_to '(logout)', choose_no_player_path %></li>
+      <% end %>
+    
       
 
     </ul>
