@@ -14,6 +14,10 @@ $( document ).ready(function() {
       $('.player-row').hide();
       $('.with-imported-ratings').show();
   });
+  $("#show-without-imported-ratings").bind('click', function() {
+      $('.player-row').show();
+      $('.with-imported-ratings').hide();
+  });
   $("#show-all-players").bind('click', function() {
       $('.player-row').show();
   });
@@ -21,9 +25,13 @@ $( document ).ready(function() {
 
 </script>
 <h1>Listing Players</h1>
-<a href='#' class='button' id='show-all-players'>show all</a>
-<a href='#' class='button' id='show-pending-collection-imports'>show pending</a>
-<a href='#' class='button' id='show-with-imported-ratings'>show with imported ratings</a>
+<div class='button-group'>
+<a href='#' class='button' id='show-all-players'>All</a>
+<a href='#' class='button' id='show-pending-collection-imports'>Pending</a>
+<a href='#' class='button' id='show-with-imported-ratings'>Ratings imported</a>
+<a href='#' class='button' id='show-without-imported-ratings'>Ratings unimported</a>
+</div>
+
 
 <div class="table-scroll">
 <table class='hover'>
