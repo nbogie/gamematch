@@ -39,20 +39,19 @@ Showing game - LoB Game Match - <%= @game.name.truncate(20) %>
 <p>
   <h3>Owners (<%= @game.owning_players.size %>)</h3>
   <ul> 
-  <% @game.owning_players.each do |player| %>
-    <li>
-      <%= link_to player.meetup_username, player %> 
-      <%= link_to "(bgg)", player.bgg_user_url %>
-      <%= link_to "(Meetup)", player.meetup_user_url %>
-    <ul>
-      <% player.events.each do |event| %>
-        <li><%= link_to event.name, event, title: 'Explore the event here' %> (<%= link_to "Meetup", event.url, alt: 'View the event on meetup.com' %>)</li>
-      <% end %>
-    </ul>
-    </li>
-<% end %>
-</ul>
-
+    <% @game.owning_players.each do |player| %>
+      <li>
+        <%= link_to player.meetup_username, player %> 
+        <%= link_to "(bgg)", player.bgg_user_url %>
+        <%= link_to "(Meetup)", player.meetup_user_url %>
+        <ul>
+          <% player.events.each do |event| %>
+            <li><%= link_to event.name, event, title: 'Explore the event here' %> (<%= link_to "Meetup", event.url, alt: 'View the event on meetup.com' %>)</li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
 </p>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |

@@ -29,7 +29,6 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <%= link_to 'want-to-play', @player.bgg_want_to_plays_url %>,
   <%= link_to 'owned', @player.bgg_owned_games_url %>,
   <%= link_to 'ratings', @player.bgg_ratings_url %>
-  
 </p>
 
 <p><strong>Collection processed at: </strong><%= @player.collection_processed_at %></p>
@@ -40,27 +39,28 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 <li class="accordion-item is-active" data-accordion-item>
   <a href="#" class="accordion-title">Next Meetups</a>
   <div class="accordion-content" data-tab-content>
-  <h3>Next meetups</h3>
+    <h3>Next meetups</h3>
     <ol>
       <% @player.events.each do |event| %>
-      <li><%= link_to event.name, event %></li>
+        <li><%= link_to event.name, event %></li>
       <% end %>
     </ol>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
+
 <li class="accordion-item is-active" data-accordion-item>
   <a href="#" class="accordion-title"><%= @player.meetup_username %> wants to play:</a>
   <div class="accordion-content" data-tab-content>
     <h3><%= @player.meetup_username %> wants to play:</h3>
-  <%= @player.want_to_play_games.size %> game(s):
-  
-  <ul>
-  <% @player.want_to_play_games.each do |game| %>
-    <li><%= link_to game.name, game %>
-      <%= link_to "(bgg)", game.bgg_game_url %>
-    </li>
-  <% end %>
-  </ul>
+    <%= @player.want_to_play_games.size %> game(s):
+    
+    <ul>
+      <% @player.want_to_play_games.each do |game| %>
+        <li><%= link_to game.name, game %>
+          <%= link_to "(bgg)", game.bgg_game_url %>
+        </li>
+      <% end %>
+    </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
 
@@ -68,15 +68,15 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <a href="#" class="accordion-title"><%= @player.meetup_username %>'s Top 20</a>
   <div class="accordion-content" data-tab-content>
     <h3><%= @player.meetup_username %>'s Top 20 games</h3>
-  <ul>
-  <% @top_20_games.each do |game| %>
-    <li>
-      <%= link_to game.name, game %>
-      <%= link_to "(bgg)", game.bgg_game_url %>
-      Rating: <%= game.rating %>
-    </li>
-  <% end %>
-  </ul>
+    <ul>
+      <% @top_20_games.each do |game| %>
+        <li>
+          <%= link_to game.name, game %>
+          <%= link_to "(bgg)", game.bgg_game_url %>
+          Rating: <%= game.rating %>
+        </li>
+      <% end %>
+    </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
 
@@ -84,16 +84,16 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <a href="#" class="accordion-title"><%= @player.meetup_username %>'s games which others most want to play</a>
   <div class="accordion-content" data-tab-content>
     <h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
-  <ul>
-  <% @most_desired_games.each do |game| %>
-    <li>
-      <%= @playwish_counts[game.id] %> wish to play
-      <%= link_to game.name, game %>
-      <%= link_to "(bgg)", game.bgg_game_url %>
-       (<%# game.rating %>/10)
-    </li>
-  <% end %>
-  </ul>
+    <ul>
+      <% @most_desired_games.each do |game| %>
+        <li>
+          <%= @playwish_counts[game.id] %> wish to play
+          <%= link_to game.name, game %>
+          <%= link_to "(bgg)", game.bgg_game_url %>
+           (<%# game.rating %>/10)
+        </li>
+      <% end %>
+    </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
 
@@ -103,24 +103,24 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
     <h3>All games owned by <%= @player.meetup_username %></h3>
     <strong id='owned-games'>Total number of games owned:</strong> <%= @player.owned_games.size %>
 
-  <ul>
-  <% @owned_games.each do |game| %>
-    <li>
-      <%= link_to game.name, game %>
-      <%= link_to "(bgg)", game.bgg_game_url %>
-      <% if @playwish_counts[game.id] %>
-      - Num wishing to play: <%= @playwish_counts[game.id] %>
+    <ul>
+      <% @owned_games.each do |game| %>
+        <li>
+          <%= link_to game.name, game %>
+          <%= link_to "(bgg)", game.bgg_game_url %>
+          <% if @playwish_counts[game.id] %>
+            - Num wishing to play: <%= @playwish_counts[game.id] %>
+          <% end %>
+        </li>
       <% end %>
-    </li>
-  <% end %>
-  </ul>
+    </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
-
+</ul> <!-- end accordion -->
 
 <div>
   <%= link_to 'Edit', edit_player_path(@player), class: 'button small' %>
   <%= link_to 'Focus this Player', choose_player_path(@player), class: 'button small' %>
-  <%= link_to 'Mark collection stale', mark_stale_path(:id => @player.id ), class: 'button small' %>
+  <%= link_to 'Mark collection stale', mark_stale_path(:id => @player.id ), class: 'button warning small' %>
 </div>
 

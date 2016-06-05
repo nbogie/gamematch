@@ -6,30 +6,27 @@ Listing Events - LoB Game Match
 <h1>Listing Events</h1>
 
 <div class="table-scroll">
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Meetup link</th>
-      <th>RSVPs</th>
-      <th>Status</th>
-      <th>Event time</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @events.each do |event| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to event.name, event %></td>
-        <td><%= link_to 'meetup', event.url %></td>
-        <td><%= event.rsvps.size %></td>
-        <td><%= event.status %></td>
-        <td><%= event.event_time %></td>
+        <th>Name</th>
+        <th>Meetup link</th>
+        <th>RSVPs</th>
+        <th>Status</th>
+        <th>Event time</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+  
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td><%= link_to event.name, event %></td>
+          <td><%= link_to 'meetup', event.url %></td>
+          <td><%= event.rsvps.size %></td>
+          <td><%= event.status %></td>
+          <td><%= event.event_time %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-<br>
-
-<%= link_to 'New Event', new_event_path %>
