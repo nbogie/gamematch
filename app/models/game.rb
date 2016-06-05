@@ -37,7 +37,7 @@ class Game < ActiveRecord::Base
   end
   
   def self.owned_uniquely_by(player)
-    player.owned_games.where('id in (?)', owned_uniquely.map(&:id))
+    player.owned_games.where('id in (?)', uniquely_owned_games.map(&:id))
   end
 
   def self.uniquely_owned_games
