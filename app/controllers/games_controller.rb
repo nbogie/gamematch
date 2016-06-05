@@ -15,8 +15,14 @@ class GamesController < ApplicationController
   end
 
 
+
   def rare_games
     @games = Game.find_rare_games()
+    render 'index'
+  end
+
+  def desired_games
+    @games = Game.find_desired_games()
     render 'index'
   end
   

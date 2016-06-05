@@ -82,5 +82,10 @@ class Game < ActiveRecord::Base
     gids2 = Game.joins(:ownerships).select('id, name, count(*) as c').where(:id => gids1.map(&:id)).group(:id).having('c <= ?', max_owners)
     common_select.where(id: gids2.map(&:id)).unscope(:order).order('pw_count DESC, own_count ASC')
   end
+
+  def self.find_desired_games
+    #TODO: do purely in AR or direct SQL
+    common_select.unscope(:order).order('pw_count DESC, name')
+  end
   
 end

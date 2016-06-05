@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'game_names' => 'games#game_names'
   
   get 'rare_games' => 'games#rare_games'
+  get 'desired_games' => 'games#desired_games'
 
   get 'players/mark_stale/:id', to: 'players#mark_stale', as: 'mark_stale'
 
