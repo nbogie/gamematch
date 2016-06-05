@@ -35,6 +35,14 @@ class Game < ActiveRecord::Base
   def bgg_game_analysis_url
     return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{bgg_game_id}"
   end
+  
+  def self.owned_uniquely_by(player)
+    player.owned_games.where('id in (?)', owned_uniquely.map(&:id))
+  end
+
+  def self.uniquely_owned_games
+    common_select.having('own_count = 1').unscope(:limit).limit(50)
+  end
 
   def self.desired_games_for_players(ps)
     Game.select('games.id, games.name, games.bgg_game_id, count(play_wishes.game_id) AS pw_count').

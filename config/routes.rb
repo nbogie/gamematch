@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   
   get 'rare_games' => 'games#rare_games'
   get 'desired_games' => 'games#desired_games'
+  get 'uniquely_owned_games' => 'games#uniquely_owned_games'
 
   get 'players/mark_stale/:id', to: 'players#mark_stale', as: 'mark_stale'
 

@@ -116,7 +116,26 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
     </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
+
+<li class="accordion-item is-active" data-accordion-item>
+  <a href="#" class="accordion-title">Uniquely Owned Games</a>
+  <div class="accordion-content" data-tab-content>
+    <h3>Games owned ONLY by <%= @player.meetup_username %></h3>
+    <ul>
+      <% @uniquely_owned_games.each do |game| %>
+        <li>
+          <%= link_to game.name, game %>
+          <%= link_to "(bgg)", game.bgg_game_url %>
+          <% if @playwish_counts[game.id] %>
+            - Num wishing to play: <%= @playwish_counts[game.id] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div><!-- accordion content -->
+</li> <!-- accordion item -->
 </ul> <!-- end accordion -->
+
 
 <div>
   <%= link_to 'Edit', edit_player_path(@player), class: 'button small' %>

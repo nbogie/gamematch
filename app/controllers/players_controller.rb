@@ -34,6 +34,8 @@ class PlayersController < ApplicationController
     }
 
     @playwish_counts = Hash[* top_ten.flatten]
+    
+    @uniquely_owned_games = Game.owned_uniquely_by(@player)
   end
 
   # GET /players/new
