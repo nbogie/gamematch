@@ -24,7 +24,7 @@ class GamesController < ApplicationController
   def game_names
     ps = params.permit(:term)
     if (ps[:term]) 
-      @games = Game.search(ps[:term])
+      @games = Game.search(ps)
     else
       @games = []
     end

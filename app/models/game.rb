@@ -20,12 +20,12 @@ class Game < ActiveRecord::Base
   #Returns games with play_wishes and ownerships associations counted as
   # pw_count and own_count.
   # TODO: do this with scopes instead - more conventional.
-  def self.common_select(opts)
+  def self.common_select(opts = {})
     select('games.*, count(distinct play_wishes.player_id) AS pw_count, count(distinct ownerships.player_id) AS own_count').
     joins(:play_wishes).
     joins(:ownerships).
     group('games.id').
-    order('games.name').limit(opts[:limit] || 15).offset(opts[:offset] || 7)
+    order('games.name').limit(opts[:limit] || 15).offset(opts[:offset] || 0)
   end
 
   def bgg_game_url
@@ -75,10 +75,12 @@ class Game < ActiveRecord::Base
   end
 
   def self.find_rare_games
-    #TODO: do purely in AR or SQL, without passing the half-way list of ids around
-    gids = Game.joins(:ownerships).select('id, name, count(*) as c').group(:id).having('c <= 2')
-    gids = Game.joins(:play_wishes).select('id, name, count(*) as pw_c').where(:id => gids.map(&:id)).group(:game_id).having('pw_c > 3')
-    return Game.find(gids.map(&:id))
+    #TODO: do purely in AR or direct SQL
+    max_owners = 2
+    min_play_wishes = 4
+    gids1 = Game.joins(:play_wishes).select('id, name, count(*) as pw_c').group(:game_id).having('pw_c >= ?', min_play_wishes)
+    gids2 = Game.joins(:ownerships).select('id, name, count(*) as c').where(:id => gids1.map(&:id)).group(:id).having('c <= ?', max_owners)
+    common_select.where(id: gids2.map(&:id)).unscope(:order).order('pw_count DESC, own_count ASC')
   end
   
 end
