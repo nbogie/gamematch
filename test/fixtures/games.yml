@@ -7,3 +7,11 @@ one:
 two:
   name: Game Two
   bgg_game_id: 2
+
+three:
+  name: Star Wars - Imperial Assault
+  bgg_game_id: 3
+
+four:
+  name: Star Wars - Rebellion
+  bgg_game_id: 4
