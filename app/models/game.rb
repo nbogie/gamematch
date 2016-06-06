@@ -36,6 +36,11 @@ class Game < ActiveRecord::Base
     return "https://boardgamegeek.com/geekbuddy/analyze/thing/#{bgg_game_id}"
   end
   
+  def bgg_lob_guild_search_url
+    n = URI.encode(name)
+    "https://boardgamegeek.com/guild/collection/586?title=#{n}&subtype=&own=1&B1=Apply"
+  end
+  
   def self.owned_uniquely_by(player)
     player.owned_games.where('id in (?)', uniquely_owned_games.map(&:id))
   end

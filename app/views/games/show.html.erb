@@ -7,6 +7,7 @@ Showing game - LoB Game Match - <%= @game.name.truncate(20) %>
   <h2>Game: <%= @game.name %></h2>
   <%= link_to "(on bgg)", @game.bgg_game_url %> 
   <%= link_to "(geekbuddy analyse)", @game.bgg_game_analysis_url %> 
+  <%= link_to '(lob guild analyse)', @game.bgg_lob_guild_search_url %>
 </p>
 
 <p>
