@@ -18,3 +18,5 @@ sample_data/sensitive/*
 /log/*
 !/log/.keep
 /tmp
+
+/spring
