@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyText
+  name: Saturday at the Bullfrog
   provided_url: MyText
-  meetup_id: MyText
-  status: MyText
-  event_time: 2016-05-26 01:33:55
+  meetup_event_id: 123456
+  status: upcoming
+  event_time: 2016-06-11 11:00:00
 
 two:
-  name: MyText
+  name: Saturday Evening
   provided_url: MyText
-  meetup_id: MyText
-  status: MyText
-  event_time: 2016-05-26 01:33:55
+  meetup_event_id: 123457
+  status: upcoming
+  event_time: 2016-06-11 17:30:00

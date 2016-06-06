@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  bgg_username: MyText
+  bgg_username: Albert The Amazing
   bgg_user_id: MyText
-  meetup_username: MyText
+  meetup_username: Joe Bloggs
   meetup_user_id: 1
-  meetup_bio: MyText
+  meetup_bio: I like games
 
 two:
-  bgg_username: MyText
+  bgg_username: bgg two
   bgg_user_id: MyText
-  meetup_username: MyText
-  meetup_user_id: 1
-  meetup_bio: MyText
+  meetup_username: Fred Fish
+  meetup_user_id: 2
+  meetup_bio: I like Avalon

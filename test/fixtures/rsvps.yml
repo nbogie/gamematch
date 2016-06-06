@@ -2,8 +2,10 @@
 
 one:
   player_id: 1
+  event_id: 1
   response: MyText
 
 two:
-  player_id: 1
+  event_id: 1
+  player_id: 2
   response: MyText

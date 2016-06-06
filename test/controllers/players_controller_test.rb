@@ -11,19 +11,6 @@ class PlayersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:players)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create player" do
-    assert_difference('Player.count') do
-      post :create, player: { bgg_user_id: @player.bgg_user_id, bgg_username: @player.bgg_username, meetup_bio: @player.meetup_bio, meetup_user_id: @player.meetup_user_id, meetup_username: @player.meetup_username }
-    end
-
-    assert_redirected_to player_path(assigns(:player))
-  end
-
   test "should show player" do
     get :show, id: @player
     assert_response :success
@@ -35,15 +22,8 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   test "should update player" do
-    patch :update, id: @player, player: { bgg_user_id: @player.bgg_user_id, bgg_username: @player.bgg_username, meetup_bio: @player.meetup_bio, meetup_user_id: @player.meetup_user_id, meetup_username: @player.meetup_username }
+    patch :update, id: @player, player: { bgg_username: @player.bgg_username }
     assert_redirected_to player_path(assigns(:player))
   end
 
-  test "should destroy player" do
-    assert_difference('Player.count', -1) do
-      delete :destroy, id: @player
-    end
-
-    assert_redirected_to players_path
-  end
 end
