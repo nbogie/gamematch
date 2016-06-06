@@ -12,8 +12,8 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test "should search" do
-    get :index, :params => { :term=> 'star wars'}
-        assert_response :success
+    get :index, :term=> 'star wars'
+    assert_response :success
     assert_not_nil assigns(:games)
   end
 
