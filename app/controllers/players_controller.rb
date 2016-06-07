@@ -4,9 +4,14 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
+    ps = params.permit(:term)
+    if (ps[:term])
+      @players = Player.search(term: ps[:term], limit: 10, offset: ps[:page] || 0)
+    else
+      @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
+    end
   end
-
+  
   def choose_player
     p = Player.find(params.require(:id))
     session[:chosen_player_id] = params.require(:id)
