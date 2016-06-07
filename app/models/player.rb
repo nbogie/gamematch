@@ -52,6 +52,10 @@ class Player < ActiveRecord::Base
     save!
   end
 
+  def self.search(opts)
+    Player.order(:meetup_username).limit(15).where('meetup_username LIKE ?', "%#{opts[:term]}%")
+  end
+
   
   def self.me
     find_by(bgg_username: 'enz0')

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   #for game search autocomplete
   get 'game_names' => 'games#game_names'
+  get 'player_names' => 'players#player_names'
   
   get 'rare_games' => 'games#rare_games'
   get 'desired_games' => 'games#desired_games'

@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_action :set_player, only: [:show, :edit, :update]
 
   # GET /players
   # GET /players.json
@@ -38,29 +38,8 @@ class PlayersController < ApplicationController
     @uniquely_owned_games = Game.owned_uniquely_by(@player)
   end
 
-  # GET /players/new
-  def new
-    @player = Player.new
-  end
-
   # GET /players/1/edit
   def edit
-  end
-
-  # POST /players
-  # POST /players.json
-  def create
-    @player = Player.new(player_params)
-
-    respond_to do |format|
-      if @player.save
-        format.html { redirect_to @player, notice: 'Player was successfully created.' }
-        format.json { render :show, status: :created, location: @player }
-      else
-        format.html { render :new }
-        format.json { render json: @player.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /players/1
@@ -80,16 +59,7 @@ class PlayersController < ApplicationController
     end
   end
 
-  # DELETE /players/1
-  # DELETE /players/1.json
-  def destroy
-    @player.destroy
-    respond_to do |format|
-      format.html { redirect_to players_url, notice: 'Player was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-  
+
   def mark_stale
     id = params.require(:id)
     logger.debug("mark_stale with id #{id}")
@@ -107,6 +77,16 @@ class PlayersController < ApplicationController
     else
       redirect_to @player, notice: "Player bgg_username update failed.  Errors: #{@player.errors}"
     end
+  end
+
+  def player_names
+    ps = params.permit(:term)
+    if (ps[:term]) 
+      @players = Player.search(ps)
+    else
+      @players = []
+    end
+    render json: @players.map(&:meetup_username)
   end
 
 
