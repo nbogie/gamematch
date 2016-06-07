@@ -1,0 +1,5 @@
+guard for test runs on file system events
+.irbrc
+backtrace_silencers in config/initialisers
+
+mod test_helper for red/green bars

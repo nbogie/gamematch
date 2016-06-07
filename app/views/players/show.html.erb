@@ -41,7 +41,11 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 <li id='next-meetups' class="accordion-item is-active" data-accordion-item data-magellan-target='next-meetups'>
   <a href="#" class="accordion-title">Next Meetups</a>
   <div class="accordion-content" data-tab-content>
-    <h3>Next meetups</h3>
+    <% if @player.events.empty? %>
+      <%= @player.meetup_username %> is not attending any upcoming meetups.
+    <% else %>
+      <h3>Next meetups</h3>
+    <% end %>
     <ol>
       <% @player.events.each do |event| %>
         <li><%= link_to event.name, event %></li>
@@ -53,8 +57,11 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 <li id='want-to-play-games' class="accordion-item is-active" data-accordion-item data-magellan-target='want-to-play-games'>
   <a href="#" class="accordion-title"><%= @player.meetup_username %> wants to play:</a>
   <div class="accordion-content" data-tab-content>
-    <h3><%= @player.meetup_username %> wants to play:</h3>
-    <%= @player.want_to_play_games.size %> game(s):
+    <% if @player.events.empty? %>
+      <%= @player.meetup_username %> has no want-to-play games marked on BGG.
+    <% else %>
+      <h3><%= @player.meetup_username %> wants to play <%= @player.want_to_play_games.size %> game(s):</h3>
+    <% end %>
     
     <ul>
       <% @player.want_to_play_games.each do |game| %>
