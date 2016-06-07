@@ -18,11 +18,14 @@ Showing Event - LoB Game Match - <%= @event.name %>
     <div class="accordion-content" data-tab-content>
 
       <h3>Games which attendees want to play (in bgg)</h3>
-      <ul>
-      <% @desired_games.each do |g| %>
-        <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
-      <% end %>
-      </ul>
+      <table>
+          <% @desired_games.each do |g| %>
+            <tr>
+              <td><%= link_to g.name, g %></td>
+              <td><%= g.pw_count %> wishes.</td>
+            </tr>
+          <% end %>
+      </table>
     </div>
   </li>
   <li class="accordion-item" data-accordion-item>

@@ -25,16 +25,16 @@ Showing game - LoB Game Match - <%= @game.name.truncate(20) %>
 
 <p>
   <h3 id='high-ratings'>High ratings:</h3>
-  <ul>
+  <table>
   <% @rating_players.each do |player| %>
-    <li>
-      <%= link_to player.meetup_username, player %> 
+    <tr>
+      <td><%= link_to player.meetup_username, player %>
       <%= link_to "(bgg)", player.bgg_user_url %>
-      <%= link_to "(Meetup)", player.meetup_user_url %>
-       - rating: <%= player.rating %>
-    </li>
+      <%= link_to "(Meetup)", player.meetup_user_url %></td>
+      <td>Rating: <%= player.rating %></td>
+    </td></tr>
   <% end %>
-  </ul>
+  </table>
 </p>
 
 <p>

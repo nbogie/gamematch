@@ -98,16 +98,16 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <a href="#" class="accordion-title"><%= @player.meetup_username %>'s games which others most want to play</a>
   <div class="accordion-content" data-tab-content>
     <h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
-    <ul>
+      <table>
       <% @most_desired_games.each do |game| %>
-        <li>
-          <%= @playwish_counts[game.id] %> wish to play
-          <%= link_to game.name, game %>
-          <%= link_to "(bgg)", game.bgg_game_url %>
-           (<%# game.rating %>/10)
-        </li>
+        <tr>
+          <td><%= @playwish_counts[game.id] %> wish to play</td>
+          <td><%= link_to game.name, game %>
+              <%= link_to "(bgg)", game.bgg_game_url %></td>
+          <td>(<%# game.rating %>/10)</td>
+        </tr>
       <% end %>
-    </ul>
+    </table>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
 
