@@ -5,6 +5,8 @@ Game.joins(:ownerships).select('id, name, count(*) as c').group(:game_id).having
 ->
 SELECT id, name, count(*) as c FROM "games" INNER JOIN "ownerships" ON "ownerships"."game_id" = "games"."id" GROUP BY "game_id" HAVING c <2
 
+When listing uniquely owned games, sort by pw_count DESC.
+
 When comparing user with one (or more) other player(s), also show commonalities in your highly-rated (r >= 8)  games.
 
 Add matches from up-and-coming LoBs

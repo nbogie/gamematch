@@ -5,3 +5,8 @@ backtrace_silencers in config/initialisers
 mod test_helper for red/green bars
 
 Apple-E: goto-anything, in cloud9 IDE.
+
+AR: ModelA.joins(:tableB) will do an inner join between A and B (and so will omit anything from A that doesn't have a row in B).
+For outer joins in active record, either specify the join with sql, 
+or use includes() with where(): e.g. Article.includes(:comments).where(comments: { visible: true })
+but note that joins() is prefered over includes()
