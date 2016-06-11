@@ -57,7 +57,7 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 <li id='want-to-play-games' class="accordion-item is-active" data-accordion-item data-magellan-target='want-to-play-games'>
   <a href="#" class="accordion-title"><%= @player.meetup_username %> wants to play:</a>
   <div class="accordion-content" data-tab-content>
-    <% if @player.events.empty? %>
+    <% if @player.want_to_play_games.empty? %>
       <%= @player.meetup_username %> has no want-to-play games marked on BGG.
     <% else %>
       <h3><%= @player.meetup_username %> wants to play <%= @player.want_to_play_games.size %> game(s):</h3>
@@ -104,7 +104,7 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
           <td><%= @playwish_counts[game.id] %> wish to play</td>
           <td><%= link_to game.name, game %>
               <%= link_to "(bgg)", game.bgg_game_url %></td>
-          <td>(<%# game.rating %>/10)</td>
+          <td>TODO: Owner's rating</td>
         </tr>
       <% end %>
     </table>
