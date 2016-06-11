@@ -5,6 +5,8 @@ Game.joins(:ownerships).select('id, name, count(*) as c').group(:game_id).having
 ->
 SELECT id, name, count(*) as c FROM "games" INNER JOIN "ownerships" ON "ownerships"."game_id" = "games"."id" GROUP BY "game_id" HAVING c <2
 
+When comparing user with one (or more) other player(s), also show commonalities in your highly-rated (r >= 8)  games.
+
 Add matches from up-and-coming LoBs
 
 Consider importing all games from bgg in one pass (perhaps from a csv dump of all games). ( ~80k games? )
