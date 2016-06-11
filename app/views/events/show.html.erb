@@ -33,11 +33,11 @@ Showing Event - LoB Game Match - <%= @event.name %>
     <div class="accordion-content" data-tab-content>
   
       <h3>Games which attendees want to play, which someone attending owns</h3>
-      <ul>
+      <table>
         <% @desired_owned_games.each do |g| %>
-          <li><%= link_to g.name, g %> - <%= g.pw_count %> wishes.</li>
+          <tr><td><%= link_to g.name, g %></td><td><%= g.pw_count %> wishes.</td></tr>
         <% end %>
-      </ul>
+      </table>
     </div>
   </li>
 
