@@ -1,8 +1,5 @@
 00_TODO
 ========
-In joining games with, and counting, play_wishes and ownerships, be sure not to 
-accidentally exclude games with ZERO rows in owner or play_wishes.
-
 Games which are owned only by one or two players, which are popular
 Game.joins(:ownerships).select('id, name, count(*) as c').group(:game_id).having('c <2')
 ->
@@ -25,3 +22,5 @@ For now, I'll just ignore the second item (so if you only own the second one, th
 
 Add indices and uniqueness constraints on the join tables.
 
+In joining games with, and counting, play_wishes and ownerships, be sure not to 
+accidentally exclude games with ZERO rows in owner or play_wishes.
