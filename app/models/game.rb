@@ -47,7 +47,7 @@ class Game < ActiveRecord::Base
   end
 
   def self.uniquely_owned_games
-    common_select.having('own_count = 1').unscope(:limit).limit(50)
+    common_select.having('own_count = 1').unscope(:limit).unscope(:order).order('pw_count DESC, name').limit(50)
   end
 
   def self.desired_games_for_players(ps)
