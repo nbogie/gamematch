@@ -20,10 +20,11 @@ class Game < ActiveRecord::Base
   #Returns games with play_wishes and ownerships associations counted as
   # pw_count and own_count.
   # TODO: do this with scopes instead - more conventional.
+  # Note: outer join necessary as we want to include games that have no play_wish and/or ownership row.
   def self.common_select(opts = {})
     select('games.*, count(distinct play_wishes.player_id) AS pw_count, count(distinct ownerships.player_id) AS own_count').
-    joins(:play_wishes).
-    joins(:ownerships).
+    joins('LEFT OUTER JOIN play_wishes ON play_wishes.game_id = games.id').
+    joins('LEFT OUTER JOIN ownerships ON ownerships.game_id = games.id').
     group('games.id').
     order('games.name').limit(opts[:limit] || 15).offset(opts[:offset] || 0)
   end
