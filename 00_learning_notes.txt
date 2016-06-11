@@ -1,12 +1,31 @@
-guard for test runs on file system events
-.irbrc
-backtrace_silencers in config/initialisers
+* Guard for test runs on file system events
 
-mod test_helper for red/green bars
+* .irbrc
 
-Apple-E: goto-anything, in cloud9 IDE.
+* backtrace_silencers in config/initialisers
 
-AR: ModelA.joins(:tableB) will do an inner join between A and B (and so will omit anything from A that doesn't have a row in B).
+* mod test_helper for red/green bars
+
+* Apple-E: goto-anything, in cloud9 IDE.
+
+* AR: ModelA.joins(:tableB) will do an inner join between A and B (and so will omit anything from A that doesn't have a row in B).
 For outer joins in active record, either specify the join with sql, 
 or use includes() with where(): e.g. Article.includes(:comments).where(comments: { visible: true })
 but note that joins() is prefered over includes()
+Example of left join: Game.includes(:ownerships).where(ownerships: { game_id: 1..500 })
+
+* SQL example: Games, along with an ownership count and a play-wish count.  (with one owner).
+
+SELECT          games.*, 
+                Count(DISTINCT play_wishes.player_id) AS pw_count, 
+                Count(DISTINCT ownerships.player_id)  AS own_count 
+FROM            "games" 
+LEFT OUTER JOIN play_wishes 
+ON              play_wishes.game_id = games.id 
+LEFT OUTER JOIN ownerships 
+ON              ownerships.game_id = games.id 
+GROUP BY        games.id 
+HAVING          own_count = 1 
+ORDER BY        pw_count desc limit 50
+
+* Counting and NULLs: The function count(expression) only counts entries where expression is not null.
