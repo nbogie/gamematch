@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601222345) do
+ActiveRecord::Schema.define(version: 20160612013105) do
 
   create_table "events", force: :cascade do |t|
     t.text     "meetup_event_id"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160601222345) do
     t.boolean  "granted"
     t.datetime "collection_processed_at"
     t.datetime "ratings_imported_at"
+    t.datetime "searched_at"
   end
 
   add_index "players", ["meetup_user_id"], name: "index_players_on_meetup_user_id", unique: true

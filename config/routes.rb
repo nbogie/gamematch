@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
+  get '/players/unlinked_attending', to: 'players#unlinked_attending', as: 'unlinked_attending_players'
 
   resources :rsvps
   resources :events
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   get 'uniquely_owned_games' => 'games#uniquely_owned_games'
 
   get 'players/mark_stale/:id', to: 'players#mark_stale', as: 'mark_stale'
+  get 'players/mark_searched/:id', to: 'players#mark_searched', as: 'mark_searched'
 
   get 'players/link_with_bgg_account/:id/:bgg_username', to: 'players#link_with_bgg_account
   ', as: 'link_with_bgg_account'

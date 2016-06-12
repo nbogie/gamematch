@@ -4,12 +4,19 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    ps = params.permit(:term)
+    ps = params.permit(:term, :offset)
     if (ps[:term])
-      @players = Player.search(term: ps[:term], limit: 10, offset: ps[:page] || 0)
+      @players = Player.search(term: ps[:term], limit: 20, offset: ps[:offset] || 0)
     else
       @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
     end
+  end
+
+  # GET /players/unlinked_attending
+  # GET /players/unlinked_attending.json
+  def unlinked_attending
+    @players = Player.attending_something_and_no_bgg_link
+    render :index
   end
   
   def choose_player
@@ -55,7 +62,7 @@ class PlayersController < ApplicationController
       if @player.update(player_params)
         @player.collection_processed_at = nil
         @player.save!
-        format.html { redirect_to @player, notice: 'Player was successfully updated.' }
+        format.html { redirect_to @player, notice: "Player was successfully updated.#{@player.link_string}" }
         format.json { render :show, status: :ok, location: @player }
       else
         format.html { render :edit }
@@ -74,11 +81,19 @@ class PlayersController < ApplicationController
     redirect_to p, notice: "Player mark_stale successful."
   end
 
+  def mark_searched
+    id = params.require(:id)
+    p = Player.find(id)
+    p.searched_at = Time.now
+    p.save!
+    redirect_to p, notice: "Player mark_searched successful: #{p.link_string}"
+  end
+
   def link_with_bgg_account
     logger.debug("in link_with_bgg_account #{params.require(:id)}")
     @player = Player.find(params.require(:id)[:id])
     if @player.update(params.require(:bgg_username))
-      redirect_to @player, notice: 'Player bgg_username successfully updated'
+      redirect_to @player, notice: "Player bgg_username successfully updated.  #{@player.link_string}"
     else
       redirect_to @player, notice: "Player bgg_username update failed.  Errors: #{@player.errors}"
     end

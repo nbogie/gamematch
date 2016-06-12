@@ -52,8 +52,26 @@ class Player < ActiveRecord::Base
     save!
   end
 
+  def manual_link(bgg_name)
+    bgg_username = bgg_name
+    searched_at = Time.now
+    save!
+    link_string
+  end
+  
+  def link_string
+    "[#{meetup_user_id}, '#{bgg_username}', '#{meetup_username}', false],"
+  end
+  
+  def self.attending_something_and_no_bgg_link
+    Player.where("players.bgg_username is NULL and players.searched_at is NULL and players.meetup_username like '% %'").joins(:rsvps).group(:player_id).order(:meetup_username)
+  end
+
   def self.search(opts)
-    Player.order(:meetup_username).limit(15).where('meetup_username LIKE ?', "%#{opts[:term]}%")
+    Player.order(:meetup_username).
+      limit(opts[:limit]).
+      offset(opts[:offset]).
+      where('meetup_username LIKE ?', "%#{opts[:term]}%")
   end
 
   

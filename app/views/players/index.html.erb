@@ -60,7 +60,12 @@ $( document ).ready(function() {
       <%= player.ratings_imported_at.nil? ? '': 'with-imported-ratings' %>
       '>
         <td><%= link_to player.meetup_username, player %> 
-           (<%= link_to "bgg:#{player.bgg_username}", player.bgg_user_url %>)
+           <% if player.bgg_username.nil? %>
+             - <%= link_to "searchbgg", player.search_on_bgg_url %><br/>
+             <%= link_to '(marksearched)', mark_searched_path(player) %> -
+           <% else %>
+             (<%= link_to "bgg:#{player.bgg_username}", player.bgg_user_url %>)
+           <% end %>
             <%= link_to " / Meetup", player.meetup_user_url %>
         </td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
