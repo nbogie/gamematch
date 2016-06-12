@@ -188,9 +188,10 @@ def set_bgg_meetup_links
       [133073032, 'saua', 'Joachim', false],
       [6224143, 'pwatson1974', 'Paul Watson', false],
       [120421272, 'TrevPC', 'Trev Caughie', false],
-      [33632622, 'alibimonday', 'Adrian Rice', false]
-      ]
-  
+      [33632622, 'alibimonday', 'Adrian Rice', false],
+      [90976022, 'davieedwinarcher', 'Davie Edwin Archer', false],
+      [150954892, 'ionicbox', 'Justin Smith', false]
+    ]
   bgg_lob_links.each do |mid, bgn, real, granted|
     p = Player.find_by meetup_user_id: mid
     p.bgg_username = bgn
