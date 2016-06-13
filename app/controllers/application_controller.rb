@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :chosen_player, :set_nested_menus
 
   def set_nested_menus
-    @nested_menus = false
+    @nested_menus = true
   end
 
   def chosen_player
