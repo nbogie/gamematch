@@ -79,7 +79,7 @@ def importAllMembers
   offset = 0
   while (importPageOfMembers(offset) > 0)
     offset += 1
-    Rails.logger.info "DONE PAGE: #{offset}"
+    Rails.logger.info "DONE PAGE: #{offset}.  Sleeping 5 seconds"
     sleep(5)
   end
 end
@@ -93,6 +93,7 @@ def importPageOfMembers(offset)
     if (existing_player)
       Rails.logger.warn "WARNING: skipping player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB: #{existing_player.inspect}"
     else
+=begin
       Player.create(meetup_username: m.name, 
                   bgg_username: found_bgg_tag,
                   bgg_user_id: nil,
@@ -101,7 +102,8 @@ def importPageOfMembers(offset)
                   meetup_status: m.status,
                   meetup_link: m.link,
                   meetup_joined: m.joined)
-      Rails.logger.info "Imported user: #{m.name} #{m.id}"
+=end
+      Rails.logger.info "(SKIPPED) Imported user: #{m.name} #{m.id}"
     end
   end
   return members.size

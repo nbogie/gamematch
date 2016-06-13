@@ -5,7 +5,7 @@ namespace :lob do
   desc "fetch the lob users via http and save them to the db"
   task import_users_to_db: :environment do
     mu = RMeetupUtils.new
-    mu.importAllMembersPagedToDB
+    mu.importAllMembers
   end
   
   desc "fetch the upcoming lob meetup events and rsvps to db"
