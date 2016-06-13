@@ -46,16 +46,6 @@ def getRSVPsForEventOnePage(event_id)
                                })
 end
 
-def getMembers(offset)
-  members = @client.fetch(:members,{ :group_id => 274386, 
-                                     :fields => "bio",
-                                     :omit => "topics,photo",
-                                     :page=> 200,
-                                     :offset => offset })
-  #TODO: filter out inactive members
-  return members
-end
-
 def getEventsForNextNDays(nDays)
   events = @client.fetch(:events,{ :group_id => 274386, 
                                    :status => 'upcoming', 
@@ -85,8 +75,17 @@ def findBGGTagInBio(str)
    tagged || findBGGTagFromURLInBio(str)
 end
 
+def importAllMembers
+  offset = 0
+  while (importPageOfMembers(offset) > 0)
+    offset += 1
+    Rails.logger.info "DONE PAGE: #{offset}"
+    sleep(5)
+  end
+end
+
 def importPageOfMembers(offset)
-  members = getMembers(offset)
+  members = getPageOfMembers(offset)
   members.each do |m|
     bio_raw = m.member["bio"]
     found_bgg_tag = findBGGTagInBio(bio_raw)
@@ -108,15 +107,15 @@ def importPageOfMembers(offset)
   return members.size
 end
 
-def importAllMembers
-  offset = 0
-  while (importPageOfMembers(offset) > 0)
-    offset += 1
-    Rails.logger.info "DONE PAGE: #{offset}"
-    sleep(5)
-  end
+def getPageOfMembers(offset)
+  members = @client.fetch(:members,{ :group_id => 274386, 
+                                     :fields => "bio",
+                                     :omit => "topics,photo",
+                                     :page=> 200,
+                                     :offset => offset })
+  #TODO: filter out inactive members
+  return members
 end
-
 
 def importAllEvents(nDays)
   Rsvp.delete_all
