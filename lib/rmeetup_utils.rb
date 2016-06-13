@@ -221,6 +221,15 @@ def set_bgg_meetup_links
       [70582182, '6uka', 'Vika', false],
       [82647442, 'StephiH', 'Stephanie H', false],
       [48889852, '210pasadena', 'Mark Chessher', false],
+      [85716142, 'hrimalf', 'Rachel Godfrey', false],
+      [130076992, 'phvlvt', 'Pieter ver Loren van Themaat', false],
+      [26686352, 'hairyarsenal', 'Chris Marling', false],
+      [10342108, 'harris_family', 'Simon H', false],
+      [19083431, 'Tekopo', 'Riccardo Fabris', false],
+      [8671792, 'woodnoggin', 'Rich P', false],
+      [29632272, 'getareaction', 'Charlie', false],
+      [70296852, 'kendovich', 'Kenneth Petersen', false],
+      [120641782, 'RacingHippo', 'John Kennard', false],
     ]
   bgg_lob_links.each do |mid, bgn, real, granted|
     p = Player.find_by meetup_user_id: mid
