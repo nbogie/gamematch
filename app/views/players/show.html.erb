@@ -14,7 +14,11 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 
 <p id='basic-info' data-magellan-target="basic-info">
   <strong>Bgg username:</strong>
-  <%= link_to @player.bgg_username, @player.bgg_user_url %>
+  <% if @player.bgg_username %>
+    <%= link_to @player.bgg_username, @player.bgg_user_url %>
+  <% else %>
+    - not linked - 
+  <% end %>  
 </p>
 
 <p>
@@ -38,6 +42,7 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 <!--  data-multi-expand="true" -->
 <ul class="accordion" data-accordion>
   
+  <% if @player.bgg_username %>
 <li id='next-meetups' class="accordion-item is-active" data-accordion-item data-magellan-target='next-meetups'>
   <a href="#" class="accordion-title">Next Meetups</a>
   <div class="accordion-content" data-tab-content>
@@ -154,6 +159,7 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
     </ul>
   </div><!-- accordion content -->
 </li> <!-- accordion item -->
+<% end %> <%# END if @player.bgg_username #%>
 </ul> <!-- end accordion -->
 
 
