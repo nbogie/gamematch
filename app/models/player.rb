@@ -71,6 +71,16 @@ class Player < ActiveRecord::Base
     Player.where("meetup_bio like '%bgg%' AND bgg_username is null")
   end
   
+  def self.attending_something
+    Player.joins(:rsvps).group(:player_id)
+  end
+  
+  def self.mark_rough_visited_for_all_who_attend_something
+    Player.attending_something.
+    where(last_visited_meetup_at: nil).
+    update_all(last_visited_meetup_at: Time.now - 1.weeks)
+  end
+  
   def self.search(opts)
     Player.order(:meetup_username).
       limit(opts[:limit]).

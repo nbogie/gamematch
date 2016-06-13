@@ -230,6 +230,11 @@ def set_bgg_meetup_links
       [29632272, 'getareaction', 'Charlie', false],
       [70296852, 'kendovich', 'Kenneth Petersen', false],
       [120641782, 'RacingHippo', 'John Kennard', false],
+      [13331889, 'evilm2twjunkie', 'Tagore', false],
+      [100071782, 'Fabio_', 'Fabio Lopiano', false],
+      [81570322, 'quilleashm', 'Mike Q', false],
+      [12771598, 'Kester', 'Kester', false],
+      [10985265, 'JohnBandettini', 'John B', false],
     ]
   bgg_lob_links.each do |mid, bgn, real, granted|
     p = Player.find_by meetup_user_id: mid
@@ -260,8 +265,8 @@ def importUserGamesFromBGG
       #We'd like to request only wanttoplay: 1 OR own: 1 but we can only AND these.
       #Stats are probably a whole lot more data, so 
       #  consider only getting the rated games, with stats, at a second pass.
-      while(Time.now < reqTime + 5) do
-        remainingTime = reqTime + 5 - Time.now
+      while(Time.now < reqTime + 10) do
+        remainingTime = reqTime + 10 - Time.now
         Rails.logger.debug("Sleeping #{remainingTime}s to avoid spamming bgg...")
         sleep remainingTime
       end
