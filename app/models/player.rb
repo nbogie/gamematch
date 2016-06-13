@@ -67,11 +67,15 @@ class Player < ActiveRecord::Base
     Player.where("players.bgg_username is NULL and players.searched_at is NULL and players.meetup_username like '% %'").joins(:rsvps).group(:player_id).order(:meetup_username)
   end
 
+  def self.unlinked_but_bio_mentions_bgg
+    Player.where("meetup_bio like '%bgg%' AND bgg_username is null")
+  end
+  
   def self.search(opts)
     Player.order(:meetup_username).
       limit(opts[:limit]).
       offset(opts[:offset]).
-      where('meetup_username LIKE ?', "%#{opts[:term]}%")
+      where('meetup_username LIKE ? or bgg_username LIKE ?', "%#{opts[:term]}%", "%#{opts[:term]}%")
   end
 
   

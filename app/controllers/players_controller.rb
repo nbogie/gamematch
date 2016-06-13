@@ -19,6 +19,11 @@ class PlayersController < ApplicationController
     render :index
   end
   
+  def unlinked_but_bio_mentions_bgg
+    @players = Player.unlinked_but_bio_mentions_bgg
+    render :index
+  end
+  
   def choose_player
     p = Player.find(params.require(:id))
     session[:chosen_player_id] = params.require(:id)
