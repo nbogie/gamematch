@@ -29,3 +29,5 @@ HAVING          own_count = 1
 ORDER BY        pw_count desc limit 50
 
 * Counting and NULLs: The function count(expression) only counts entries where expression is not null.
+
+* cloud9: app must use port 8080 and binding addr 0.0.0.0: https://docs.c9.io/v1.0/docs/run-an-application
