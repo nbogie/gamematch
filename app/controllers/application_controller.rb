@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   def chosen_player
     @chosen_player ||= session[:chosen_player_id] && Player.find(session[:chosen_player_id])
   end
+  
   def has_chosen_player?
     ! @chosen_player.nil?
   end
