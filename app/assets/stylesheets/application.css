@@ -22,3 +22,8 @@
 .unprocessed {
     background-color: orange;
 }
+
+/* attempted fix for FOUC of nested menus */
+.no-js [data-responsive-menu] ul {
+  display: none;
+}
