@@ -1,8 +1,14 @@
 00_TODO
 ========
+
+Write a merging import of meetup members into an existing db.  Add new fields to existing members (e.g. 'visited').
+ - also try to get a new-members-since out of the meetup api.
+
 When players reload an event's page, if it has been deleted give them a better error message.  (They may reload an event page, or access a bookmark.)
 
 Keep track of users who are active, or find this from meetup.  We need not suggest games with players who haven't been to a meetup in 2 years...
+This might be enough: 'visited' on member#get: http://www.meetup.com/meetup_api/docs/2/member/#get
+
 
 When comparing user with one (or more) other player(s), also show commonalities in your highly-rated (r >= 8)  games.
 
