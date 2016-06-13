@@ -18,11 +18,11 @@
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Players", players_path %></li>
       <li><%= link_to "Games", games_path %>
-        <ul class="vertical menu">
+        <% if @nested_menus %><ul class="vertical menu"><% end %>
           <li><%= link_to "Desired games", desired_games_path %></li>
           <li><%= link_to "Rarer desired games", rare_games_path %></li>
           <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
-        </ul>
+        <% if @nested_menus %></ul><% end %>
       </li>
       <% if @chosen_player.nil? %>
         <li>no-one</li>

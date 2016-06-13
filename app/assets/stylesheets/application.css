@@ -22,3 +22,7 @@
 .unprocessed {
     background-color: orange;
 }
+
+.no-js [data-responsive-menu] ul {
+  display: none;
+}

@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   #before every action of every controller
-  before_action :chosen_player
+  before_action :chosen_player, :set_nested_menus
+
+  def set_nested_menus
+    @nested_menus = false
+  end
 
   def chosen_player
     @chosen_player ||= session[:chosen_player_id] && Player.find(session[:chosen_player_id])
