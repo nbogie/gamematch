@@ -11,7 +11,19 @@ class PlayersController < ApplicationController
       @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
     end
   end
+  def other
+    Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
+  end
+  def wealthy
+    @players = Player.with_collections_counted.order('own_count desc').limit(30)
+    render 'index'
+  end
 
+  def many_wants
+    @players = Player.with_collections_counted.order('pw_count desc').limit(30)
+    render 'index'
+  end
+  
   # GET /players/unlinked_attending
   # GET /players/unlinked_attending.json
   def unlinked_attending

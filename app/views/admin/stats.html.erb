@@ -1,0 +1,17 @@
+<h1>Stats</h1>
+
+<h3>bgg-link stats</h3>
+Users linked with bgg accounts: 
+<%= link_to @link_stats[:linked], players_path %>
+(<%= '%.1f' % @link_stats[:pct] %>%) of 
+<%= @link_stats[:total] %> imported users<br/>
+
+<h3>Visiting stats</h3>
+Users visiting meetup group website within last month: <br/>
+<% 1.upto(4) do |i| %>
+    <%= i %> week(s): <%= @visited_stats[:weeks][i] %> / <%= @visited_stats[:total] %><br/>
+<% end %>
+
+<h3>Collection stats</h3>
+BGG-linked users who own at least 5 games (and seem active): <br/>
+<%= @collection_stats[:geeks] %>

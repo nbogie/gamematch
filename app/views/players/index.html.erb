@@ -73,8 +73,8 @@ $( document ).ready(function() {
         </td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
         <td><%= player.meetup_status %></td>
-        <td><%= player.want_to_play_games.size %></td>
-        <td><%= player.owned_games.size %></td>
+        <td><%= player.num_want_to_play_games %></td>
+        <td><%= player.num_owned_games %></td>
         <td><%= player.rated_games.size %></td>
         <td><%= player.events.size %></td>
         <td><%= link_to 'bgg disparities', player.bgg_disparities_url %></td>
@@ -92,6 +92,8 @@ $( document ).ready(function() {
 </table>
 </div>
 
+<%= link_to 'having most games', wealthy_path, class: 'button' %>
+<%= link_to 'most want-to-plays', many_wants_path, class: 'button' %>
 <%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path, class: 'button' %>
 <%= link_to 'unlinked but recently visited', unlinked_but_recently_visited_path, class: 'button' %>
 <%= link_to 'unlinked but attending something', unlinked_but_attending_something_path, class: 'button' %>
