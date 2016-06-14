@@ -10,14 +10,6 @@ $( document ).ready(function() {
       $('.player-row').hide();
       $('.with-pending-collection').show();
   });
-  $("#show-with-imported-ratings").bind('click', function() {
-      $('.player-row').hide();
-      $('.with-imported-ratings').show();
-  });
-  $("#show-without-imported-ratings").bind('click', function() {
-      $('.player-row').show();
-      $('.with-imported-ratings').hide();
-  });
   $("#show-all-players").bind('click', function() {
       $('.player-row').show();
   });
@@ -39,7 +31,6 @@ $( document ).ready(function() {
     <tr>
       <th>Name(s)</th>
       <th>Edit</th>
-      <th>Meetup status</th>
       <th>num want-to-play</th>
       <th>num owned</th>
       <th>num rated</th>
@@ -49,7 +40,6 @@ $( document ).ready(function() {
       <th>Last Visited Meetup At</th>
       <th>Joined Meetup At</th>
       <th>Collection Processed At</th>
-      <th>Ratings Imported At</th>
       <th>Collection Requested at</th>
       <th>Meetup bio</th>
     </tr>
@@ -59,7 +49,6 @@ $( document ).ready(function() {
     <% @players.each do |player| %>
       <tr class='player-row
       <%= player.collection_processed_at.nil? ? 'with-pending-collection' : '' %>
-      <%= player.ratings_imported_at.nil? ? '': 'with-imported-ratings' %>
       '>
         <td><%= link_to player.meetup_username, player %> 
            <% if player.bgg_username.nil? %>
@@ -71,7 +60,6 @@ $( document ).ready(function() {
             <%= link_to " / Meetup", player.meetup_user_url %>
         </td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= player.meetup_status %></td>
         <td><%= player.num_want_to_play_games %></td>
         <td><%= player.num_owned_games %></td>
         <td><%= player.rated_games.size %></td>
@@ -82,7 +70,6 @@ $( document ).ready(function() {
         <td><%= player.joined_meetup_at %></td>
         <td class='<%= player.collection_processed_at.nil? ? 'unprocessed' : 'processed' %>'>
           <%= time_ago_in_words(player.collection_processed_at) + " ago" unless player.collection_processed_at.nil? %></td>
-        <td><%= time_ago_in_words(player.ratings_imported_at) + " ago" unless player.ratings_imported_at.nil? %></td>
         <td><%= time_ago_in_words(player.collection_requested_at) + " ago" unless player.collection_requested_at.nil? %></td>
         <td><%= player.meetup_bio %></td>
       </tr>
@@ -94,8 +81,6 @@ $( document ).ready(function() {
 <div class='button-group'>
   <a href='#' class='button' id='show-all-players'>no js filter</a>
   <a href='#' class='button' id='show-pending-collection-imports'>Pending</a>
-  <a href='#' class='button' id='show-with-imported-ratings'>Ratings imported</a>
-  <a href='#' class='button' id='show-without-imported-ratings'>Ratings unimported</a>
   <%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path, class: 'button' %>
   <%= link_to 'unlinked but recently visited', unlinked_but_recently_visited_path, class: 'button' %>
   <%= link_to 'unlinked but attending something', unlinked_but_attending_something_path, class: 'button' %>

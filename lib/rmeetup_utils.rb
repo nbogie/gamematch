@@ -108,11 +108,9 @@ def importPageOfMembers(offset)
                   bgg_user_id: nil,
                   meetup_user_id: m.id,
                   meetup_bio: bio_raw,
-                  meetup_status: m.status,
                   meetup_link: m.link,
                   joined_meetup_at: ms_to_time_or_nil(m.joined),
-                  last_visited_meetup_at: ms_to_time_or_nil(m.visited),
-                  )
+                  last_visited_meetup_at: ms_to_time_or_nil(m.visited))
       Rails.logger.info "Importer: Imported user: #{m.name} #{m.id}"
     end
   end
@@ -509,7 +507,6 @@ def importUserGamesFromBGG
     if (colln.nil? || colln["item"].nil?)
       Rails.logger.warn "No collection for #{bgg_username}: #{colln.inspect}"
       player.collection_processed_at = Time.now
-      player.ratings_imported_at = Time.now
       player.save!
       next
     end
@@ -572,7 +569,6 @@ def importUserGamesFromBGG
     end #each game in collection
     
     player.collection_processed_at = Time.now
-    player.ratings_imported_at = Time.now
     player.save!
     Rails.logger.debug "Done processing #{colln['item'].size} item(s) for #{player.meetup_username}"
 
