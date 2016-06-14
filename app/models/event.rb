@@ -12,9 +12,8 @@ class Event < ActiveRecord::Base
   #may differ from the one used in the url.
   #We save whatever one is given in the id field.
   
-  def add_known_users
-    ['Maiacetus', 'enz0', 'jonpurkis', 'stereoscopy', 'NormandyWept', 'CDrust'].each do |username|
-      p = Player.find_by_bgg_username username
+  def add_all_members
+    Player.where('bgg_username is not null').each do |p|
       if (!players.member? p)
         players.push(p)
       end
