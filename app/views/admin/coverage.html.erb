@@ -1,0 +1,6 @@
+<h1>Coverage</h1>
+
+Users linked with bgg accounts: 
+<%= link_to @stats[:linked], players_path %>
+(<%= '%.1f' % @stats[:pct] %>%) of 
+<%= @stats[:total] %> imported users<br/>
