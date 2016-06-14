@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
   get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
-  get '/players/unlinked_attending', to: 'players#unlinked_attending', as: 'unlinked_attending_players'
+  get '/players/unlinked_attending', to: 'players#unlinked_attending', as: 'unlinked_but_attending_something'
   get '/players/unlinked_but_bio_mentions_bgg', to: 'players#unlinked_but_bio_mentions_bgg', as: 'unlinked_but_bio_mentions_bgg'
+  get '/players/unlinked_but_recently_visited', to: 'players#unlinked_but_recently_visited', as: 'unlinked_but_recently_visited'
 
 
   resources :rsvps

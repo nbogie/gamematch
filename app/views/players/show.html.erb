@@ -30,6 +30,15 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <strong>Meetup bio:</strong>
   <%= @player.meetup_bio %>
 </p>
+<p>
+  <strong>Visited:</strong>
+  <%= @player.last_visited_meetup_at %>
+</p>
+
+<p>
+  <strong>Joined:</strong>
+  <%= @player.joined_meetup_at %>
+</p>
 
 <p><strong>BGG links: </strong>
   <%= link_to 'want-to-play', @player.bgg_want_to_plays_url %>,

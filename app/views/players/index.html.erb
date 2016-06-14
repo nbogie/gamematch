@@ -48,6 +48,7 @@ $( document ).ready(function() {
       <th>bgg disparities</th>
       <th>Granted</th>
       <th>Last Visited Meetup At</th>
+      <th>Joined Meetup At</th>
       <th>Collection Processed At</th>
       <th>Ratings Imported At</th>
       <th>Collection Requested at</th>
@@ -79,6 +80,7 @@ $( document ).ready(function() {
         <td><%= link_to 'bgg disparities', player.bgg_disparities_url %></td>
         <td><%= player.granted %></td>
         <td><%= player.last_visited_meetup_at %></td>
+        <td><%= player.joined_meetup_at %></td>
         <td class='<%= player.collection_processed_at.nil? ? 'unprocessed' : 'processed' %>'>
           <%= time_ago_in_words(player.collection_processed_at) + " ago" unless player.collection_processed_at.nil? %></td>
         <td><%= time_ago_in_words(player.ratings_imported_at) + " ago" unless player.ratings_imported_at.nil? %></td>
@@ -90,4 +92,8 @@ $( document ).ready(function() {
 </table>
 </div>
 
-<%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path %>
+<%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path, class: 'button' %>
+<%= link_to 'unlinked but recently visited', unlinked_but_recently_visited_path, class: 'button' %>
+<%= link_to 'unlinked but attending something', unlinked_but_attending_something_path, class: 'button' %>
+
+

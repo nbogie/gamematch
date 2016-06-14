@@ -32,3 +32,5 @@ ORDER BY        pw_count desc limit 50
 
 * cloud9: App must use port 8080 and binding addr 0.0.0.0: https://docs.c9.io/v1.0/docs/run-an-application
             rails server -p 8080 -b 0.0.0.0
+            
+* convert milliseconds since epoch to ruby Time (datetime) object: Time.at(ms_value/1000)

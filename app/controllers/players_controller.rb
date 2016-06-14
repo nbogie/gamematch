@@ -15,7 +15,12 @@ class PlayersController < ApplicationController
   # GET /players/unlinked_attending
   # GET /players/unlinked_attending.json
   def unlinked_attending
-    @players = Player.attending_something_and_no_bgg_link
+    @players = Player.unlinked_but_attending_something
+    render :index
+  end
+
+  def unlinked_but_recently_visited
+    @players = Player.unlinked_but_recently_visited
     render :index
   end
   

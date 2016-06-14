@@ -2,7 +2,11 @@
 ========
 
 Write a merging import of meetup members into an existing db.  Add new fields to existing members (e.g. 'visited').
- - also try to get a new-members-since out of the meetup api.
+ - also try to get a new-members-since out of the meetup api:
+  That should be possible with order=joined&desc=true but output from this doesn't seem reliable.
+  We could also get the first few pages ordered by visited, desc, in order to get ids for who's active.
+
+Support deletion of meetup-deleted users, in the merge... identified as any player whose meetup id does not come up in a FULL successfully completed import.
 
 When players reload an event's page, if it has been deleted give them a better error message.  (They may reload an event page, or access a bookmark.)
 
@@ -19,6 +23,8 @@ Consider importing all games from bgg in one pass (perhaps from a csv dump of al
 Permit import / refresh of a single event, and single user.
 
 When showing a user's owned games which are most desired for play by others, prefer games that no one else owns.
+
+check font support for non roman alphabet: e.g. 고병훈
 
 DONE: 
 =====

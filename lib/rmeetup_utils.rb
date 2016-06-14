@@ -76,12 +76,17 @@ def findBGGTagInBio(str)
 end
 
 def importAllMembers
+  Rails.logger.info "Importer: Importing/updating all members from meetup"
   offset = 0
   while (importPageOfMembers(offset) > 0)
     offset += 1
-    Rails.logger.info "DONE PAGE: #{offset}.  Sleeping 5 seconds"
+    Rails.logger.info "Importer: DONE PAGE: #{offset}.  Sleeping 5 seconds"
     sleep(5)
   end
+end
+
+def ms_to_time_or_nil(ms)
+  ms.nil? ? nil : Time.at(ms/1000)
 end
 
 def importPageOfMembers(offset)
@@ -91,9 +96,13 @@ def importPageOfMembers(offset)
     found_bgg_tag = findBGGTagInBio(bio_raw)
     existing_player = Player.find_by meetup_user_id: m.id
     if (existing_player)
-      Rails.logger.warn "WARNING: skipping player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB: #{existing_player.inspect}"
+      Rails.logger.info "Importer: updating timestamps for player which already exists with meetup_user_id #{m.id}: From API: #{m.inspect}, and from DB - player id: #{existing_player.id}"
+      h = {}
+      h[:last_visited_meetup_at] = ms_to_time_or_nil(m.visited)
+      h[:joined_meetup_at] = ms_to_time_or_nil(m.joined)
+      Player.update(existing_player.id, h)
     else
-=begin
+      Rails.logger.info "Importer: importing new user:  #{m.inspect}"
       Player.create(meetup_username: m.name, 
                   bgg_username: found_bgg_tag,
                   bgg_user_id: nil,
@@ -101,15 +110,17 @@ def importPageOfMembers(offset)
                   meetup_bio: bio_raw,
                   meetup_status: m.status,
                   meetup_link: m.link,
-                  meetup_joined: m.joined)
-=end
-      Rails.logger.info "(SKIPPED) Imported user: #{m.name} #{m.id}"
+                  joined_meetup_at: ms_to_time_or_nil(m.joined),
+                  last_visited_meetup_at: ms_to_time_or_nil(m.visited),
+                  )
+      Rails.logger.info "Importer: Imported user: #{m.name} #{m.id}"
     end
   end
   return members.size
 end
 
 def getPageOfMembers(offset)
+  Rails.logger.info "Importer: fetching page of members from meetup group."
   members = @client.fetch(:members,{ :group_id => 274386, 
                                      :fields => "bio",
                                      :omit => "topics,photo",
@@ -137,6 +148,178 @@ end
 
 def unescapeSpace(str)
   str.gsub('%20', ' ')
+end
+
+def lob_guild_members
+  <<~HEREDOC.split /\n/
+  2grve
+  ALGO
+  AdmiralGT
+  Anamorphic235
+  Andarius
+  Bang Potential
+  Baron Frog
+  Bezman
+  Blns75
+  CDrust
+  CJCalogero
+  Chaigirl17
+  CrazyCod
+  DMStue
+  DanV
+  Darke
+  DicingWithDearth
+  Earl_G
+  Fabio_
+  Fortune
+  Gaz72uk
+  Gizoku
+  Gront
+  Haakon Gaarder
+  Hornby4523
+  Ilikegames
+  Interociter
+  Jeeman
+  JimF
+  Johan
+  JohnBandettini
+  Jugular
+  Kester
+  Litany_Eu
+  Lobotnik
+  LondononBoard
+  Maiacetus
+  Mos Blues
+  Mr Shrubber
+  MurrayL
+  Oslot
+  PeterM2158
+  Phantomwhale
+  Picon
+  RacingHippo
+  Ravenhoe
+  Richard M
+  Riotgirl
+  Roger_Jay
+  Sandman14
+  ScarletJester
+  Sorp222
+  SpooksTheHorse
+  Stelio
+  Strygalldwir
+  StuartF
+  SuperSize
+  TDaver
+  Tekopo
+  Temple of Battle
+  Toastiness
+  Tom Chase
+  Tonio_London
+  Totality
+  Truthsayer
+  Tulfa
+  Tycho
+  Uroshnor
+  Waaaaaayne
+  White Stone
+  Xantiriad
+  Xithi
+  Yodi
+  Zubbus
+  agius1520
+  amorphous
+  angelgabriel
+  archivists
+  arundle
+  baditude
+  barnetto
+  brattle
+  brochd
+  bucklen_uk
+  bulldozers
+  c00ky1970
+  caro128
+  cesco
+  crazylegs
+  dekkadekkadekka
+  discombob
+  dthoreau
+  duckworp
+  edjw
+  eldaec
+  enz0
+  evilm2twjunkie
+  exa1zar2ius3
+  fairfaxx
+  falsedan
+  flyingmerlin
+  furriebarry
+  garner
+  geffizozo
+  hairyarsenal
+  hampshan
+  harris_family
+  hughganought
+  idolwitch
+  ill6
+  ionicbox
+  jellynut
+  jond
+  jonpurkis
+  kamchatka
+  kanito8a
+  lauramath
+  leverus
+  lizbot
+  lscrock
+  magicoctopus
+  man on the lam
+  matthoppy
+  maxdrawdown
+  meeplette
+  mlmrk
+  mulder82
+  nickjanaway
+  nosywombat
+  outlier
+  pawnvsdice
+  perfectimperfection
+  pie_eater81
+  pilgrim152
+  pmyteh
+  praxis330
+  qwertymartin
+  ragados
+  randomgerbil
+  recoil1977
+  richiban
+  rogull72
+  rowangray
+  rrreow
+  salar
+  saua
+  smok
+  softhook
+  spaceinvader
+  spoon_platoon
+  stereoscopy
+  stickinsect
+  sweetsweetdoughnuts
+  thdizzy
+  toblerdrone
+  tomhoward87
+  tpreece
+  veemonroe
+  vejrum
+  vidalvic
+  wetwilly487
+  whistleblower
+  willynch
+  woodnoggin
+  yoanadim
+  zardon
+  zzyzxuk
+  HEREDOC
 end
 
 def set_bgg_meetup_links
@@ -236,6 +419,19 @@ def set_bgg_meetup_links
       [81570322, 'quilleashm', 'Mike Q', false],
       [12771598, 'Kester', 'Kester', false],
       [10985265, 'JohnBandettini', 'John B', false],
+      [206604494, 'Cardboard Conundrum', 'Richie Freeman', false],
+      [80788842, 'Granlid', 'Granlid', false],
+      [13586732, 'Herzog73', 'Toby', false],
+      [21034041, 'Xantiriad', 'Gary Blower', false],
+      [82531512, 'klinsy73', 'Chris Keeley', false],
+      [185340705, 'Spyros_UCL', 'Spyros', false],
+      [8322874, 'malletman', 'Robin Brown', false],
+      [12870410, 'Yodi', 'Dan H', false],
+      [47631332, 'ncfc', 'Catherine Collins', false],
+      [12712378, 'sweetsweetdoughnuts', 'Lloyd', false],
+      [70280912, 'GrahamMiller', 'Graham Miller', false],
+      [90105582, 'Derek Long', 'Derek Long', false],
+      [6926307, 'qwertymartin', 'Martin', false],
     ]
   bgg_lob_links.each do |mid, bgn, real, granted|
     p = Player.find_by meetup_user_id: mid
@@ -245,6 +441,29 @@ def set_bgg_meetup_links
   end
 end
 
+def getOneGuildMembersPage(page)
+    #https://boardgamegeek.com/xmlapi2/guild?id=586&members=1&page=2
+    g = BggApi.guild(id: 586, members: true, page: page)
+    g['members'][0]['member'].map {|h| h['name']} rescue []
+end
+
+def get_guild_member_names
+  page = 1
+  exhausted = false
+  all_names = []
+  while (!exhausted)
+    names = getOneGuildMembersPage(page)
+    exhausted = names.empty?
+    all_names.push names
+    Rails.logger.info "got page #{page} of guild info: #{names}  Sleeping 5 secs..."
+    sleep 5
+    page = page + 1
+  end
+  puts "guild member names: "
+  all_names.flatten.sort.each do |n|
+    puts n
+  end
+end
 
 def skip(&block)
   puts "skipping block"
