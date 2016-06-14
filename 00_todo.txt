@@ -6,6 +6,8 @@ Write a merging import of meetup members into an existing db.  Add new fields to
   That should be possible with order=joined&desc=true but output from this doesn't seem reliable.
   We could also get the first few pages ordered by visited, desc, in order to get ids for who's active.
 
+Speed up the player loads with pw_count and own_count.  E.g. cache these counts, perhaps generating them offline.
+
 Support deletion of meetup-deleted users, in the merge... identified as any player whose meetup id does not come up in a FULL successfully completed import.
 
 When players reload an event's page, if it has been deleted give them a better error message.  (They may reload an event page, or access a bookmark.)
