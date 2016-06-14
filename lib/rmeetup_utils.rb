@@ -2,7 +2,6 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sqlite3'
 require 'bgg'
-require 'bgg_utils' #this one is local
 require 'yaml'
 require 'rmeetup'
 

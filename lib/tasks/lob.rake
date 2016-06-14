@@ -1,4 +1,3 @@
-require 'bgg_utils'
 require 'rmeetup_utils'
 
 namespace :lob do
