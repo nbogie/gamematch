@@ -14,12 +14,12 @@ class PlayersController < ApplicationController
   def other
     Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
   end
-  def wealthy
+  def most_owns
     @players = Player.with_collections_counted.order('own_count desc').limit(30)
     render 'index'
   end
 
-  def many_wants
+  def most_wants
     @players = Player.with_collections_counted.order('pw_count desc').limit(30)
     render 'index'
   end

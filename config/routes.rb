@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
   
-  get '/players/wealthy', to: 'players#wealthy', as: 'wealthy'
-  get '/players/many_wants', to: 'players#many_wants', as: 'many_wants'
+  get '/players/most_owns', to: 'players#most_owns', as: 'most_owns'
+  get '/players/most_wants', to: 'players#most_wants', as: 'most_wants'
   get '/players/unlinked_attending', to: 'players#unlinked_attending', as: 'unlinked_but_attending_something'
   get '/players/unlinked_but_bio_mentions_bgg', to: 'players#unlinked_but_bio_mentions_bgg', as: 'unlinked_but_bio_mentions_bgg'
   get '/players/unlinked_but_recently_visited', to: 'players#unlinked_but_recently_visited', as: 'unlinked_but_recently_visited'

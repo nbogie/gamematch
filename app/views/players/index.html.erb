@@ -27,10 +27,9 @@ $( document ).ready(function() {
 <h1>Listing Players</h1>
 
 <div class='button-group'>
-  <a href='#' class='button' id='show-all-players'>All</a>
-  <a href='#' class='button' id='show-pending-collection-imports'>Pending</a>
-  <a href='#' class='button' id='show-with-imported-ratings'>Ratings imported</a>
-  <a href='#' class='button' id='show-without-imported-ratings'>Ratings unimported</a>
+  <%= link_to 'All', players_path, class: 'button' %>
+  <%= link_to 'having most games', most_owns_path, class: 'button' %>
+  <%= link_to 'most want-to-plays', most_wants_path, class: 'button' %>
 </div>
 
 
@@ -92,10 +91,13 @@ $( document ).ready(function() {
 </table>
 </div>
 
-<%= link_to 'having most games', wealthy_path, class: 'button' %>
-<%= link_to 'most want-to-plays', many_wants_path, class: 'button' %>
-<%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path, class: 'button' %>
-<%= link_to 'unlinked but recently visited', unlinked_but_recently_visited_path, class: 'button' %>
-<%= link_to 'unlinked but attending something', unlinked_but_attending_something_path, class: 'button' %>
-
+<div class='button-group'>
+  <a href='#' class='button' id='show-all-players'>no js filter</a>
+  <a href='#' class='button' id='show-pending-collection-imports'>Pending</a>
+  <a href='#' class='button' id='show-with-imported-ratings'>Ratings imported</a>
+  <a href='#' class='button' id='show-without-imported-ratings'>Ratings unimported</a>
+  <%= link_to 'unlinked but bio mentions bgg', unlinked_but_bio_mentions_bgg_path, class: 'button' %>
+  <%= link_to 'unlinked but recently visited', unlinked_but_recently_visited_path, class: 'button' %>
+  <%= link_to 'unlinked but attending something', unlinked_but_attending_something_path, class: 'button' %>
+</div>
 
