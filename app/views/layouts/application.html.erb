@@ -15,14 +15,10 @@
   <div class="top-bar-left">
 
     <ul class="vertical medium-horizontal menu" data-dropdown-menu>
+      <li><%= link_to "Demo", demo_path %>
       <li><%= link_to "Events", events_path %></li>
       <li><%= link_to "Players", players_path %></li>
       <li><%= link_to "Games", games_path %>
-        <% if @nested_menus %><ul class="vertical menu"><% end %>
-          <li><%= link_to "Desired games", desired_games_path %></li>
-          <li><%= link_to "Rarer desired games", rare_games_path %></li>
-          <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
-        <% if @nested_menus %></ul><% end %>
       </li>
       <% if @chosen_player.nil? %>
         <li>no-one</li>
