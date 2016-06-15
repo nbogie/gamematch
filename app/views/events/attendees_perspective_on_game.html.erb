@@ -1,0 +1,17 @@
+<% content_for :title do %>
+Attendees vs Game - LoB Game Match - <%= @game.name %>
+<% end %>
+
+<h1>Attendees vs Game<h1>
+<h2>Event: <%= link_to @event.name, @event %></h2>
+<h2>Game: <%= @game.name %></h2>
+
+<h3>Attendees wanting to play this game (according to bgg)</h3>
+<table>
+  <% @keen_players_attending.each do |p| %>
+    <tr>
+      <td><%= link_to p.meetup_username, p %> - <%= p.rating_for(@game.id) %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>

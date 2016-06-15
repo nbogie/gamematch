@@ -143,4 +143,10 @@ class Player < ActiveRecord::Base
     want_to_play_games.where(:play_wishes => {game_id: p.owned_games})
   end
   
+  def rating_for(game)
+    r = ratings.where(game_id: game).limit(1)
+    #TODO: find correct way to do this in AR
+    r.exists? ? r.first.rating : nil
+  end
+  
 end

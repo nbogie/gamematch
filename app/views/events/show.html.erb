@@ -22,7 +22,7 @@ Showing Event - LoB Game Match - <%= @event.name %>
           <% @desired_games.each do |g| %>
             <tr>
               <td><%= link_to g.name, g %></td>
-              <td><%= g.pw_count %> wishes.</td>
+              <td><%= link_to "#{g.pw_count} wishes", attendees_perspective_on_game_path({event_id: @event, game_id: g}) %></td>
             </tr>
           <% end %>
       </table>

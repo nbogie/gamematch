@@ -30,15 +30,20 @@ Rails.application.routes.draw do
   get 'desired_games' => 'games#desired_games'
   get 'uniquely_owned_games' => 'games#uniquely_owned_games'
 
+  #TAG:devonly
   get 'players/mark_stale/:id', to: 'players#mark_stale', as: 'mark_stale'
+  #TAG:devonly
   get 'players/mark_searched/:id', to: 'players#mark_searched', as: 'mark_searched'
 
-  get 'players/link_with_bgg_account/:id/:bgg_username', to: 'players#link_with_bgg_account
-  ', as: 'link_with_bgg_account'
+  #TAG:devonly
+  get 'players/link_with_bgg_account/:id/:bgg_username', to: 'players#link_with_bgg_account', as: 'link_with_bgg_account'
 
+  #TAG:devonly
   get 'players/:id/choose', to: 'players#choose_player', as: 'choose_player'
 
+  #TAG:devonly
   get 'events/:id/workinprogress', to: 'events#workinprogress', as: 'workinprogress'
+  get 'events/:event_id/games/:game_id', to: 'events#attendees_perspective_on_game', as: 'attendees_perspective_on_game'
 
   get 'admin/tables'
   get 'admin/stats'

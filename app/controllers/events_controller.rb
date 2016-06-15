@@ -21,7 +21,12 @@ class EventsController < ApplicationController
 #        Game.desired_games_for_players_owned_by_others(@event.players.where('id is not ?', @chosen_player), @chosen_player)
       
     end
-
+  end
+  
+  def attendees_perspective_on_game
+    @event = Event.find(params.require(:event_id))
+    @game = Game.find(params.require(:game_id))
+    @keen_players_attending = @game.keen_players.where(play_wishes: {player_id: @event.players})
   end
   
   def workinprogress
