@@ -10,16 +10,17 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <li><a href='#favourite-games'>favourite games</a></li>
   <li><a href='#desired-owned-games'>desired owned games</a></li>
   <li><a href='#owned-games'>owned games</a></li>
+  <li><a href='#uniquely-owned-games'>uniquely owned games</a></li>
 </ul>
 
-<p id='basic-info' data-magellan-target="basic-info">
+<div id='basic-info' data-magellan-target="basic-info">
   <strong>Bgg username:</strong>
   <% if @player.bgg_username %>
     <%= link_to @player.bgg_username, @player.bgg_user_url %>
   <% else %>
     - not linked - 
   <% end %>  
-</p>
+</div>
 
 <p>
   <strong>Meetup username:</strong>
@@ -48,29 +49,21 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
 
 <p><strong>Collection processed at: </strong><%= @player.collection_processed_at %></p>
 
-<!--  data-multi-expand="true" -->
-<ul class="accordion" data-accordion>
-  
   <% if @player.bgg_username %>
-<li id='next-meetups' class="accordion-item is-active" data-accordion-item data-magellan-target='next-meetups'>
-  <a href="#" class="accordion-title">Next Meetups</a>
-  <div class="accordion-content" data-tab-content>
+    <div id='next-meetups' data-magellan-target='next-meetups'>
     <% if @player.events.empty? %>
       <%= @player.meetup_username %> is not attending any upcoming meetups.
     <% else %>
       <h3>Next meetups</h3>
+      <ol>
+        <% @player.events.each do |event| %>
+          <li><%= link_to event.name, event %></li>
+        <% end %>
+      </ol>
     <% end %>
-    <ol>
-      <% @player.events.each do |event| %>
-        <li><%= link_to event.name, event %></li>
-      <% end %>
-    </ol>
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
+    </div>
 
-<li id='want-to-play-games' class="accordion-item is-active" data-accordion-item data-magellan-target='want-to-play-games'>
-  <a href="#" class="accordion-title"><%= @player.meetup_username %> wants to play:</a>
-  <div class="accordion-content" data-tab-content>
+    <div id='want-to-play-games' data-magellan-target='want-to-play-games'>
     <% if @player.want_to_play_games.empty? %>
       <%= @player.meetup_username %> has no want-to-play games marked on BGG.
     <% else %>
@@ -84,13 +77,9 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
         </li>
       <% end %>
     </ul>
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
-
-<li id='favourite-games' class="accordion-item is-active" data-accordion-item data-magellan-target='favourite-games'>
-  <a href="#" class="accordion-title"><%= @player.meetup_username %>'s Top 20</a>
-  <div class="accordion-content" data-tab-content>
-
+    </div>
+    
+    <div id='favourite-games' data-magellan-target='favourite-games'>
     <h3><%= @player.meetup_username %>'s Top 20 games</h3>
     <table>
       <tbody>
@@ -104,13 +93,10 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
       <% end %>
       </tbody>
     </table>
-
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
-
-<li id='desired-owned-games' class="accordion-item is-active" data-accordion-item data-magellan-target='desired-owned-games'>
-  <a href="#" class="accordion-title"><%= @player.meetup_username %>'s games which others most want to play</a>
-  <div class="accordion-content" data-tab-content>
+    </div>
+    
+    
+    <div id='desired-owned-games' data-magellan-target='desired-owned-games'>
     <h3>Games others most want to play, which are owned by <%= @player.meetup_username %></h3>
       <table>
       <% @most_desired_games.each do |game| %>
@@ -122,12 +108,10 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
         </tr>
       <% end %>
     </table>
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
-
-<li id='owned-games' class="accordion-item is-active" data-accordion-item data-magellan-target='owned-games'>
-  <a href="#" class="accordion-title">Owned Games</a>
-  <div class="accordion-content" data-tab-content>
+    </div>
+    
+    <div id='owned-games' data-magellan-target='owned-games'>
+    
     <h3>All games owned by <%= @player.meetup_username %></h3>
     <strong>Total number of games owned:</strong> <%= @player.owned_games.size %>
 
@@ -148,12 +132,10 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
       <% end %>
       </tbody>
     </table>
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
-
-<li class="accordion-item is-active" data-accordion-item>
-  <a href="#" class="accordion-title">Uniquely Owned Games</a>
-  <div class="accordion-content" data-tab-content>
+    </div>
+    
+    <div id='uniquely-owned-games' data-magellan-target='uniquely-owned-games'>
+    
     <h3>Games owned ONLY by <%= @player.meetup_username %></h3>
     <ul>
       <% @uniquely_owned_games.each do |game| %>
@@ -166,11 +148,9 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
         </li>
       <% end %>
     </ul>
-  </div><!-- accordion content -->
-</li> <!-- accordion item -->
+    </div>
+    
 <% end %> <%# END if @player.bgg_username #%>
-</ul> <!-- end accordion -->
-
 
 <div>
   <%= link_to 'Edit', edit_player_path(@player), class: 'button small' %>

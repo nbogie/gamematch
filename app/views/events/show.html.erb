@@ -10,13 +10,6 @@ Showing Event - LoB Game Match - <%= @event.name %>
   (<%= @event.event_time %>)
 </p>
 
-<!--  data-multi-expand="true" -->
-<ul class="accordion" data-accordion>
-  
-  <li class="accordion-item is-active" data-accordion-item>
-    <a href="#" class="accordion-title">Desired Games</a>
-    <div class="accordion-content" data-tab-content>
-
       <h3>Games which attendees want to play (in bgg)</h3>
       <table>
           <% @desired_games.each do |g| %>
@@ -26,26 +19,15 @@ Showing Event - LoB Game Match - <%= @event.name %>
             </tr>
           <% end %>
       </table>
-    </div>
-  </li>
-  <li class="accordion-item" data-accordion-item>
-    <a href="#" class="accordion-title">Owned Desired Games</a>
-    <div class="accordion-content" data-tab-content>
-  
       <h3>Games which attendees want to play, which someone attending owns</h3>
       <table>
         <% @desired_owned_games.each do |g| %>
           <tr><td><%= link_to g.name, g %></td><td><%= g.pw_count %> wishes.</td></tr>
         <% end %>
       </table>
-    </div>
-  </li>
 
   <% if @chosen_player %>
   
-  <li class="accordion-item" data-accordion-item>
-    <a href="#" class="accordion-title">User-Owned Desired Games</a>
-    <div class="accordion-content" data-tab-content>
       <h3>Games which attendees want to play, which <%= @chosen_player.meetup_username %> owns</h3>
       
       <ul>
@@ -59,14 +41,9 @@ Showing Event - LoB Game Match - <%= @event.name %>
           </li>
         <% end %>
       </ul>
-    </div>
-  </li>
   <% end %>
 
-  <li class="accordion-item" data-accordion-item>
-    <a href="#" class="accordion-title">Attending</a>
-    <div class="accordion-content" data-tab-content>
-  
+
       <h3>Attending Players:</h3>
     
       <ul>
@@ -78,15 +55,10 @@ Showing Event - LoB Game Match - <%= @event.name %>
             <% else %>
               <%= link_to player.meetup_username, player %>
             <% end %>
-            / <%= link_to "meetup", player.meetup_user_url %>
-            
-            -<%= link_to "search on bgg", player.search_on_bgg_url %>
+            (<%= link_to "meetup", player.meetup_user_url %>)
           </li>
         <% end %>
       </ul>
-    </div>
-  </li>
 
-</ul> <!-- end accordion -->
 
 <%= link_to 'Back', events_path %>
