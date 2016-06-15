@@ -1,0 +1,20 @@
+<h1>Demo of some queries</h1>
+<% p = Player.find_by_bgg_username('NormandyWept') %>
+<% g = Game.find_by_name('High Frontier') %>
+<% e = Event.busiest_event %>
+<ul>
+    <li><%= link_to 'A report on a player', p %></li>
+    <li><%= link_to 'A report on a game', g %></li>
+    <li><%= link_to 'A report on an event', e %></li>
+    <li><%= link_to 'Listing of events', events_path %></li>
+    <li><%= link_to 'Listing of players', players_path %></li>
+    <li><%= link_to 'Search of games', games_path(term: 'Imperium') %></li>
+    <li><%= link_to 'Search of players', players_path(term: 'soren') %></li>
+    <li><%= link_to 'Players having most games', most_owns_path %></li>
+    <li><%= link_to 'Players wishing to play the most games', most_wants_path %></li>
+    <li><%= link_to 'Players wishing to play most games owned by a specific player', who_want_to_play_yours_path(p) %></li>
+    <li><%= link_to "Most commonly desired games", desired_games_path %></li>
+    <li><%= link_to "Most desired games which are little-owned", rare_games_path %></li>
+    <li><%= link_to "Uniquely owned games", uniquely_owned_games_path %></li>
+</ul>
+

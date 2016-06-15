@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+  get 'demo', to: 'players#demo', as: 'demo'
   get 'choose_no_player', to: 'players#choose_no_player', as: 'choose_no_player'
   
   get '/players/most_owns', to: 'players#most_owns', as: 'most_owns'
@@ -7,7 +9,8 @@ Rails.application.routes.draw do
   get '/players/unlinked_attending', to: 'players#unlinked_attending', as: 'unlinked_but_attending_something'
   get '/players/unlinked_but_bio_mentions_bgg', to: 'players#unlinked_but_bio_mentions_bgg', as: 'unlinked_but_bio_mentions_bgg'
   get '/players/unlinked_but_recently_visited', to: 'players#unlinked_but_recently_visited', as: 'unlinked_but_recently_visited'
-
+  get '/players/:id/who_want_to_play_yours', to: 'players#who_want_to_play_yours', as: 'who_want_to_play_yours'
+  
 
   resources :rsvps
   resources :events

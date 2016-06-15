@@ -176,5 +176,6 @@ Showing player - LoB Game Match - <%= @player.meetup_username %>
   <%= link_to 'Edit', edit_player_path(@player), class: 'button small' %>
   <%= link_to 'Focus this Player', choose_player_path(@player), class: 'button small' %>
   <%= link_to 'Mark collection stale', mark_stale_path(:id => @player.id ), class: 'button warning small' %>
+  <%= link_to 'who want to play', who_want_to_play_yours_path(:id => @player.id ), class: 'button small' %>
 </div>
 

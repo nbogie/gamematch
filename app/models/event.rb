@@ -11,6 +11,15 @@ class Event < ActiveRecord::Base
     return "https://www.meetup.com/LondonOnBoard/events/#{meetup_event_id}"
   end
 
+  def self.busiest_event
+    Event.joins(:rsvps).
+      select('events.*, count(*) as rsvp_count').
+      group(:event_id).
+      order('rsvp_count desc').
+      limit(1).
+      load[0]
+  end
+  
   def add_all_members
     #TAG:devonly
     Player.where('bgg_username is not null').each do |p|

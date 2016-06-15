@@ -18,6 +18,12 @@ Showing game - LoB Game Match - <%= @game.name.truncate(20) %>
       <%= link_to player.meetup_username, player %> 
       <%= link_to "(bgg)", player.bgg_user_url %>
       <%= link_to "(Meetup)", player.meetup_user_url %>
+      <ul>
+        <% player.events.each do |event| %>
+          <li><%= link_to event.name, event %> (<%= link_to "Meetup", event.url %>)</li>
+        <% end %>
+      </ul>
+
     </li>
   <% end %>
   </ul>
@@ -47,7 +53,7 @@ Showing game - LoB Game Match - <%= @game.name.truncate(20) %>
         <%= link_to "(Meetup)", player.meetup_user_url %>
         <ul>
           <% player.events.each do |event| %>
-            <li><%= link_to event.name, event, title: 'Explore the event here' %> (<%= link_to "Meetup", event.url, alt: 'View the event on meetup.com' %>)</li>
+            <li><%= link_to event.name, event %> (<%= link_to "Meetup", event.url %>)</li>
           <% end %>
         </ul>
       </li>

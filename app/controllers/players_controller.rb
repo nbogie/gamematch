@@ -22,6 +22,11 @@ class PlayersController < ApplicationController
     render 'index'
   end
   
+  def who_want_to_play_yours
+    @player = Player.find(params.require(:id))
+    @players = @player.who_want_to_play_yours
+  end
+  
   # GET /players/unlinked_attending
   # GET /players/unlinked_attending.json
   def unlinked_attending

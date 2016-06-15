@@ -121,9 +121,26 @@ class Player < ActiveRecord::Base
       where('meetup_username LIKE ? or bgg_username LIKE ?', "%#{opts[:term]}%", "%#{opts[:term]}%")
   end
 
+  def self.with_percentage_sign_in_bgg_username
+    where("bgg_username like '%X%%' ESCAPE 'X'")
+  end
+  
   def self.me
     #TAG:devonly
     find_by(bgg_username: 'enz0')
+  end
+  
+  def who_want_to_play_yours
+    Player.joins(:play_wishes).
+      where('play_wishes.game_id' => owned_games.select(:id)).where('player_id != ?', id).
+      group(:player_id).
+      select('players.*, count(*) as pw_count').
+      order('pw_count desc').
+      limit(5)
+  end
+  
+  def want_to_play_games_owned_by(p)
+    want_to_play_games.where(:play_wishes => {game_id: p.owned_games})
   end
   
 end

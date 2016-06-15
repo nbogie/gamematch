@@ -1,0 +1,22 @@
+<% content_for :title do %>
+Who want to play games owned by <%= @player.meetup_username %> - LoB Game Match
+<% end %>
+
+<h1>Players who want to play the most games owned by <%= @player.meetup_username %></h1>
+
+<ul>
+  <% @players.each do |player| %>
+    <li>
+      <%= link_to player.meetup_username, player, class: "bgg-linked-player" %>
+      (bgg: <%= link_to player.bgg_username, player.bgg_user_url %>)
+      (<%= link_to "meetup", player.meetup_user_url %>)
+
+      - <%= player.pw_count %>
+      <% player.want_to_play_games_owned_by(@player).each do |g| %>
+      <ul>
+        <li><%= link_to g.name, g %></li>
+      </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
