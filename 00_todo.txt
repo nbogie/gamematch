@@ -1,6 +1,10 @@
 00_TODO
 ========
 
+Sort flickering of foundation js accordion (e.g. ditch accordion)
+
+In event-attendees-to-one-game report, show those who rate it highly (even if they haven't marked it want-to-play)
+
 Write a merging import of meetup members into an existing db.  Add new fields to existing members (e.g. 'visited').
  - also try to get a new-members-since out of the meetup api:
   That should be possible with order=joined&desc=true but output from this doesn't seem reliable.
