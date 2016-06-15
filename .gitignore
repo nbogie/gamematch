@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 config/api_keys.yaml
+config/newrelic.yml
 sample_data/sensitive/*
 
 # Ignore bundler config.

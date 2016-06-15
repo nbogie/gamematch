@@ -52,6 +52,10 @@ group :development, :test do
   gem 'byebug'
 end
 
+group :development, :staging, :production do
+  gem 'newrelic_rpm'
+end
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
