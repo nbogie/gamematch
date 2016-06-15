@@ -4,7 +4,7 @@ Attendees vs Game - LoB Game Match - <%= @game.name %>
 
 <h1>Attendees vs Game<h1>
 <h2>Event: <%= link_to @event.name, @event %></h2>
-<h2>Game: <%= @game.name %></h2>
+<h2>Game: <%= link_to @game.name, @game %></h2>
 
 <h3>Attendees wanting to play this game (according to bgg)</h3>
 <table>
@@ -15,3 +15,14 @@ Attendees vs Game - LoB Game Match - <%= @game.name %>
     </tr>
   <% end %>
 </table>
+
+
+<h3>TODO</h3>
+<pre>
+  Who owns it who is attending?
+  Who rates it highly who is attending?
+    - important even if they haven't marked it want-to-play
+  Who wants to play it who has attended recently and therefore 
+    might be invited again.
+  
+</pre>
