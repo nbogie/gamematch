@@ -11,9 +11,7 @@ class PlayersController < ApplicationController
       @players = Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
     end
   end
-  def other
-    Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
-  end
+  
   def most_owns
     @players = Player.with_collections_counted.order('own_count desc').limit(30)
     render 'index'
@@ -138,6 +136,10 @@ class PlayersController < ApplicationController
       @player = Player.find(params[:id])
     end
 
+    def other
+      Player.where("players.bgg_username is NOT NULL").order(:meetup_username)
+    end
+  
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_params
       params.require(:player).permit(:bgg_username)
