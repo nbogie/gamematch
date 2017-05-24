@@ -511,7 +511,8 @@ def importUserGamesFromBGG
     end
 
   
-    partitioned = partitionCollection(colln)
+    #partitioned = partitionCollection(colln)
+    
     #Faster than checking if we already have an ownership record
     Ownership.delete_all(player_id: player.id)
     PlayWish.delete_all(player_id: player.id)
