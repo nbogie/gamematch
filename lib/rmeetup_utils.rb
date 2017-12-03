@@ -78,10 +78,11 @@ def importAllMembers
   Rails.logger.info "Importer: Importing/updating all members from meetup"
   offset = 0
   while (importPageOfMembers(offset) > 0)
-    offset += 1
     Rails.logger.info "Importer: DONE PAGE: #{offset}.  Sleeping 5 seconds"
+    offset += 1
     sleep(5)
   end
+  Rails.logger.info "Importer: Finished"
 end
 
 def ms_to_time_or_nil(ms)
